@@ -18,9 +18,11 @@
 
 <acme:menu-bar>
 	<acme:menu-left>
-		<acme:menu-option code="master.menu.anonymous" access="isAnonymous()">
-			<acme:menu-suboption code="master.menu.anonymous.favourite-link" action="http://www.example.com/"/>
-		</acme:menu-option>
+	    <acme:menu-option code="master.menu.anonymous" access="isAnonymous()">
+	        <acme:menu-suboption code="master.menu.anonymous.favourite-link" action="https://www.wikipedia.org">
+	            77865531C: Buzon, Manuel Zoilo
+	        </acme:menu-suboption>
+	    </acme:menu-option>
 
 		<acme:menu-option code="master.menu.administrator" access="hasRealm('Administrator')">
 			<acme:menu-suboption code="master.menu.administrator.list-user-accounts" action="/administrator/user-account/list"/>
