@@ -20,6 +20,7 @@
 	<acme:menu-left>
 		<acme:menu-option code="master.menu.anonymous" access="isAnonymous()">
 		    <acme:menu-suboption code="master.menu.anonymous.favourite-link-1" action="https://www.wikipedia.org" />
+			<acme:menu-suboption code="master.menu.anonymous.favourite-link-3" action="https://www.instagram.com" />
 		    <acme:menu-suboption code="master.menu.anonymous.favourite-link-4" action="https://www.youtube.com/" />
 		</acme:menu-option>
 
