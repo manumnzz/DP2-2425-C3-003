@@ -19,10 +19,8 @@
 <acme:menu-bar>
 	<acme:menu-left>
 		<acme:menu-option code="master.menu.anonymous" access="isAnonymous()">
-		    <acme:menu-suboption code="master.menu.anonymous.favourite-link" action="https://www.wikipedia.org" />
+		    <acme:menu-suboption code="master.menu.anonymous.favourite-link-1" action="https://www.wikipedia.org" />
 		    <acme:menu-suboption code="master.menu.anonymous.favourite-link-4" action="https://www.youtube.com/" />
-		    <span>77865531C: Buzon, Manuel Zoilo</span>
-			<span>71038372C: Anda, Enrique</span>
 		</acme:menu-option>
 
 
