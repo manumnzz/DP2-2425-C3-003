@@ -5,14 +5,9 @@ import java.time.Duration;
 
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
@@ -26,20 +21,24 @@ public class Task extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
+	@Mandatory
+	@Valid
+	@Automapped
 	protected TaskType			type;
 
-	@NotBlank
+	@Mandatory
 	@ValidString
-	@Length(max = 255)
+	@Automapped
 	protected String			description;
 
-	@NotNull
-	@Min(0)
-	@Max(10)
-	@ValidNumber
+	@Mandatory
+	@ValidNumber(max = 10)
+	@Automapped
 	protected Integer			priority;
 
-	@NotNull
+	@Mandatory
+	@Valid
+	@Automapped
 	protected Duration			duration;
 	// Derived attributes -----------------------------------------------------
 
@@ -47,12 +46,12 @@ public class Task extends AbstractEntity {
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Technicians			technician;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private MaintenanceRecords	maintenanceRecord;
 
 }

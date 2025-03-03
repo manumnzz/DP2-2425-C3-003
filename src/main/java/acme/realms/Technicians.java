@@ -3,12 +3,14 @@ package acme.realms;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.Length;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractRole;
+import acme.client.components.mappings.Automapped;
+import acme.client.components.validation.Mandatory;
+import acme.client.components.validation.Optional;
+import acme.client.components.validation.ValidNumber;
+import acme.client.components.validation.ValidString;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,23 +24,34 @@ public class Technicians extends AbstractRole {
 
 	// Attributes -------------------------------------------------------------
 
+	@Mandatory
+	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$")
 	@Column(unique = true)
-	@Pattern(regexp = "^[A-Z]{2,3}\\d{6}$")
 	protected String			licenseNumber;
 
-	@Pattern(regexp = "^\\+?\\d{6,15}$")
+	@Mandatory
+	@ValidString(pattern = "^\\+?\\d{6,15}$")
+	@Automapped
 	protected String			phoneNumber;
 
-	@NotBlank
-	@Length(max = 50)
+	@Mandatory
+	@ValidString(max = 50)
+	@Automapped
 	protected String			specialization;
 
-	protected boolean			healthTestPassed;
+	@Mandatory
+	@Valid
+	@Automapped
+	protected Boolean			healthTestPassed;
 
+	@Mandatory
+	@ValidNumber
+	@Automapped
 	protected Integer			yearsExperience;
 
-	@NotBlank
-	@Length(max = 255)
+	@Optional
+	@ValidString
+	@Automapped
 	protected String			certifications;
 
 	// Derived attributes -----------------------------------------------------
