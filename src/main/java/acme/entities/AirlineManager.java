@@ -3,11 +3,10 @@ package acme.entities;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
@@ -29,26 +28,22 @@ public class AirlineManager extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
-	@NotNull
 	@Pattern(regexp = "^[A-Z]{2,3}\\d{6}$", message = "Invalid identifier format")
 	@Unique
-	@Column(unique = true, nullable = false)
 	private String				identifier;
 
 	@Mandatory
 	@Positive
 	@Automapped
-	@Column(nullable = false)
 	private int					yearsOfExperience;
 
 	@ValidMoment(past = true)
 	@Mandatory
-	@NotNull
 	@Temporal(TemporalType.DATE)
-	@Column(nullable = false)
 	private Date				dateOfBirth;
 
 	@Optional
+	@Valid
 	@Automapped
 	private String				pictureUrl;
 }
