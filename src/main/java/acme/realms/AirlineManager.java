@@ -11,8 +11,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 import org.checkerframework.common.aliasing.qual.Unique;
-import org.dom4j.tree.AbstractEntity;
 
+import acme.client.components.basis.AbstractRole;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
@@ -23,7 +23,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class AirlineManager extends AbstractEntity {
+public class AirlineManager extends AbstractRole {
 
 	// Serialisation version --------------------------------------------------
 
