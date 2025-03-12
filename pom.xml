@@ -31,12 +31,4 @@
 		<version>25.2.0</version>
 		<relativePath>../../pom-25.2.0.xml</relativePath>
 	</parent>
-	
-	<dependencies>
-		<dependency>
-			<groupId>Acme</groupId>
-			<artifactId>Acme-Jobs</artifactId>
-			<version>25.2.0</version>
-		</dependency>
-	</dependencies>
 </project>
