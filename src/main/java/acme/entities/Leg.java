@@ -8,15 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.Positive;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.Optional;
-import acme.client.components.validation.ValidString;
+import acme.client.components.validation.ValidMoment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,42 +23,64 @@ import lombok.Setter;
 @Setter
 public class Leg extends AbstractEntity {
 
+	// Serialisation version --------------------------------------------------
+
 	private static final long	serialVersionUID	= 1L;
 
-	@Mandatory
-	@ValidString(max = 50)
-	@Automapped
-	private String				origen;
-
-	@Mandatory
-	@ValidString(max = 50)
-	@Automapped
-	private String				destino;
+	// Attributes -------------------------------------------------------------
 
 	@Mandatory
 	@Valid
-	@FutureOrPresent(message = "La fecha de salida debe ser presente o futura")
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
-	private Date				fechaSalida;
+	@Column(unique = true)
+	private String				flightNumber;
 
 	@Mandatory
-	@FutureOrPresent(message = "La fecha de llegada debe ser futura")
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date				fechaLlegada;
+	private Date				scheduledDeparture;
+
+	@Mandatory
+	@ValidMoment
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date				scheduledArrival;
 
 	@Mandatory
 	@Valid
-	@Positive(message = "La duración debe ser un número positivo")
-	private Double				duracionHoras;
-
-	@Optional
-	@ValidString(max = 50)
 	@Automapped
-	private String				comentarios;
+	private FlightStatus		status;
+
+	// Derived attributes -----------------------------------------------------
+
+
+	@Transient
+	public double getDuration() {
+		long differenceInMillis = this.scheduledArrival.getTime() - this.scheduledDeparture.getTime();
+
+		double durationInHours = (double) differenceInMillis / (1000 * 60 * 60);
+
+		return durationInHours;
+	}
+
+	// Relationships ----------------------------------------------------------
+
 
 	@Mandatory
 	@Valid
 	@ManyToOne
-	private Flight				vuelo;
+	private Flight		flight;
+
+	@Mandatory
+	@Valid
+	@ManyToOne
+	private Airport		departureAirport;
+
+	@Mandatory
+	@Valid
+	@ManyToOne
+	private Airport		arrivalAirport;
+
+	@Mandatory
+	@Valid
+	@ManyToOne
+	private Aircraft	aircraft;
 }

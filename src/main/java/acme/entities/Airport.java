@@ -3,16 +3,17 @@ package acme.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.Valid;
 
-import org.dom4j.tree.AbstractEntity;
-
+import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
+import acme.client.components.validation.Mandatory;
+import acme.client.components.validation.Optional;
+import acme.client.components.validation.ValidEmail;
+import acme.client.components.validation.ValidString;
+import acme.client.components.validation.ValidUrl;
+import acme.constraints.ValidShortText;
+import acme.datatypes.Phone;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,41 +22,54 @@ import lombok.Setter;
 @Setter
 public class Airport extends AbstractEntity {
 
+	// Serialisation version --------------------------------------------------
+
 	private static final long	serialVersionUID	= 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer				id;
+	// Attributes -------------------------------------------------------------
 
-	@Column(length = 50, nullable = false)
-	@Size(max = 50)
+	@Mandatory
+	@ValidString(max = 50)
+	@Automapped
 	private String				name;
 
-	@Column(length = 3, unique = true, nullable = false)
-	@Pattern(regexp = "^[A-Z]{3}$", message = "IATA code must be exactly 3 uppercase letters")
+	@Mandatory
+	// @Pattern(regexp = "^[A-Z]{3}$", message = "IATA code must be exactly 3 uppercase letters")
+	@Column(unique = true)
 	private String				iataCode;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Mandatory
+	@Valid
+	@Automapped
 	private OperationalScope	operationalScope;
 
-	@Column(length = 50, nullable = false)
-	@Size(max = 50)
+	@Mandatory
+	@ValidString(max = 50)
+	@Automapped
 	private String				city;
 
-	@Column(length = 50, nullable = false)
-	@Size(max = 50)
+	@Mandatory
+	@ValidShortText
+	@Automapped
 	private String				country;
 
+	@Optional
+	@ValidUrl
+	@Automapped
 	private String				website;
 
-	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+$", message = "Invalid email format (no '@' allowed)")
+	@Optional
+	@ValidEmail
+	@Automapped
 	private String				email;
 
-	@Pattern(regexp = "^\\+?\\d{6,15}$", message = "Phone number must be 6-15 digits, optional + prefix")
-	private String				phoneNumber;
-}
+	@Optional
+	// @ValidPhone
+	@Automapped
+	private Phone				phone;
 
-enum OperationalScope {
-	INTERNATIONAL, DOMESTIC, REGIONAL
+	// Derived attributes -----------------------------------------------------
+
+	// Relationships ----------------------------------------------------------
+
 }
