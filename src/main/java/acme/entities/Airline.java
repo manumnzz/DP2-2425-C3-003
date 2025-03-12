@@ -3,6 +3,8 @@ package acme.entities;
 
 import java.util.Date;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
@@ -44,7 +46,7 @@ public class Airline extends AbstractEntity {
 
 	@Mandatory
 	@ValidMoment(past = true)
-	@Automapped
+	@Temporal(TemporalType.TIMESTAMP)
 	protected Date				foundationMoment;
 
 	@Mandatory
@@ -52,8 +54,8 @@ public class Airline extends AbstractEntity {
 	@Automapped
 	protected String			phoneNumber;
 
-	@Mandatory
-	@ValidEmail
 	@Optional
+	@ValidEmail
+	@Automapped
 	protected String			email;
 }
