@@ -21,6 +21,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>Acme-ANS</artifactId>
 	<version>D02</version>
+
 	<packaging>war</packaging>
 	
 	<parent>
@@ -30,4 +31,11 @@
 		<relativePath>../../pom-25.2.0.xml</relativePath>
 	</parent>
 	
+	<dependencies>
+		<dependency>
+			<groupId>Acme</groupId>
+			<artifactId>Acme-Jobs</artifactId>
+			<version>25.2.0</version>
+		</dependency>
+	</dependencies>
 </project>
