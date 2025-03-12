@@ -8,3 +8,4 @@ user-account-provider-03,true,"UserIdentity{name: 'Antonia', surname: 'אבטי�
 user-account-technician-01,true,"UserIdentity{name: 'Javier', surname: 'Del Pozo', email: 'jdlpozo@acme.com'}",technician1,technician1
 user-account-technician-02,true,"UserIdentity{name: 'Jesus', surname: 'אבטיח', email: 'Jesus@acme.com'}",technician2,technician2
 user-account-technician-03,true,"UserIdentity{name: 'Jaime', surname: '之乎路 ᏥᏲᏎᎭ', email: 'jaime@acme.com'}",technician3,technician3
+
