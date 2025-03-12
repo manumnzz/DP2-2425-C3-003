@@ -1,9 +1,12 @@
 
-package acme.entities;
+package acme.entities.S1;
 
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
@@ -15,6 +18,8 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidLongText;
+import acme.entities.Airport;
+import acme.realms.AirlineManager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -53,27 +58,39 @@ public class Flight extends AbstractEntity {
 
 
 	public Date getScheduledDeparture() {
-		return null;
+		return this.flightLeg != null && !this.flightLeg.isEmpty() ? this.flightLeg.stream().min(Comparator.comparingInt(FlightLeg::getSequence)).map(x -> x.getLeg().getScheduledDeparture()).orElse(null) : null;
 	}
 
 	public Date getScheduledArrival() {
-		return null;
+		return this.flightLeg != null && !this.flightLeg.isEmpty() ? this.flightLeg.stream().max(Comparator.comparingInt(FlightLeg::getSequence)).map(x -> x.getLeg().getScheduledArrival()).orElse(null) : null;
 	}
 
 	public String getOriginCity() {
-		return null;
+		return this.flightLeg != null && !this.flightLeg.isEmpty() ? this.flightLeg.stream().min(Comparator.comparingInt(FlightLeg::getSequence)).map(x -> x.getLeg().getDepartureAirport().getCity()).orElse(null) : null;
 	}
 
 	public String getDestinationCity() {
-		return null;
+		return this.flightLeg != null && !this.flightLeg.isEmpty() ? this.flightLeg.stream().max(Comparator.comparingInt(FlightLeg::getSequence)).map(x -> x.getLeg().getArrivalAirport().getCity()).orElse(null) : null;
 	}
 
 	public Integer getNumberOfLayovers() {
-		return null;
+		return this.flightLeg != null ? Math.max(0, this.flightLeg.size() - 1) : 0;
 	}
 
+	public Leg getFirstLeg() {
+		return this.flightLeg.stream().min(Comparator.comparingInt(FlightLeg::getSequence)).map(FlightLeg::getLeg).orElse(null);
+	}
+
+	public Leg getLastLeg() {
+		return this.flightLeg.stream().max(Comparator.comparing(FlightLeg::getSequence)).map(FlightLeg::getLeg).orElse(null);
+	}
 	// Relationships ----------------------------------------------------------
 
+
+	@Mandatory
+	@Valid
+	@ManyToMany
+	private List<FlightLeg>	flightLeg;
 
 	@Mandatory
 	@Valid

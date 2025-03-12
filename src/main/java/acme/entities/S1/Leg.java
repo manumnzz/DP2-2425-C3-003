@@ -1,5 +1,5 @@
 
-package acme.entities;
+package acme.entities.S1;
 
 import java.util.Date;
 
@@ -15,6 +15,8 @@ import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
+import acme.entities.Aircraft;
+import acme.entities.Airport;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,11 +65,6 @@ public class Leg extends AbstractEntity {
 
 	// Relationships ----------------------------------------------------------
 
-
-	@Mandatory
-	@Valid
-	@ManyToOne
-	private Flight		flight;
 
 	@Mandatory
 	@Valid

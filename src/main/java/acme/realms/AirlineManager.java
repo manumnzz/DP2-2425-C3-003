@@ -1,5 +1,5 @@
 
-package acme.entities;
+package acme.realms;
 
 import java.util.Date;
 
@@ -25,7 +25,11 @@ import lombok.Setter;
 @Setter
 public class AirlineManager extends AbstractEntity {
 
+	// Serialisation version --------------------------------------------------
+
 	private static final long	serialVersionUID	= 1L;
+
+	// Attributes -------------------------------------------------------------
 
 	@Mandatory
 	@Pattern(regexp = "^[A-Z]{2,3}\\d{6}$", message = "Invalid identifier format")
@@ -46,4 +50,8 @@ public class AirlineManager extends AbstractEntity {
 	@Valid
 	@Automapped
 	private String				pictureUrl;
+
+	// Derived attributes -----------------------------------------------------
+
+	// Relationships ----------------------------------------------------------
 }
