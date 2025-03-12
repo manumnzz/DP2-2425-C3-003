@@ -37,7 +37,6 @@ public class Customer extends AbstractRole {
 	@Mandatory
 	@ValidString(max = 255)
 	@Automapped
-
 	protected String			physicalAddress;
 
 	@Mandatory
