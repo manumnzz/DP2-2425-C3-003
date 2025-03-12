@@ -1,0 +1,4 @@
+key,key:technician,maintenanceDate,status,nextInspectionDue,estimatedCost,notes,key:aircraft
+MR-01,technician-01,2025/03/01 10:00,PENDING,2025/06/01 10:00,EUR 500000.00,Initial inspection before major overhaul,AC-01
+MR-02,technician-02,2025/03/02 11:00,IN_PROGRESS,2025/07/01 11:00,EUR 500000.00,Repairing fuselage cracks,AC-02
+MR-03,technician-02,2025/03/05 09:00,COMPLETED,2025/09/01 09:00,EUR 500000.00,Completed routine engine maintenance,AC-03

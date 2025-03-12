@@ -17,7 +17,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Technicians extends AbstractRole {
+public class Technician extends AbstractRole {
 	// Serialisation version --------------------------------------------------
 
 	private static final long	serialVersionUID	= 1L;
@@ -37,7 +37,7 @@ public class Technicians extends AbstractRole {
 	@Mandatory
 	@ValidString(max = 50)
 	@Automapped
-	protected String			specialization;
+	protected String			specialisation;
 
 	@Mandatory
 	@Valid
@@ -47,7 +47,7 @@ public class Technicians extends AbstractRole {
 	@Mandatory
 	@ValidNumber
 	@Automapped
-	protected Integer			yearsExperience;
+	protected Integer			yearsOfExperience;
 
 	@Optional
 	@ValidString

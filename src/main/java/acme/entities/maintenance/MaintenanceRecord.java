@@ -1,14 +1,20 @@
 
 package acme.entities.maintenance;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.ValidNumber;
+import acme.client.components.validation.Optional;
+import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
 import acme.entities.aircraft.Aircraft;
 import acme.realms.Technician;
@@ -18,7 +24,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Task extends AbstractEntity {
+public class MaintenanceRecord extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
 
@@ -27,24 +33,29 @@ public class Task extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@Valid
+	@Temporal(TemporalType.TIMESTAMP)
 	@Automapped
-	protected TaskType			type;
+	protected Date				maintenanceDate;
 
 	@Mandatory
+	@Valid
+	@Automapped
+	protected MaintenanceStatus	status;
+
+	@Mandatory
+	@Temporal(TemporalType.TIMESTAMP)
+	@Automapped
+	protected Date				nextInspectionDue;
+
+	@Mandatory
+	@ValidMoney
+	@Automapped
+	protected Money				estimatedCost;
+
+	@Optional
 	@ValidString
 	@Automapped
-	protected String			description;
-
-	@Mandatory
-	@ValidNumber(max = 10)
-	@Automapped
-	protected Integer			priority;
-
-	@Mandatory
-	@Valid
-	@Automapped
-	protected Long				estimatedDuration;
+	protected String			notes;
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
@@ -53,11 +64,6 @@ public class Task extends AbstractEntity {
 	@Valid
 	@ManyToOne(optional = false)
 	private Technician			technician;
-
-	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private MaintenanceRecord	maintenanceRecord;
 
 	@Mandatory
 	@Valid

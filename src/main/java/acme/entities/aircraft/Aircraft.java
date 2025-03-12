@@ -1,24 +1,23 @@
 
-package acme.entities.maintenance;
+package acme.entities.aircraft;
 
-import java.util.Date;
-
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
-import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
-import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidMoney;
+import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
-import acme.realms.Technicians;
+import lombok.Getter;
+import lombok.Setter;
 
-public class MaintenanceRecords extends AbstractEntity {
+@Entity
+@Getter
+@Setter
+public class Aircraft extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
 
@@ -27,36 +26,42 @@ public class MaintenanceRecords extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidMoment
-	@Temporal(TemporalType.TIMESTAMP)
-	protected Date				moment;
+	@ValidString(max = 50)
+	@Automapped
+	protected String			model;
+
+	@Mandatory
+	@ValidString(max = 50)
+	@Column(unique = true)
+	protected String			registrationNumber;
+
+	@Mandatory
+	@ValidNumber
+	@Automapped
+	protected Integer			capacity;
+
+	@Mandatory
+	@ValidNumber(min = 20, max = 50)
+	@Automapped
+	protected Integer			cargoWeight;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected MaintenanceStatus	status;
-
-	@Mandatory
-	@ValidMoment
-	@Temporal(TemporalType.TIMESTAMP)
-	protected Date				nextInspection;
-
-	@Mandatory
-	@ValidMoney
-	@Automapped
-	protected Money				cost;
+	protected AircraftStatus	status;
 
 	@Optional
 	@ValidString
 	@Automapped
-	protected String			notes;
+	protected String			optionalDetails;
+
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
 
-	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private Technicians			technician;
+	//	@Mandatory
+	//	@Valid
+	//	@ManyToOne(optional = false)
+	//	private Airline			airline;
 
 }
