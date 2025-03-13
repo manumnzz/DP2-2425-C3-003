@@ -1,11 +1,14 @@
 
 package acme.entities.S3;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.Min;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
@@ -13,7 +16,10 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoney;
+import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.entities.Aircraft;
+import acme.entities.S1.Flight;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +37,6 @@ public class FlightCrewMembers extends AbstractEntity {
 	@Mandatory
 	@ValidString(pattern = "^[A-Z]{2-3}\\d{6}$")
 	@Column(unique = true)
-	@Automapped
 	private String				employeeCode;
 
 	@Mandatory
@@ -42,7 +47,7 @@ public class FlightCrewMembers extends AbstractEntity {
 	@Mandatory
 	@ValidString(max = 255)
 	@Automapped
-	private String				language;
+	private List<String>		language;
 
 	@Mandatory
 	@Enumerated(EnumType.STRING)
@@ -60,7 +65,20 @@ public class FlightCrewMembers extends AbstractEntity {
 	private Money				salary;
 
 	@Optional
-	@Min(0)
+	@ValidNumber(min = 0)
 	@Automapped
 	private Integer				experience;
+
+	// Relationships ----------------------------------------------------------
+
+	@Mandatory
+	@Valid
+	@ManyToOne
+	private Aircraft			aircraft;
+
+	@Mandatory
+	@Valid
+	@ManyToOne
+	private Flight				flight;
+
 }
