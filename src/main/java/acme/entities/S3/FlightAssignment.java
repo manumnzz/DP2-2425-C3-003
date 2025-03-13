@@ -44,21 +44,9 @@ public class FlightAssignment {
 	@Automapped
 	private String				remarks;
 
-
-	//Enum for flight crew 
-	public enum FlightCrew {
-		PILOT, COPILOT, LEAD_ATTENDANT, CABIN_ATTENDANT
-	}
-
-	//Enum for current status
-	public enum CurrentStatus {
-		CONFIRMED, PENDING, CANCELLED
-	}
-
 	// Relationships ----------------------------------------------------------
-
 
 	@Mandatory
 	@ManyToOne
-	private FlightCrewMembers crewMember;
+	private FlightCrewMembers	crewMember;
 }

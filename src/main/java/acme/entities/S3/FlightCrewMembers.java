@@ -56,10 +56,4 @@ public class FlightCrewMembers {
 	@Min(0)
 	@Automapped
 	private Integer				experience;
-
-
-	//Enum for availability status
-	public enum AvailabilityStatus {
-		AVAILABLE, ON_VACATION, ON_LEAVE
-	}
 }
