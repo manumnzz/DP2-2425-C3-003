@@ -49,7 +49,7 @@ public class Flight extends AbstractEntity {
 	private Money				cost;
 
 	@Optional
-	@ValidString
+	@ValidString(max = 255)
 	@Automapped
 	private String				description;
 
