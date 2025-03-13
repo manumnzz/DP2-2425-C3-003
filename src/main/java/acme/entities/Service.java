@@ -4,7 +4,6 @@ package acme.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Pattern;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
@@ -19,7 +18,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Service extends AbstractEntity{
+public class Service extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
 
@@ -33,7 +32,7 @@ public class Service extends AbstractEntity{
 	private String				name;
 
 	@Mandatory
-	@Pattern(regexp = "^(https?|ftp)://.*$", message = "Must be a valid URL")
+	@ValidString(pattern = "^(https?|ftp)://.*$", message = "Must be a valid URL")
 	@Column(unique = true)
 	private String				imageLink;
 

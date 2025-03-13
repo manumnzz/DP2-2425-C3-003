@@ -3,19 +3,19 @@ package acme.entities.S3;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
+import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.entities.S1.Flight;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,7 +33,6 @@ public class ActivityLog extends AbstractEntity {
 	@Mandatory
 	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(unique = true)
 	private Date				moment;
 
 	@Mandatory
@@ -47,14 +46,19 @@ public class ActivityLog extends AbstractEntity {
 	private String				description;
 
 	@Mandatory
-	@Min(0)
-	@Max(10)
+	@ValidNumber(min = 0, max = 10)
 	@Automapped
-	private String				severityLevel;
+	private Integer				severityLevel;
 
 	// Relationships ----------------------------------------------------------
 
 	@Mandatory
+	@Valid
 	@ManyToOne
 	private FlightCrewMembers	crewMember;
+
+	@Mandatory
+	@Valid
+	@ManyToOne
+	private Flight				flight;
 }
