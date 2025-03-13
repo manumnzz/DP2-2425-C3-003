@@ -1,5 +1,5 @@
 
-package forms;
+package acme.forms;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 
 import acme.client.components.basis.AbstractForm;
 import acme.client.components.datatypes.Money;
-import acme.entities.Leg;
+import acme.entities.S1.Leg;
 import lombok.Getter;
 import lombok.Setter;
 
