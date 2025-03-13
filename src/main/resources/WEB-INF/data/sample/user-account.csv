@@ -19,4 +19,7 @@ user-account-member,true,"UserIdentity{name: 'Elena', surname: 'Lopez', email: '
 user-account-manager-01,true,"UserIdentity{name: 'Felipe', surname: 'Montero', email: 'felipe@acme.com'}",manager1,manager1
 user-account-manager-03,true,UserIdentity{},manager3,manager3
 user-account-manager-02,true,"UserIdentity{name: 'Cristina', surname: 'Dominguez', email: 'cristina@acme.com'}",manager2,manager2
+user-account-custumer-01,true,"UserIdentity{name: 'Pedro', surname: 'Custumer', email: 'pedro@acme.com'}",custumer1,custumer1
+user-account-custumer-02,true,"UserIdentity{name: 'Maria', surname: '貸んい建濯よ芝弾テソ Λορεμ ιπσ', email: 'maria@acme.com'}",custumer2,custumer2
+user-account-custumer-03,true,"UserIdentity{name: 'Manolete', surname: '之乎路可良 ᏥᏲ', email: 'manolete@acme.com'}",custumer3,custumer3
 
