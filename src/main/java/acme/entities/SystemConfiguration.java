@@ -4,9 +4,7 @@ package acme.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
@@ -27,14 +25,13 @@ public class SystemConfiguration extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@NotBlank
 	@ValidString(pattern = "^[A-Z]{3}$", message = "Must be a valid 3-letter currency code")
 	@Automapped
 	private String				systemCurency;
 
-	@ElementCollection
 	@Mandatory
 	@ValidString(pattern = "^[A-Z]{3}$", message = "Must be a valid 3-letter currency code")
+	@Automapped
 	private List<String>		acceptedCurrencies;
 
 
