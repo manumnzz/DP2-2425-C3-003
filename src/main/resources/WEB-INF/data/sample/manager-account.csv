@@ -1,4 +1,4 @@
-key,enabled,identity,password,username
-user-account-manager-01,true,UserIdentity{n: manager1},manager1,manager1
-user-account-manager-02,true,UserIdentity{n: manager2},manager2,manager2
-user-account-manager-03,true,UserIdentity{n: manager3},manager3,manager3
+﻿key,key:userAccount,identifier,yearsOfExperience,dateOfBirth,pictureURL
+manager-01,user-account-manager-01,AB123456,16,1989-12-20
+manager-02,user-account-manager-02,CD234567,12, 1967-12-11
+manager-03,user-account-manager-03,EF345678,2,2000-03-23
