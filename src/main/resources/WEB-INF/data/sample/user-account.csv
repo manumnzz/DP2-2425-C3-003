@@ -11,3 +11,8 @@ user-account-technician-03,true,"UserIdentity{name: 'Jaime', surname: '之乎路
 user-account-manager-01,true,UserIdentity{n: manager1},manager1,manager1
 user-account-manager-03,true,UserIdentity{n: manager3},manager3,manager3
 user-account-manager-02,true,UserIdentity{n: manager2},manager2,manager2
+user-account-member-01,true,"UserIdentity{name: 'Ana', surname: 'Rodriguez', email: 'ana@acme.com'}",member1,member1
+user-account-member-02,true,"UserIdentity{name: 'Carlos', surname: 'Martinez', email: 'carlos@acme.com'}",member2,member2
+user-account-member-03,true,"UserIdentity{name: 'Laura', surname: 'Sanchez', email: 'laura@acme.com'}",member3,member3
+user-account-member-04,true,"UserIdentity{name: 'David', surname: 'Garcia', email: 'david@acme.com'}",member4,member4
+user-account-member,true,"UserIdentity{name: 'Elena', surname: 'Lopez', email: 'elena@acme.com'}",member,member
