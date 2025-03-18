@@ -1,12 +1,8 @@
 
 package acme.realms;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
@@ -49,10 +45,10 @@ public class FlightCrewMembers extends AbstractRole {
 	@Mandatory
 	@ValidString(max = 255)
 	@Automapped
-	private List<String>		language;
+	private String				language;
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
+	@Valid
 	@Automapped
 	private AvailabilityStatus	availability;
 
@@ -70,17 +66,17 @@ public class FlightCrewMembers extends AbstractRole {
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Aircraft			aircraft;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Flight				flight;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Airline				airline;
 
 }
