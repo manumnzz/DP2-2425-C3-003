@@ -29,28 +29,33 @@ public class SystemConfiguration extends AbstractEntity {
 	@Automapped
 	private String				systemCurency;
 
+	//@Mandatory
+	//@ValidString(pattern = "^[A-Z]{3}$", message = "Must be a valid 3-letter currency code")
+	//@Automapped
+	//private List<String>		acceptedCurrencies;
+
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{3}$", message = "Must be a valid 3-letter currency code")
+	@ValidString
 	@Automapped
-	private List<String>		acceptedCurrencies;
+	private String				acceptedCurrencies;
 
 
-	// Constructor
 	public SystemConfiguration() {
 		this.systemCurency = "EUR";
-		this.acceptedCurrencies = new ArrayList<>();
-		this.acceptedCurrencies.add("EUR");
-		this.acceptedCurrencies.add("USD");
-		this.acceptedCurrencies.add("GBP");
+		List<String> initialCurrencies = new ArrayList<>();
+		initialCurrencies.add("EUR");
+		initialCurrencies.add("USD");
+		initialCurrencies.add("GBP");
 	}
 
 	// Methods to manage accepted currencies
-	public void addAcceptedCurrency(final String currency) {
-		if (!this.acceptedCurrencies.contains(currency))
-			this.acceptedCurrencies.add(currency);
-	}
+	//	public void addAcceptedCurrency(final String currency) {
+	//		if (!this.acceptedCurrencies.contains(currency))
+	//			this.acceptedCurrencies.add(currency);
+	//	}
+	//
+	//	public void removeAcceptedCurrency(final String currency) {
+	//		this.acceptedCurrencies.remove(currency);
+	//	}
 
-	public void removeAcceptedCurrency(final String currency) {
-		this.acceptedCurrencies.remove(currency);
-	}
 }

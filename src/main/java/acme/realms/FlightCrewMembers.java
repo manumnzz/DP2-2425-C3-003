@@ -1,16 +1,12 @@
 
-package acme.entities.S3;
-
-import java.util.List;
+package acme.realms;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
-import acme.client.components.basis.AbstractEntity;
+import acme.client.components.basis.AbstractRole;
 import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
@@ -18,16 +14,17 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
-import acme.entities.aircraft.Aircraft;
 import acme.entities.Airline;
 import acme.entities.S1.Flight;
+import acme.entities.S3.AvailabilityStatus;
+import acme.entities.aircraft.Aircraft;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class FlightCrewMembers extends AbstractEntity {
+public class FlightCrewMembers extends AbstractRole {
 
 	// Serialisation version --------------------------------------------------
 
@@ -48,10 +45,10 @@ public class FlightCrewMembers extends AbstractEntity {
 	@Mandatory
 	@ValidString(max = 255)
 	@Automapped
-	private List<String>		language;
+	private String				language;
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
+	@Valid
 	@Automapped
 	private AvailabilityStatus	availability;
 
@@ -69,17 +66,17 @@ public class FlightCrewMembers extends AbstractEntity {
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Aircraft			aircraft;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Flight				flight;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Airline				airline;
 
 }
