@@ -4,19 +4,15 @@ package acme.forms;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Entity;
-
-
-import acme.client.components.basis.AbstractEntity;
+import acme.client.components.basis.AbstractForm;
 import acme.entities.Airport;
 import acme.realms.AirlineManager;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
-public class ManagerDashboard extends AbstractEntity {
+public class ManagerDashboard extends AbstractForm {
 
 	// Serialisation version --------------------------------------------------
 
