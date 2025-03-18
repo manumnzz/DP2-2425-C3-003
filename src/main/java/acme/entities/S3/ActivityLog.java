@@ -15,7 +15,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
-import acme.entities.S1.Flight;
+import acme.realms.FlightCrewMembers;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -60,5 +60,5 @@ public class ActivityLog extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@ManyToOne
-	private Flight				flight;
+	private FlightAssignment	flightAssignment;
 }
