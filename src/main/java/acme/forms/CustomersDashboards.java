@@ -3,15 +3,12 @@ package acme.forms;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-
 import acme.client.components.basis.AbstractForm;
 import acme.client.components.datatypes.Money;
 import acme.entities.S1.Leg;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 public class CustomersDashboards extends AbstractForm {
