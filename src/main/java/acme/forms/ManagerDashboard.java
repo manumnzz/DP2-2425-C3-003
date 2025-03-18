@@ -1,5 +1,5 @@
 
-package acme.entities.S1;
+package acme.forms;
 
 import java.util.List;
 import java.util.Map;
