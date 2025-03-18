@@ -1,4 +1,4 @@
-# CHANGELOG.txt
+# messages-en.i18n
 #
 # Copyright (C) 2012-2025 Rafael Corchuelo.
 #
@@ -8,5 +8,9 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-D01 This is the first version of Acme ANS
-D02 This is the second version of Acme ANS
+authenticated.airlinemanager.list.title = Listing of Flights
+
+authenticated.airlinemanager.list.label.tag = Tag
+authenticated.airlinemanager.list.label.scheduledDeparture = Scheduled Departure
+authenticated.airlinemanager.list.label.scheduledArrival = Scheduled Arrival
+authenticated.airlinemanager.list.label.cost = Cost

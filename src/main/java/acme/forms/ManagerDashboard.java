@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.persistence.Entity;
 
+
 import acme.client.components.basis.AbstractEntity;
 import acme.entities.Airport;
 import acme.realms.AirlineManager;
@@ -22,6 +23,7 @@ public class ManagerDashboard extends AbstractEntity {
 	private static final long		serialVersionUID	= 1L;
 
 	// Attributes -------------------------------------------------------------
+
 	List<AirlineManager>			ranking;
 
 	Map<AirlineManager, Integer>	yearsToRetire;
