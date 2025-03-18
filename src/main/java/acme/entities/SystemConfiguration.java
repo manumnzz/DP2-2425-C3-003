@@ -27,12 +27,7 @@ public class SystemConfiguration extends AbstractEntity {
 	@Mandatory
 	@ValidString(pattern = "^[A-Z]{3}$", message = "Must be a valid 3-letter currency code")
 	@Automapped
-	private String				systemCurency;
-
-	//@Mandatory
-	//@ValidString(pattern = "^[A-Z]{3}$", message = "Must be a valid 3-letter currency code")
-	//@Automapped
-	//private List<String>		acceptedCurrencies;
+	private String				systemCurrency;
 
 	@Mandatory
 	@ValidString
@@ -41,21 +36,37 @@ public class SystemConfiguration extends AbstractEntity {
 
 
 	public SystemConfiguration() {
-		this.systemCurency = "EUR";
+		this.systemCurrency = "EUR";
 		List<String> initialCurrencies = new ArrayList<>();
 		initialCurrencies.add("EUR");
 		initialCurrencies.add("USD");
 		initialCurrencies.add("GBP");
 	}
 
+	// Getter y Setter para acceptedCurrencies como List<String>
+	public List<String> getAcceptedCurrencies() {
+		if (this.acceptedCurrencies == null || this.acceptedCurrencies.isEmpty())
+			return new ArrayList<>();
+		return List.of(this.acceptedCurrencies.split(","));
+	}
+
+	public void setAcceptedCurrencies(final List<String> currencies) {
+		this.acceptedCurrencies = String.join(",", currencies);
+	}
+
 	// Methods to manage accepted currencies
-	//	public void addAcceptedCurrency(final String currency) {
-	//		if (!this.acceptedCurrencies.contains(currency))
-	//			this.acceptedCurrencies.add(currency);
-	//	}
-	//
-	//	public void removeAcceptedCurrency(final String currency) {
-	//		this.acceptedCurrencies.remove(currency);
-	//	}
+	public void addAcceptedCurrency(final String currency) {
+		List<String> currencies = new ArrayList<>(this.getAcceptedCurrencies());
+		if (!currencies.contains(currency)) {
+			currencies.add(currency);
+			this.setAcceptedCurrencies(currencies);
+		}
+	}
+
+	public void removeAcceptedCurrency(final String currency) {
+		List<String> currencies = new ArrayList<>(this.getAcceptedCurrencies());
+		currencies.remove(currency);
+		this.setAcceptedCurrencies(currencies);
+	}
 
 }
