@@ -13,7 +13,7 @@ import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidString;
+import acme.constraints.ValidLongText;
 import acme.entities.S1.Leg;
 import acme.realms.FlightCrewMembers;
 import lombok.Getter;
@@ -46,7 +46,7 @@ public class FlightAssignment extends AbstractEntity {
 	private CurrentStatus		currentStatus;
 
 	@Mandatory
-	@ValidString(max = 255)
+	@ValidLongText
 	@Automapped
 	private String				remarks;
 

@@ -10,7 +10,8 @@ import acme.client.components.basis.AbstractEntity;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
-import acme.client.components.validation.ValidString;
+import acme.constraints.ValidLongText;
+import acme.constraints.ValidShortText;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +27,7 @@ public class TrackingLog extends AbstractEntity {
 	private Date				updateTime;
 
 	@Mandatory
-	@ValidString(min = 0, max = 50)
+	@ValidShortText
 	private String				step;
 
 	@Mandatory
@@ -36,6 +37,6 @@ public class TrackingLog extends AbstractEntity {
 	private boolean				indicator;
 
 	@Optional
-	@ValidString(min = 0, max = 255)
+	@ValidLongText
 	private String				resolution;
 }
