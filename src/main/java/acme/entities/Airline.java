@@ -1,24 +1,30 @@
 
-package acme.entities.aircraft;
+package acme.entities;
 
-import javax.persistence.Column;
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
-import acme.client.components.validation.ValidNumber;
+import acme.client.components.validation.ValidEmail;
+import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
+import acme.client.components.validation.ValidUrl;
 import acme.constraints.ValidShortText;
+import acme.datatypes.Phone;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Aircraft extends AbstractEntity {
+public class Airline extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
 
@@ -29,40 +35,35 @@ public class Aircraft extends AbstractEntity {
 	@Mandatory
 	@ValidShortText
 	@Automapped
-	protected String			model;
+	protected String			name;
 
 	@Mandatory
-	@ValidShortText
-	@Column(unique = true)
-	protected String			registrationNumber;
-
-	@Mandatory
-	@ValidNumber
+	@ValidString(pattern = "^[A-Z]{2}X$")
 	@Automapped
-	protected Integer			capacity;
+	protected String			iataCode;
 
 	@Mandatory
-	@ValidNumber(min = 20, max = 50)
+	@ValidUrl
 	@Automapped
-	protected Integer			cargoWeight;
+	protected String			website;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected AircraftStatus	status;
+	protected AirlineType		type;
+
+	@Mandatory
+	@ValidMoment(past = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	protected Date				foundationMoment;
+
+	@Mandatory
+	@Valid
+	@Automapped
+	protected Phone				phoneNumber;
 
 	@Optional
-	@ValidString
+	@ValidEmail
 	@Automapped
-	protected String			optionalDetails;
-
-	// Derived attributes -----------------------------------------------------
-
-	// Relationships ----------------------------------------------------------
-
-	//	@Mandatory
-	//	@Valid
-	//	@ManyToOne(optional = false)
-	//	private Airline			airline;
-
+	protected String			email;
 }

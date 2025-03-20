@@ -1,24 +1,24 @@
 
-package acme.entities.aircraft;
+package acme.realms;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.Valid;
 
-import acme.client.components.basis.AbstractEntity;
+import acme.client.components.basis.AbstractRole;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
-import acme.client.components.validation.ValidNumber;
+import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
-import acme.constraints.ValidShortText;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Aircraft extends AbstractEntity {
+public class Passenger extends AbstractRole {
 
 	// Serialisation version --------------------------------------------------
 
@@ -27,42 +27,31 @@ public class Aircraft extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidShortText
-	@Automapped
-	protected String			model;
-
-	@Mandatory
-	@ValidShortText
+	@ValidString(max = 255)
 	@Column(unique = true)
-	protected String			registrationNumber;
+	protected String			fullName;
 
 	@Mandatory
-	@ValidNumber
-	@Automapped
-	protected Integer			capacity;
-
-	@Mandatory
-	@ValidNumber(min = 20, max = 50)
-	@Automapped
-	protected Integer			cargoWeight;
-
-	@Mandatory
-	@Valid
-	@Automapped
-	protected AircraftStatus	status;
-
-	@Optional
 	@ValidString
 	@Automapped
-	protected String			optionalDetails;
+	protected String			email;
+
+	@Mandatory
+	@ValidString(pattern = "^[A-Z0-9]{6,9}$")
+	@Automapped
+	protected String			passportNumber;
+
+	@Mandatory
+	@ValidMoment(past = true)
+	@Automapped
+	protected Date				dateOfBirth;
+
+	@Mandatory
+	@ValidString(max = 50)
+	@Optional
+	protected String			specialNeeds;
 
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
-
-	//	@Mandatory
-	//	@Valid
-	//	@ManyToOne(optional = false)
-	//	private Airline			airline;
-
 }

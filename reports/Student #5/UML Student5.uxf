@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>102</x>
+      <y>66</y>
+      <w>372</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+MaintenanceRecord
+--
++maintenanceDate Date{@Mandatory @ValidMoment	@Temporal(TemporalType.TIMESTAMP)}
++status MaintenanceStatus{@Mandatory @Valid	@Automapped}
++nextInspectionDue Date{@Mandatory @ValidMoment	@Temporal(TemporalType.TIMESTAMP)}
++estimatedCost Money{@Mandatory	@ValidMoney @Automapped}
++notes String{@Mandatory	@ValidString @Automapped} 
++technician {@Mandatory	@Valid @ManyToOne(optional= false)}
++aircraft {@Mandatory	@Valid @ManyToOne(optional= false)}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>96</x>
+      <y>366</y>
+      <w>354</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Aircraft
+--
++model String{@Mandatory	@ValidString(max=50)	@Automapped}
++Registration Number String{@Mandatory 	@ValidString(max=50)	@Column(unique = true)}
++Capacity Integer {@Mandatory @ValidNumber @Automapped}
++Cargo Weight Integer {@Mandatory @ValidNumber(min=20, max=50) @Automapped}
++Status airplaneStatus {@Mandatory @Valid	@Automapped	}
++details String{@Optional	@ValidString	@Automapped}
++Airline {@Mandatory	@Valid @ManyToOne(optional= false)}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>330</x>
+      <y>222</y>
+      <w>408</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Technician
+--
++License Number String{@Mandatory	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$")	@Column(unique = true)}
++Phone Number String{@Mandatory @ValidString(pattern = "^\\+?\\d{6,15}$")	@Automapped}
++Specialisation String{@Mandatory	@ValidString(max = 50)	@Automapped}
++healthTestPassed Boolean{@Mandatory	@Valid	@Automapped}
++yearsOfExperience Integer{@Mandatory	@ValidNumber	@Automapped}
++certifications String{@Optional	@ValidString	@Automapped}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>576</x>
+      <y>66</y>
+      <w>300</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Task
+--
++type TaskType{@Mandatory @Valid	@Automapped}
++description String{@Mandatory	@ValidString	@Automapped}
++priority Integer{@Mandatory	 @ValidNumber(max=10)	@Automapped}
++estimatedDuration Long{@Mandatory	@Valid	@Automapped}
++technician {@Mandatory	@Valid @ManyToOne(optional= false)}
++MaintenanceRecord {@Mandatory	@Valid @ManyToOne(optional= false)}
++aircraft {@Mandatory	@Valid @ManyToOne(optional= false)}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>138</x>
+      <y>546</y>
+      <w>96</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Airline</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>468</x>
+      <y>114</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>174</y>
+      <w>18</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>618</x>
+      <y>174</y>
+      <w>18</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>174</y>
+      <w>30</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+</panel_attributes>
+    <additional_attributes>10.0;320.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>474</y>
+      <w>30</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

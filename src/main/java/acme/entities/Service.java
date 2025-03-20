@@ -4,21 +4,22 @@ package acme.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Pattern;
 
+import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidShortText;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class service {
+public class Service extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
 
@@ -27,12 +28,12 @@ public class service {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidShortText
 	@Automapped
 	private String				name;
 
 	@Mandatory
-	@Pattern(regexp = "^(https?|ftp)://.*$", message = "Must be a valid URL")
+	@ValidString(pattern = "^(https?|ftp)://.*$", message = "Must be a valid URL")
 	@Column(unique = true)
 	private String				imageLink;
 

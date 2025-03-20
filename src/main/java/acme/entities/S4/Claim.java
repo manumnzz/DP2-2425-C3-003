@@ -12,7 +12,7 @@ import acme.client.components.basis.AbstractEntity;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidString;
+import acme.constraints.ValidLongText;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,7 +33,7 @@ public class Claim extends AbstractEntity {
 	@Length(min = 0, max = 255)
 	private String				passengerEmail;
 
-	@ValidString(min = 0, max = 255)
+	@ValidLongText
 	@Mandatory
 	private String				description;
 

@@ -13,6 +13,8 @@ import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
+import acme.constraints.ValidLongText;
+import acme.constraints.ValidShortText;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,13 +30,13 @@ public class AssistanceAgent extends AbstractRole {
 	@Automapped
 	private String				code;
 
-	@ValidString(min = 0, max = 255)
 	@Mandatory
+	@ValidLongText
 	@Automapped
 	private String				spokenLanguages;
 
-	@ValidString(min = 0, max = 50)
 	@Mandatory
+	@ValidShortText
 	@Automapped
 	private String				airline;
 
@@ -43,8 +45,8 @@ public class AssistanceAgent extends AbstractRole {
 	@Automapped
 	private Date				moment;
 
-	@ValidString(min = 0, max = 255)
 	@Optional
+	@ValidLongText
 	@Automapped
 	private String				biography;
 

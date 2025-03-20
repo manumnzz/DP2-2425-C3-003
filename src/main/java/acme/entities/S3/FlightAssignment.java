@@ -3,25 +3,26 @@ package acme.entities.S3;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
+import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidString;
+import acme.constraints.ValidLongText;
+import acme.entities.S1.Leg;
+import acme.realms.FlightCrewMembers;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class FlightAssignment {
+public class FlightAssignment extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
 
@@ -30,29 +31,34 @@ public class FlightAssignment {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
+	@Valid
 	@Automapped
 	private FlightCrew			flightCrew;
 
 	@Mandatory
-	@ValidMoment
+	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(unique = true)
 	private Date				moment;
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
+	@Valid
 	@Automapped
 	private CurrentStatus		currentStatus;
 
 	@Mandatory
-	@ValidString(max = 255)
+	@ValidLongText
 	@Automapped
 	private String				remarks;
 
 	// Relationships ----------------------------------------------------------
 
 	@Mandatory
-	@ManyToOne
+	@Valid
+	@ManyToOne(optional = false)
 	private FlightCrewMembers	crewMember;
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Leg					leg;
 }

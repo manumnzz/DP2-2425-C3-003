@@ -1,0 +1,6 @@
+﻿key,employeeCode,phone,language,avaibility,airline,salary,experience
+member-01,AN123456,+34612345678,"Español, Ingles",AVAILABLE,Iberia,75000€,12
+member-02,CM234567,+34623456789,"Español, Aleman",AVAILABLE,Vueling,60000€,8
+member-03,LS345678,+34634567890,"Italiano, Ingles",ON_VACATION,Iberia,45000€,10
+member-04,DG456789,+34645678901,Ingles,AVAILABLE,Ryanair,35000€,5
+member,EL567890,+34656789012,Ingles,AVAILABLE,Vueling,30000€,0

@@ -1,5 +1,5 @@
 
-package acme.entities.S3;
+package acme.entities;
 
 import java.util.Date;
 
@@ -10,20 +10,22 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
+import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidNumber;
-import acme.constraints.ValidLongText;
-import acme.constraints.ValidShortText;
-import acme.realms.FlightCrewMembers;
+import acme.client.components.validation.ValidMoney;
+import acme.client.components.validation.ValidString;
+import acme.entities.S1.Flight;
+import acme.realms.Customer;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class ActivityLog extends AbstractEntity {
+public class Booking extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
 
@@ -32,34 +34,41 @@ public class ActivityLog extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
+	@ValidString(pattern = "^[A-Z0-9]{6,8}$")
+	@Automapped
+	protected String			locatorCode;
+
+	@Mandatory
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date				moment;
+	protected Date				purchaseMoment;
 
 	@Mandatory
-	@ValidShortText
+	@Valid
 	@Automapped
-	private String				incident;
+	protected ClassType			travelClass;
 
 	@Mandatory
-	@ValidLongText
+	@ValidMoney
 	@Automapped
-	private String				description;
+	protected Money				price;
 
-	@Mandatory
-	@ValidNumber(min = 0, max = 10)
+	@Optional
+	@ValidString(pattern = "^\\d{4}$")
 	@Automapped
-	private Integer				severityLevel;
+	protected String			lastCreditCardNibble;
+
+	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private FlightCrewMembers	crewMember;
+	protected Customer			customer;
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private FlightAssignment	flightAssignment;
+	protected Flight			fligth;
 }

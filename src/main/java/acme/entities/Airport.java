@@ -12,6 +12,8 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
+import acme.constraints.ValidShortText;
+import acme.datatypes.Phone;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,12 +44,12 @@ public class Airport extends AbstractEntity {
 	private OperationalScope	operationalScope;
 
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidShortText
 	@Automapped
 	private String				city;
 
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidShortText
 	@Automapped
 	private String				country;
 
@@ -62,9 +64,9 @@ public class Airport extends AbstractEntity {
 	private String				email;
 
 	@Optional
-	@ValidString(pattern = "^\\+?\\d{6,15}$")
+	@Valid
 	@Automapped
-	private String				phone;
+	private Phone				phone;
 
 	// Derived attributes -----------------------------------------------------
 
