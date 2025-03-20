@@ -34,7 +34,7 @@ public class Airport extends AbstractEntity {
 	private String				name;
 
 	@Mandatory
-	// @Pattern(regexp = "^[A-Z]{3}$", message = "IATA code must be exactly 3 uppercase letters")
+	@ValidString(pattern = "^[A-Z]{3}$")
 	@Column(unique = true)
 	private String				iataCode;
 

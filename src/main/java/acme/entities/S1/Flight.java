@@ -1,12 +1,9 @@
 
 package acme.entities.S1;
 
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
@@ -40,9 +37,9 @@ public class Flight extends AbstractEntity {
 	private String				tag;
 
 	@Mandatory
-	// HINT: @Valid by default.
+	@Valid
 	@Automapped
-	private Boolean				requiresSelfTransfer;
+	private boolean				requiresSelfTransfer;
 
 	@Mandatory
 	@ValidMoney
@@ -58,47 +55,47 @@ public class Flight extends AbstractEntity {
 
 
 	public Date getScheduledDeparture() {
-		return this.flightLeg != null && !this.flightLeg.isEmpty() ? this.flightLeg.stream().min(Comparator.comparingInt(FlightLeg::getSequence)).map(x -> x.getLeg().getScheduledDeparture()).orElse(null) : null;
+		return this.firstLeg != null ? this.firstLeg.getScheduledDeparture() : null;
 	}
 
 	public Date getScheduledArrival() {
-		return this.flightLeg != null && !this.flightLeg.isEmpty() ? this.flightLeg.stream().max(Comparator.comparingInt(FlightLeg::getSequence)).map(x -> x.getLeg().getScheduledArrival()).orElse(null) : null;
+		return this.lastLeg != null ? this.lastLeg.getScheduledArrival() : null;
 	}
 
 	public String getOriginCity() {
-		return this.flightLeg != null && !this.flightLeg.isEmpty() ? this.flightLeg.stream().min(Comparator.comparingInt(FlightLeg::getSequence)).map(x -> x.getLeg().getDepartureAirport().getCity()).orElse(null) : null;
+		return this.originAirport != null ? this.originAirport.getCity() : null;
 	}
 
 	public String getDestinationCity() {
-		return this.flightLeg != null && !this.flightLeg.isEmpty() ? this.flightLeg.stream().max(Comparator.comparingInt(FlightLeg::getSequence)).map(x -> x.getLeg().getArrivalAirport().getCity()).orElse(null) : null;
+		return this.destinationAirport != null ? this.destinationAirport.getCity() : null;
 	}
 
-	public Integer getNumberOfLayovers() {
-		return this.flightLeg != null ? Math.max(0, this.flightLeg.size() - 1) : 0;
-	}
-
-	public Leg getFirstLeg() {
-		return this.flightLeg.stream().min(Comparator.comparingInt(FlightLeg::getSequence)).map(FlightLeg::getLeg).orElse(null);
-	}
-
-	public Leg getLastLeg() {
-		return this.flightLeg.stream().max(Comparator.comparing(FlightLeg::getSequence)).map(FlightLeg::getLeg).orElse(null);
-	}
 	// Relationships ----------------------------------------------------------
 
 
 	@Mandatory
 	@Valid
-	@ManyToMany
-	private List<FlightLeg>	flightLeg;
+	@ManyToOne(optional = true)
+	private Leg				firstLeg;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
-	private Airport			airport;
+	@ManyToOne(optional = true)
+	private Leg				lastLeg;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
+	private Airport			originAirport;
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Airport			destinationAirport;
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
 	private AirlineManager	airlineManager;
+
 }
