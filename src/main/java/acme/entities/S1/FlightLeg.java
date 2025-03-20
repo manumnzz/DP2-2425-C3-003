@@ -28,30 +28,16 @@ public class FlightLeg extends AbstractEntity {
 
 	// Derived attributes -----------------------------------------------------
 
-
-	public Leg getFirstLeg() {
-		return this.leg;
-	}
-
-	public Leg getLastLeg() {
-		return this.leg;
-	}
-
-	public Integer getNumberOfLayovers() {
-		return Math.max(0, this.sequence - 1);
-	}
-
 	// Relationships ----------------------------------------------------------
 
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Flight				flight;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
-	private Flight	flight;
-
-	@Mandatory
-	@Valid
-	@ManyToOne
-	private Leg		leg;
+	@ManyToOne(optional = false)
+	private Leg					leg;
 
 }
