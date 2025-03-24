@@ -26,7 +26,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class FlightCrewMembers extends AbstractRole {
+public class FlightCrewMember extends AbstractRole {
 
 	// Serialisation version --------------------------------------------------
 

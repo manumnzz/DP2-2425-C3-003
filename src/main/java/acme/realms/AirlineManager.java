@@ -41,8 +41,8 @@ public class AirlineManager extends AbstractRole {
 	@Automapped
 	private int					yearsOfExperience;
 
-	@ValidMoment(past = true)
 	@Mandatory
+	@ValidMoment(past = true)
 	@Temporal(TemporalType.DATE)
 	private Date				dateOfBirth;
 
