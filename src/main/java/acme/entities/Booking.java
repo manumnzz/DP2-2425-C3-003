@@ -70,5 +70,5 @@ public class Booking extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	protected Flight			fligth;
+	protected Flight			flight;
 }
