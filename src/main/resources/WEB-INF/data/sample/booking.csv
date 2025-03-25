@@ -1,4 +1,4 @@
-key,key:customer,locatorCode,purchaseMoment,travelClass,price,lasCreditCardNibble,key:flight
-booking-01,customer1,ABC1234,2024/03/12 10:30:00,ECONOMY,USD 250.00,1234,101
-booking-02,customer2,BCD2345,2023/04/10 10:30:00,BUSINESS,USD 500.00,2345,102
-booking-03,customer2,ABC1234,2022/05/14 10:30:00,ECONOMY,USD 200.00,3456,103
+key,key:customer,locatorCode,purchaseMoment,travelClass,price,lastCreditCardNibble,key:flight
+booking-01,customer1,ABC1234,2024/03/12 10:30,ECONOMY,USD 250.00,1234,101
+booking-02,customer2,BCD2345,2023/04/10 10:30,BUSINESS,USD 500.00,2345,102
+booking-03,customer2,ABC1234,2022/05/14 10:30,ECONOMY,USD 200.00,3456,103
