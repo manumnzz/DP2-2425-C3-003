@@ -1,4 +1,0 @@
-key,enabled,identity,password,username
-user-account-administrator-01,True,UserIdentity{n: administrator},administrator,administrator
-user-account-administrator-02,True,UserIdentity{n: administrator1},administrator1,administrator1
-user-account-administrator-03,True,UserIdentity{n: administrator2},administrator2,administrator2

@@ -4,8 +4,7 @@ package acme.forms;
 import java.util.List;
 import java.util.Map;
 
-
-import javax.persistence.Entity;
+import acme.client.components.basis.AbstractForm;
 import acme.entities.Airport;
 import acme.realms.AirlineManager;
 import lombok.Getter;
