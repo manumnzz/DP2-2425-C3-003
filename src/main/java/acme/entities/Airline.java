@@ -18,6 +18,7 @@ import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
 import acme.constraints.ValidPhone;
 import acme.constraints.ValidShortText;
+import acme.entities.S2.AirlineType;
 import lombok.Getter;
 import lombok.Setter;
 

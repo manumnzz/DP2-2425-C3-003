@@ -1,8 +1,9 @@
 
-package acme.entities;
+package acme.entities.S2;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -35,7 +36,7 @@ public class Booking extends AbstractEntity {
 
 	@Mandatory
 	@ValidString(pattern = "^[A-Z0-9]{6,8}$")
-	@Automapped
+	@Column(unique = true)
 	private String				locatorCode;
 
 	@Mandatory

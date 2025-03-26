@@ -1,8 +1,6 @@
 
 package acme.forms;
 
-import java.util.List;
-
 import acme.client.components.basis.AbstractForm;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
@@ -23,22 +21,22 @@ public class CrewMemberDashboard extends AbstractForm {
 	@Mandatory
 	@ValidString
 	@Automapped
-	private List<String>		lastFiveDestinations;
+	private String				lastFiveDestinations;
 
 	@Mandatory
 	@ValidNumber
 	@Automapped
-	private List<Integer>		incidentSeverity;
+	private Double				incidentSeverity;
 
 	@Mandatory
 	@ValidString
 	@Automapped
-	private List<String>		lastCrewMembers;
+	private String				lastCrewMembers;
 
 	@Mandatory
 	@ValidNumber
 	@Automapped
-	private List<Integer>		assignmentsStatus;
+	private Integer				assignmentsStatus;
 
 	@Mandatory
 	@ValidNumber
