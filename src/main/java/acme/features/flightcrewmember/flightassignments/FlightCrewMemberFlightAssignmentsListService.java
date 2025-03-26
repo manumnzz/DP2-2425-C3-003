@@ -9,6 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S3.FlightAssignment;
+import acme.entities.S3.FlightCrew;
 import acme.realms.FlightCrewMember;
 
 @GuiService
@@ -24,7 +25,13 @@ public class FlightCrewMemberFlightAssignmentsListService extends AbstractGuiSer
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean isLeadAttendant;
+		FlightAssignment flightAssignment;
+
+		flightAssignment = this.repository.findFlightAssignmentById(super.getRequest().getPrincipal().getAccountId());
+		isLeadAttendant = flightAssignment != null && flightAssignment.getFlightCrew() == FlightCrew.LEAD_ATTENDANT;
+
+		super.getResponse().setAuthorised(isLeadAttendant);
 	}
 
 	@Override

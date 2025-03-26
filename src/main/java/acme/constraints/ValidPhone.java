@@ -18,7 +18,7 @@ import javax.validation.constraints.Pattern;
 @ReportAsSingleViolation
 
 @NotBlank
-@Pattern(regexp = "^\\\\+?\\\\d{6,15}$")
+@Pattern(regexp = "^\\+?\\d{6,15}$")
 public @interface ValidPhone {
 
 	// Standard validation properties -----------------------------------------

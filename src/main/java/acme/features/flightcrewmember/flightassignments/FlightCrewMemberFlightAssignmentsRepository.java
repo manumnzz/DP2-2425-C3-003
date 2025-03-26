@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
+import acme.entities.S1.Leg;
 import acme.entities.S3.ActivityLog;
 import acme.entities.S3.FlightAssignment;
 import acme.realms.FlightCrewMember;
@@ -46,4 +47,7 @@ public interface FlightCrewMemberFlightAssignmentsRepository extends AbstractRep
 
 	@Query("select case when count(fa) > 0 then true else false end from FlightAssignment fa where fa.id = :assignmentId and fa.published = true")
 	boolean isFlightAssignmentPublished(int assignmentId);
+
+	@Query("select fa from FlightAssignment fa where fa.leg.id = :id")
+	Leg findLegById(int id);
 }

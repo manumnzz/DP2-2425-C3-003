@@ -55,7 +55,7 @@ public class FlightAssignment extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private FlightCrewMember	crewMember;
+	private FlightCrewMember	flightCrewMember;
 
 	@Mandatory
 	@Valid
