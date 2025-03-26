@@ -1,6 +1,6 @@
-﻿key,key:userAccount,employeeCode,phone,language,availability,key:airline,salary,experience
-member-01,user-account-member-01,AN123456,+34612345678,"Español Ingles",AVAILABLE,airline-01,EUR 500000.00,12
-member-02,user-account-member-02,CM234567,+34623456789,"Español Aleman",AVAILABLE,airline-01,EUR 120000.00,8
-member-03,user-account-member-03,LS345678,+34634567890,"Italiano Ingles",ON_VACATION,airline-02,EUR 500.00,10
-member-04,user-account-member-04,DG456789,+34645678901,Ingles,AVAILABLE,airline-02,EUR 900000.00,5
-member,user-account-member,EL567890,+34656789012,Ingles,AVAILABLE,airline-03,EUR 50000000.00,0
+﻿key,key:userAccount,employeeCode,phone,language,availability,key:airline,salary,experience,key:aircraft,key:flight
+member-01,user-account-member-01,AN123456,+34612345678,"Español Ingles",AVAILABLE,airline-01,EUR 5000.00,12,AC-01,flight-01
+member-02,user-account-member-02,CM234567,+34623456789,"Español Aleman",AVAILABLE,airline-01,EUR 1200.00,8,AC-02,flight-02
+member-03,user-account-member-03,LS345678,+34634567890,"Italiano Ingles",ON_VACATION,airline-02,EUR 500.00,10,AC-02,flight-01
+member-04,user-account-member-04,DG456789,+34645678901,Ingles,AVAILABLE,airline-02,EUR 9000.00,5,AC-01,flight-03
+member,user-account-member,EL567890,+34656789012,Ingles,AVAILABLE,airline-03,EUR 50000.00,2,AC-02,flight-03
