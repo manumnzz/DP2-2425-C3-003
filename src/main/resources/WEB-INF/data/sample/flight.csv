@@ -1,0 +1,4 @@
+key,tag,requiresSelfTransfer,cost,description,key:firstLeg,key:lastLeg,key:originAirport,key:destinationAirport,key:airlineManager
+flight-01,dsa,true,EUR 500.0,"The most popular flight",leg-01,leg-03,airport-01,airport-03,manager-01
+flight-02,fse,true,EUR 1000.0,"The second most popular flight",leg-03,leg-02,airport-01,airport-02,manager-02
+flight-03,uas,true,EUR 30.0,"The third most popular flight",leg-02,leg-03,airport-02,airport-03,manager-01

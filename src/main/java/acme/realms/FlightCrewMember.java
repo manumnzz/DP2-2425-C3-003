@@ -15,7 +15,7 @@ import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidLongText;
-import acme.datatypes.Phone;
+import acme.constraints.ValidPhone;
 import acme.entities.Airline;
 import acme.entities.S1.Flight;
 import acme.entities.S3.AvailabilityStatus;
@@ -40,9 +40,9 @@ public class FlightCrewMember extends AbstractRole {
 	private String				employeeCode;
 
 	@Mandatory
-	@Valid
+	@ValidPhone
 	@Column(unique = true)
-	private Phone				phone;
+	private String				phone;
 
 	@Mandatory
 	@ValidLongText

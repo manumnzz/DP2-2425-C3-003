@@ -8,14 +8,14 @@ user-account-provider-03,true,"UserIdentity{name: 'Antonia', surname: 'אבטי�
 user-account-technician-01,true,"UserIdentity{name: 'Javier', surname: 'Del Pozo', email: 'jdlpozo@acme.com'}",technician1,technician1
 user-account-technician-02,true,"UserIdentity{name: 'Jesus', surname: 'אבטיח', email: 'Jesus@acme.com'}",technician2,technician2
 user-account-technician-03,true,"UserIdentity{name: 'Jaime', surname: '之乎路 ᏥᏲᏎᎭ', email: 'jaime@acme.com'}",technician3,technician3
-user-account-manager-01,true,UserIdentity{n: manager1},manager1,manager1
-user-account-manager-03,true,UserIdentity{n: manager3},manager3,manager3
-user-account-manager-02,true,UserIdentity{n: manager2},manager2,manager2
+user-account-manager-01,true,"UserIdentity{name: 'Eugenia', surname: 'Berral', email: 'eu@acme.com'}",manager1,manager1
+user-account-manager-03,true,"UserIdentity{name: 'Carlos', surname: 'Alonso', email: 'carlosalons@acme.com'}",manager3,manager3
+user-account-manager-02,true,"UserIdentity{name: 'Carla', surname: 'Medrano', email: 'carlamedrano@acme.com'}",manager2,manager2
 user-account-member-01,true,"UserIdentity{name: 'Ana', surname: 'Rodriguez', email: 'ana@acme.com'}",member1,member1
 user-account-member-02,true,"UserIdentity{name: 'Carlos', surname: 'Martinez', email: 'carlos@acme.com'}",member2,member2
 user-account-member-03,true,"UserIdentity{name: 'Laura', surname: 'Sanchez', email: 'laura@acme.com'}",member3,member3
 user-account-member-04,true,"UserIdentity{name: 'David', surname: 'Garcia', email: 'david@acme.com'}",member4,member4
 user-account-member,true,"UserIdentity{name: 'Elena', surname: 'Lopez', email: 'elena@acme.com'}",member,member
-user-account-custumer-01,true,"UserIdentity{name: 'Pedro', surname: 'Custumer', email: 'pedro@acme.com'}",custumer1,custumer1
-user-account-custumer-02,true,"UserIdentity{name: 'Maria', surname: '貸んい建濯よ芝弾テソ Λορεμ ιπσ', email: 'maria@acme.com'}",custumer2,custumer2
-user-account-custumer-03,true,"UserIdentity{name: 'Manolete', surname: '之乎路可良 ᏥᏲ', email: 'manolete@acme.com'}",custumer3,custumer3
+user-account-customer-01,true,"UserIdentity{name: 'Pedro', surname: 'Custumer', email: 'pedro@acme.com'}",customer1,customer1
+user-account-customer-02,true,"UserIdentity{name: 'Maria', surname: '貸んい建濯よ芝弾テソ Λορεμ ιπσ', email: 'maria@acme.com'}",customer2,customer2
+user-account-customer-03,true,"UserIdentity{name: 'Manolete', surname: '之乎路可良 ᏥᏲ', email: 'manolete@acme.com'}",customer3,customer3
