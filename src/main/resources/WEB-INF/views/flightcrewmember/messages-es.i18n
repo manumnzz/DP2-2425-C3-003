@@ -1,0 +1,29 @@
+# messages-es.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+authenticated.flightcrewmembers.form.title = Detalles asignaciones de vuelo
+authenticated.flightcrewmembers.list.title = Asignaciones de vuelo
+
+authenticated.flightcrewmembers.form.label.flightCrew = Tripulación de vuelo
+authenticated.flightcrewmembers.form.label.moment = Momento
+authenticated.flightcrewmembers.form.label.currentStatus = Estado actual
+authenticated.flightcrewmembers.form.label.remarks = Observaciones
+
+employer.job.form.button.update = Actualizar
+employer.job.form.button.delete = Borrar
+employer.job.form.button.publish = Publicar
+employer.job.form.button.create = Crear
+
+authenticated.flightcrewmembers.list.label.flightCrew = Tripulación de vuelo
+authenticated.flightcrewmembers.list.label.moment = Momento
+authenticated.flightcrewmembers.list.label.currentStatus = Estado actual
+authenticated.flightcrewmembers.list.label.remarks = Observaciones
+
+employer.job.list.button.create = Crear
