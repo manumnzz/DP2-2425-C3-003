@@ -10,7 +10,6 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
 import acme.entities.S3.AvailabilityStatus;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.FlightAssignment;
@@ -18,7 +17,7 @@ import acme.entities.S3.FlightCrew;
 import acme.realms.FlightCrewMember;
 
 @GuiService
-public class FlightCrewMemberFlightAssignmentsCreateService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
+public class FlightCrewMemberFlightAssignmentsDeleteService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
 
 	// Internal state ---------------------------------------------------------
 
@@ -32,32 +31,24 @@ public class FlightCrewMemberFlightAssignmentsCreateService extends AbstractGuiS
 	public void authorise() {
 		boolean isLeadAttendant;
 		FlightAssignment flightAssignment;
+		int id = super.getRequest().getData("id", int.class);
 
 		flightAssignment = this.repository.findFlightAssignmentById(super.getRequest().getPrincipal().getAccountId());
 		isLeadAttendant = flightAssignment != null && flightAssignment.getFlightCrew() == FlightCrew.LEAD_ATTENDANT;
 
-		super.getResponse().setAuthorised(isLeadAttendant);
+		CurrentStatus status = this.repository.getFlightAssignmentStatus(id);
+		boolean isNotConfirmed = status != CurrentStatus.CONFIRMED;
+
+		super.getResponse().setAuthorised(isLeadAttendant && isNotConfirmed);
 	}
 
 	@Override
 	public void load() {
 		FlightAssignment flightAssignment;
-		FlightCrewMember flightCrewMember;
-		int legId;
-		Leg leg;
-		Date moment;
+		int id;
 
-		flightCrewMember = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
-		legId = super.getRequest().getData("legId", int.class);
-		leg = this.repository.findLegById(legId);
-		moment = MomentHelper.getCurrentMoment();
-
-		flightAssignment = new FlightAssignment();
-		flightAssignment.setMoment(moment);
-		flightAssignment.setCurrentStatus(CurrentStatus.CONFIRMED);
-		flightAssignment.setRemarks("");
-		flightAssignment.setFlightCrewMember(flightCrewMember);
-		flightAssignment.setLeg(leg);
+		id = super.getRequest().getData("id", int.class);
+		flightAssignment = this.repository.findFlightAssignmentById(id);
 
 		super.getBuffer().addData(flightAssignment);
 	}
@@ -75,6 +66,8 @@ public class FlightCrewMemberFlightAssignmentsCreateService extends AbstractGuiS
 		FlightCrewMember crewMember = flightAssignment.getFlightCrewMember();
 		int activeAssignments = this.repository.countActiveAssignmentsByMemberId(crewMember.getId());
 
+		super.state(flightAssignment.getCurrentStatus() != CurrentStatus.CONFIRMED, "*", "flightAssignment.error.alreadyConfirmed");
+
 		super.state(activeAssignments == 0, "flightCrewMember", "flightAssignment.crewMember.alreadyAssigned");
 
 		super.state(crewMember.getAvailability() == AvailabilityStatus.AVAILABLE, "flightCrewMember", "flightAssignment.crewMember.notAvailable");
@@ -91,7 +84,7 @@ public class FlightCrewMemberFlightAssignmentsCreateService extends AbstractGuiS
 		Date moment;
 		moment = MomentHelper.getCurrentMoment();
 		flightAssignment.setMoment(moment);
-		this.repository.save(flightAssignment);
+		this.repository.delete(flightAssignment);
 	}
 
 	@Override

@@ -67,12 +67,12 @@ public class FlightCrewMember extends AbstractRole {
 
 	@Mandatory
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	private Aircraft			aircraft;
 
 	@Mandatory
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	private Flight				flight;
 
 	@Mandatory

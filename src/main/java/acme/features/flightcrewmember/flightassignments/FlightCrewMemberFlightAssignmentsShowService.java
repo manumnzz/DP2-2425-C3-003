@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
+import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.FlightAssignment;
 import acme.entities.S3.FlightCrew;
 import acme.realms.FlightCrewMember;
 
+@GuiService
 public class FlightCrewMemberFlightAssignmentsShowService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
 
 	@Autowired

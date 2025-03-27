@@ -9,11 +9,14 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
+import acme.client.services.GuiService;
+import acme.entities.S3.AvailabilityStatus;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.FlightAssignment;
 import acme.entities.S3.FlightCrew;
 import acme.realms.FlightCrewMember;
 
+@GuiService
 public class FlightCrewMemberFlightAssignmentsUpdateService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
 
 	// Internal state ---------------------------------------------------------
@@ -28,11 +31,15 @@ public class FlightCrewMemberFlightAssignmentsUpdateService extends AbstractGuiS
 	public void authorise() {
 		boolean isLeadAttendant;
 		FlightAssignment flightAssignment;
+		int id = super.getRequest().getData("id", int.class);
 
 		flightAssignment = this.repository.findFlightAssignmentById(super.getRequest().getPrincipal().getAccountId());
 		isLeadAttendant = flightAssignment != null && flightAssignment.getFlightCrew() == FlightCrew.LEAD_ATTENDANT;
 
-		super.getResponse().setAuthorised(isLeadAttendant);
+		CurrentStatus status = this.repository.getFlightAssignmentStatus(id);
+		boolean isNotConfirmed = status != CurrentStatus.CONFIRMED;
+
+		super.getResponse().setAuthorised(isLeadAttendant && isNotConfirmed);
 	}
 
 	@Override
@@ -53,10 +60,23 @@ public class FlightCrewMemberFlightAssignmentsUpdateService extends AbstractGuiS
 
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
-		boolean confirmation;
+		int legId = flightAssignment.getLeg().getId();
+		int pilots = this.repository.countPilotsByFlightAssignmentId(legId);
+		int copilots = this.repository.countCopilotsByFlightAssignmentId(legId);
+		FlightCrewMember crewMember = flightAssignment.getFlightCrewMember();
+		int activeAssignments = this.repository.countActiveAssignmentsByMemberId(crewMember.getId());
 
-		confirmation = super.getRequest().getData("confirmation", boolean.class);
-		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+		super.state(flightAssignment.getCurrentStatus() != CurrentStatus.CONFIRMED, "*", "flightAssignment.error.alreadyConfirmed");
+
+		super.state(activeAssignments == 0, "flightCrewMember", "flightAssignment.crewMember.alreadyAssigned");
+
+		super.state(crewMember.getAvailability() == AvailabilityStatus.AVAILABLE, "flightCrewMember", "flightAssignment.crewMember.notAvailable");
+
+		if (flightAssignment.getFlightCrew() == FlightCrew.PILOT)
+			super.state(pilots < 1, "role", "flightAssignment.tooManyPilots");
+
+		if (flightAssignment.getFlightCrew() == FlightCrew.COPILOT)
+			super.state(copilots < 1, "role", "flightAssignment.tooManyCopilots");
 	}
 
 	@Override
