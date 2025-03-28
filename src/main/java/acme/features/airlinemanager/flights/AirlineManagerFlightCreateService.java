@@ -1,11 +1,17 @@
 
 package acme.features.airlinemanager.flights;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.models.Dataset;
+import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.Airport;
 import acme.entities.S1.Flight;
+import acme.entities.S1.Leg;
 import acme.realms.AirlineManager;
 
 @GuiService
@@ -39,7 +45,37 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 
 	@Override
 	public void bind(final Flight flight) {
-		super.bindObject(flight, "tag", "requiresSelfTransfer", "cost", "description", "firstLeg", "lastLeg", "originAirport", "destinationAirport", "airlineManager");
+		int firstLegId;
+		int lastLegId;
+		int originAirportId;
+		int destinationAirportId;
+		int airlineManagerId;
+
+		Leg firstLeg;
+		Leg lastLeg;
+		Airport originAirport;
+		Airport destinationAirport;
+		AirlineManager airlineManager;
+
+		firstLegId = super.getRequest().getData("firstLeg", int.class);
+		lastLegId = super.getRequest().getData("lastLeg", int.class);
+		originAirportId = super.getRequest().getData("originAirport", int.class);
+		destinationAirportId = super.getRequest().getData("destinationAirport", int.class);
+		airlineManagerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+
+		firstLeg = this.repository.findLegById(firstLegId);
+		lastLeg = this.repository.findLegsById(lastLegId);
+		originAirport = this.repository.findAirportById(originAirportId);
+		destinationAirport = this.repository.findAirportById(destinationAirportId);
+		airlineManager = this.repository.findAirlineManagerById(airlineManagerId);
+
+		super.bindObject(flight, "tag", "requiresSelfTransfer", "cost", "description");
+		flight.setFirstLeg(firstLeg);
+		flight.setLastLeg(lastLeg);
+		flight.setOriginAirport(originAirport);
+		flight.setDestinationAirport(destinationAirport);
+		flight.setAirlineManager(airlineManager);
+
 	}
 
 	@Override
@@ -54,7 +90,40 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 
 	@Override
 	public void unbind(final Flight flight) {
-		super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description", "firstLeg", "lastLeg", "originAirport", "destinationAirport", "airlineManager");
+		Collection<Airport> airports;
+		Collection<Leg> legs;
+		SelectChoices choices1;
+		SelectChoices choices2;
+		SelectChoices choices3;
+		SelectChoices choices4;
+		Dataset dataset;
 
+		// Obtener listas de aeropuertos y legs
+		airports = this.repository.findAllAirports();
+		legs = this.repository.findAllLegs();
+
+		// Crear listas desplegables
+		choices1 = SelectChoices.from(airports, "name", flight.getOriginAirport());
+		choices2 = SelectChoices.from(airports, "name", flight.getDestinationAirport());
+		choices3 = SelectChoices.from(legs, "identifier", flight.getFirstLeg());
+		choices4 = SelectChoices.from(legs, "identifier", flight.getLastLeg());
+
+		// Unbind de los atributos básicos del vuelo
+		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description");
+
+		// Agregar aeropuertos y legs al dataset
+		dataset.put("originAirport", choices1.getSelected().getKey());
+		dataset.put("destinationAirport", choices2.getSelected().getKey());
+		dataset.put("originAirports", choices1);
+		dataset.put("destinationAirports", choices2);
+
+		dataset.put("firstLeg", choices3.getSelected().getKey());
+		dataset.put("lastLeg", choices4.getSelected().getKey());
+		dataset.put("firstLegs", choices3);
+		dataset.put("lastLegs", choices4);
+
+		// Enviar los datos a la respuesta
+		super.getResponse().addData(dataset);
 	}
+
 }

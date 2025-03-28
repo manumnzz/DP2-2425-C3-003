@@ -16,8 +16,8 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column path="tag" code="authenticated.airlinemanager.list.label.tag" width="20%"/>
-	<acme:list-column path="scheduledDeparture" code="authenticated.airlinemanager.list.label.scheduledDeparture" width="30%"/>
-	<acme:list-column path="scheduledArrival" code="authenticated.airlinemanager.list.label.scheduledArrival" width="30%"/>
-	<acme:list-column path="cost" code="authenticated.airlinemanager.list.label.cost" width="20%"/>
+	<acme:list-column path="tag" code="airlinemanager.list.label.tag" width="20%"/>
+	<acme:list-column path="scheduledDeparture" code="airlinemanager.list.label.scheduledDeparture" width="30%"/>
+	<acme:list-column path="scheduledArrival" code="airlinemanager.list.label.scheduledArrival" width="30%"/>
+	<acme:list-column path="cost" code="airlinemanager.list.label.cost" width="20%"/>
 </acme:list>
