@@ -1,5 +1,5 @@
 
-package acme.features.airlinemanager.flights;
+package acme.features.airlinemanager.flight;
 
 import java.util.Collection;
 
@@ -32,7 +32,7 @@ public class AirlineManagerFlightListService extends AbstractGuiService<AirlineM
 		Collection<Flight> flights;
 		int id;
 
-		id = super.getRequest().getPrincipal().getAccountId();
+		id = super.getRequest().getPrincipal().getActiveRealm().getId();
 		flights = this.repository.findFlightsByAirlineManagerId(id);
 
 		super.getBuffer().addData(flights);
@@ -42,9 +42,12 @@ public class AirlineManagerFlightListService extends AbstractGuiService<AirlineM
 	public void unbind(final Flight flight) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description", "firstLeg", "lastLeg", "originAirport", "destinationAirport", "airlineManager");
-		super.addPayload(dataset, flight, "text", "moreInfo");
+		// Unbind de los atributos normales
+		dataset = super.unbindObject(flight, "tag", "cost", "originCity", "destinationCity", "scheduledDeparture", "scheduledArrival");
+		super.addPayload(dataset, flight, "requiresSelfTransfer", "description", "originAirport.name", "destinationAirport.name", "firstLeg", "lastLeg", "airlineManager");
 
+		// Añadir la respuesta con los datos al dataset
 		super.getResponse().addData(dataset);
 	}
+
 }

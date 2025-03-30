@@ -1,5 +1,5 @@
 
-package acme.features.airlinemanager.legs;
+package acme.features.airlinemanager.leg;
 
 import java.util.Collection;
 
@@ -10,6 +10,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Airport;
+import acme.entities.S1.FlightStatus;
 import acme.entities.S1.Leg;
 import acme.entities.aircraft.Aircraft;
 import acme.realms.AirlineManager;
@@ -47,42 +48,45 @@ public class AirlineManagerLegShowService extends AbstractGuiService<AirlineMana
 
 		id = super.getRequest().getData("id", int.class);
 		leg = this.repository.findLegById(id);
+
+		super.getBuffer().addData(leg);
 	}
 
 	@Override
 	public void unbind(final Leg leg) {
-		int airlineManagerId;
 		Collection<Airport> airports;
 		Collection<Aircraft> aircrafts;
-		SelectChoices departureChoices;
-		SelectChoices arrivalChoices;
-		SelectChoices aircraftChoices;
+		SelectChoices choices1;
+		SelectChoices choices2;
+		SelectChoices choices3;
+		SelectChoices choices4;
 		Dataset dataset;
-
-		airlineManagerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 
 		// Obtener listas de aeropuertos y aeronaves
 		airports = this.repository.findAllAirports();
 		aircrafts = this.repository.findAllAircrafts();
 
 		// Crear listas desplegables
-		departureChoices = SelectChoices.from(airports, "name", leg.getDepartureAirport());
-		arrivalChoices = SelectChoices.from(airports, "name", leg.getArrivalAirport());
-		aircraftChoices = SelectChoices.from(aircrafts, "identifier", leg.getAircraft());
+		choices1 = SelectChoices.from(airports, "name", leg.getDepartureAirport());
+		choices2 = SelectChoices.from(airports, "name", leg.getArrivalAirport());
+		choices3 = SelectChoices.from(aircrafts, "model", leg.getAircraft());
+		choices4 = SelectChoices.from(FlightStatus.class, leg.getStatus());
 
-		// Unbind de los atributos básicos de Leg
-		dataset = super.unbindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "status");
+		// Unbind de los atributos básicos de la Leg
+		dataset = super.unbindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "draftMode", "duration");
 
-		// Agregar aeropuertos y aeronaves al dataset
-		dataset.put("departureAirport", departureChoices.getSelected().getKey());
-		dataset.put("arrivalAirport", arrivalChoices.getSelected().getKey());
-		dataset.put("departureAirports", departureChoices);
-		dataset.put("arrivalAirports", arrivalChoices);
+		// Agregar valores seleccionados al dataset
+		dataset.put("departureAirport", choices1.getSelected().getKey());
+		dataset.put("arrivalAirport", choices2.getSelected().getKey());
+		dataset.put("aircraft", choices3.getSelected().getKey());
 
-		dataset.put("aircraft", aircraftChoices.getSelected().getKey());
-		dataset.put("aircrafts", aircraftChoices);
+		// Agregar listas completas de opciones al dataset
+		dataset.put("departureAirports", choices1);
+		dataset.put("arrivalAirports", choices2);
+		dataset.put("aircrafts", choices3);
+		dataset.put("statuses", choices4);
 
-		// Enviar los datos a la respuesta
+		// Enviar el dataset a la respuesta
 		super.getResponse().addData(dataset);
 	}
 

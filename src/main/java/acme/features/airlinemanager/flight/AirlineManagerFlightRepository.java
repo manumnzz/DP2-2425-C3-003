@@ -1,5 +1,5 @@
 
-package acme.features.airlinemanager.flights;
+package acme.features.airlinemanager.flight;
 
 import java.util.Collection;
 
@@ -17,8 +17,8 @@ import acme.realms.AirlineManager;
 @Repository
 public interface AirlineManagerFlightRepository extends AbstractRepository {
 
-	@Query("select f from Flight f where f.airlineManager = :id")
-	Collection<Flight> findFlightsByAirlineManagerId(int id);
+	@Query("select f from Flight f where f.airlineManager.id = :id")
+	Collection<Flight> findFlightsByAirlineManagerId(@Param("id") int id);
 
 	@Query("select f from Flight f where f.id = :id")
 	Flight findFlightById(int id);
@@ -29,9 +29,6 @@ public interface AirlineManagerFlightRepository extends AbstractRepository {
 	@Query("SELECT l FROM Leg l WHERE l.id = :id")
 	Leg findLegById(@Param("id") int id);
 
-	@Query("SELECT l FROM Leg l WHERE l.id = :id")
-	Leg findLegsById(@Param("id") int id);
-
 	@Query("SELECT a FROM Airport a WHERE a.id = :id")
 	Airport findAirportById(@Param("id") int id);
 
@@ -41,7 +38,9 @@ public interface AirlineManagerFlightRepository extends AbstractRepository {
 	@Query("SELECT a FROM Airport a")
 	Collection<Airport> findAllAirports();
 
-	@Query("SELECT l FROM Leg l")
-	Collection<Leg> findAllLegs();
+	@Query("SELECT l FROM Leg l where l.draftMode = false")
+	Collection<Leg> findAllPublishedLegs();
 
+	@Query("select l from Leg l")
+	Collection<Leg> findAllLegs();
 }

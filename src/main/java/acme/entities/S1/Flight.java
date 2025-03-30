@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
@@ -54,18 +55,22 @@ public class Flight extends AbstractEntity {
 	// Derived attributes -----------------------------------------------------
 
 
+	@Transient
 	public Date getScheduledDeparture() {
 		return this.firstLeg != null ? this.firstLeg.getScheduledDeparture() : null;
 	}
 
+	@Transient
 	public Date getScheduledArrival() {
 		return this.lastLeg != null ? this.lastLeg.getScheduledArrival() : null;
 	}
 
+	@Transient
 	public String getOriginCity() {
 		return this.originAirport != null ? this.originAirport.getCity() : null;
 	}
 
+	@Transient
 	public String getDestinationCity() {
 		return this.destinationAirport != null ? this.destinationAirport.getCity() : null;
 	}

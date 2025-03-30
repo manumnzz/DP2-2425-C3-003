@@ -1,5 +1,5 @@
 
-package acme.features.airlinemanager.flights;
+package acme.features.airlinemanager.flight;
 
 import java.util.Collection;
 
@@ -11,34 +11,43 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Airport;
 import acme.entities.S1.Flight;
+import acme.entities.S1.FlightLeg;
 import acme.entities.S1.Leg;
 import acme.realms.AirlineManager;
 
 @GuiService
-public class AirlineManagerFlightCreateService extends AbstractGuiService<AirlineManager, Flight> {
+public class AirlineManagerFlightDeleteService extends AbstractGuiService<AirlineManager, Flight> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private AirlineManagerFlightRepository repository;
 
-	// AbstractService<AirlineManager, Flight> -------------------------------------
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		int masterId;
+		Flight flight;
+		AirlineManager airlineManager;
+
+		masterId = super.getRequest().getData("id", int.class);
+		flight = this.repository.findFlightById(masterId);
+		airlineManager = flight == null ? null : flight.getAirlineManager();
+		status = super.getRequest().getPrincipal().hasRealm(airlineManager) || flight != null;
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
 		Flight flight;
-		AirlineManager airlineManager;
+		int id;
 
-		airlineManager = (AirlineManager) super.getRequest().getPrincipal().getActiveRealm();
-
-		flight = new Flight();
-		flight.setAirlineManager(airlineManager);
+		id = super.getRequest().getData("id", int.class);
+		flight = this.repository.findFlightById(id);
 
 		super.getBuffer().addData(flight);
 	}
@@ -64,7 +73,7 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 		airlineManagerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 
 		firstLeg = this.repository.findLegById(firstLegId);
-		lastLeg = this.repository.findLegsById(lastLegId);
+		lastLeg = this.repository.findLegById(lastLegId);
 		originAirport = this.repository.findAirportById(originAirportId);
 		destinationAirport = this.repository.findAirportById(destinationAirportId);
 		airlineManager = this.repository.findAirlineManagerById(airlineManagerId);
@@ -85,7 +94,11 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 
 	@Override
 	public void perform(final Flight flight) {
-		this.repository.save(flight);
+		Collection<FlightLeg> flightlegs;
+
+		flightlegs = this.repository.findLegsByFlightId(flight.getId());
+		this.repository.deleteAll(flightlegs);
+		this.repository.delete(flight);
 	}
 
 	@Override
@@ -125,5 +138,4 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 		// Enviar los datos a la respuesta
 		super.getResponse().addData(dataset);
 	}
-
 }

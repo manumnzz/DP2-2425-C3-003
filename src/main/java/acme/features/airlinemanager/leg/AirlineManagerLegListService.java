@@ -1,5 +1,5 @@
 
-package acme.features.airlinemanager.legs;
+package acme.features.airlinemanager.leg;
 
 import java.util.Collection;
 
@@ -32,7 +32,7 @@ public class AirlineManagerLegListService extends AbstractGuiService<AirlineMana
 		Collection<Leg> legs;
 		int id;
 
-		id = super.getRequest().getPrincipal().getAccountId();
+		id = super.getRequest().getPrincipal().getActiveRealm().getId();
 		legs = this.repository.findLegsByAirlineManagerId(id);
 
 		super.getBuffer().addData(legs);
@@ -43,8 +43,8 @@ public class AirlineManagerLegListService extends AbstractGuiService<AirlineMana
 	public void unbind(final Leg leg) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(leg, "shceduledDeparture", "scheduledArrival", "duration");
-		super.addPayload(dataset, leg, "flightNumber", "status", "departureAirport", "arrivalAirport", "aircraft", "airlineManager");
+		dataset = super.unbindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "departureAirport.name", "arrivalAirport.name", "draftMode");
+		super.addPayload(dataset, leg, "aircraft", "duration", "status", "flightNumber");
 
 		super.getResponse().addData(dataset);
 	}

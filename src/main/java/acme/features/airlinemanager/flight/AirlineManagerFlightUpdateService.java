@@ -1,5 +1,5 @@
 
-package acme.features.airlinemanager.flights;
+package acme.features.airlinemanager.flight;
 
 import java.util.Collection;
 
@@ -11,19 +11,18 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Airport;
 import acme.entities.S1.Flight;
-import acme.entities.S1.FlightLeg;
 import acme.entities.S1.Leg;
 import acme.realms.AirlineManager;
 
 @GuiService
-public class AirlineManagerFlightDeleteService extends AbstractGuiService<AirlineManager, Flight> {
+public class AirlineManagerFlightUpdateService extends AbstractGuiService<AirlineManager, Flight> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private AirlineManagerFlightRepository repository;
 
-	// AbstractGuiService interface -------------------------------------------
+	// AbstractService<AirlineManager, Flight> -------------------------------------
 
 
 	@Override
@@ -36,7 +35,7 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 		masterId = super.getRequest().getData("id", int.class);
 		flight = this.repository.findFlightById(masterId);
 		airlineManager = flight == null ? null : flight.getAirlineManager();
-		status = super.getRequest().getPrincipal().hasRealm(airlineManager) || flight != null;
+		status = flight != null && super.getRequest().getPrincipal().hasRealm(airlineManager);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -73,7 +72,7 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 		airlineManagerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 
 		firstLeg = this.repository.findLegById(firstLegId);
-		lastLeg = this.repository.findLegsById(lastLegId);
+		lastLeg = this.repository.findLegById(lastLegId);
 		originAirport = this.repository.findAirportById(originAirportId);
 		destinationAirport = this.repository.findAirportById(destinationAirportId);
 		airlineManager = this.repository.findAirlineManagerById(airlineManagerId);
@@ -94,11 +93,7 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 
 	@Override
 	public void perform(final Flight flight) {
-		Collection<FlightLeg> flightlegs;
-
-		flightlegs = this.repository.findLegsByFlightId(flight.getId());
-		this.repository.deleteAll(flightlegs);
-		this.repository.delete(flight);
+		this.repository.save(flight);
 	}
 
 	@Override
@@ -113,13 +108,13 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 
 		// Obtener listas de aeropuertos y legs
 		airports = this.repository.findAllAirports();
-		legs = this.repository.findAllLegs();
+		legs = this.repository.findAllPublishedLegs();
 
 		// Crear listas desplegables
 		choices1 = SelectChoices.from(airports, "name", flight.getOriginAirport());
 		choices2 = SelectChoices.from(airports, "name", flight.getDestinationAirport());
-		choices3 = SelectChoices.from(legs, "identifier", flight.getFirstLeg());
-		choices4 = SelectChoices.from(legs, "identifier", flight.getLastLeg());
+		choices3 = SelectChoices.from(legs, "flightNumber", flight.getFirstLeg());
+		choices4 = SelectChoices.from(legs, "flightNumber", flight.getLastLeg());
 
 		// Unbind de los atributos básicos del vuelo
 		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description");
@@ -136,6 +131,9 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 		dataset.put("lastLegs", choices4);
 
 		// Enviar los datos a la respuesta
+		super.getResponse().addData("airports", airports);
+		super.getResponse().addData("legs", legs);
+
 		super.getResponse().addData(dataset);
 	}
 }
