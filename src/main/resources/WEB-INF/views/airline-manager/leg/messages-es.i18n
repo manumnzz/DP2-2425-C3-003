@@ -1,0 +1,36 @@
+# messages-en.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+master.menu.manager = Menú del Gerente
+master.menu.airlinemanager.list-legs = Lista de escalas
+airline-manager.leg.list.title = Mi Lista de Escalas
+airlinemanager.leg.list.title = Listado de Escalas
+airline-manager.leg.form.title = Escala
+
+airlinemanager.leg.list.label.flightNumber = Número de vuelo
+airlinemanager.leg.list.label.scheduledDeparture = Salida programada
+airlinemanager.leg.list.label.scheduledArrival = Llegada programada
+airlinemanager.leg.list.label.departureAirport.name = Aeropuerto de salida
+airlinemanager.leg.list.label.arrivalAirport.name = Aeropuerto de llegada
+airlinemanager.leg.list.label.draftMode = Borrador
+
+airlinemanager.leg.form.label.flightNumber = Número de vuelo
+airlinemanager.leg.form.label.scheduledDeparture = Salida programada
+airlinemanager.leg.form.label.scheduledArrival = Llegada programada
+airlinemanager.leg.form.label.status = Estado
+airlinemanager.leg.form.label.draftMode = Modo borrador
+airlinemanager.leg.form.label.departureAirport = Aeropuerto de salida
+airlinemanager.leg.form.label.arrivalAirport = Aeropuerto de llegada
+airlinemanager.leg.form.label.aircraft = Aeronave
+
+airlinemanager.leg.form.button.create = Crear
+airlinemanager.leg.form.button.update = Editar
+airlinemanager.leg.form.button.delete = Eliminar
+airlinemanager.leg.form.button.publish = Publicar

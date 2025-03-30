@@ -1,4 +1,4 @@
-key,flightNumber,scheduledDeparture,scheduledArrival,status,key:departureAirport,key:arrivalAirport,key:aircraft
-leg-01,ABC,2025/04/10 14:30,2025/04/10 18:45,ON_TIME,airport-01,airport-02,AC-01
-leg-02,XYZ,2025/04/10 10:30,2025/04/10 14:45,CANCELLED,airport-02,airport-01,AC-02
-leg-03,DEF,2025/04/10 18:30,2025/04/10 21:45,ON_TIME,airport-03,airport-01,AC-03
+key,flightNumber,scheduledDeparture,scheduledArrival,status,draftMode,key:departureAirport,key:arrivalAirport,key:aircraft,key:airline-manager
+leg-01,ABC,2025/04/10 14:30,2025/04/10 18:45,ON_TIME,false,airport-01,airport-02,AC-01,manager-01
+leg-02,XYZ,2025/04/10 10:30,2025/04/10 14:45,CANCELLED,false,airport-02,airport-01,AC-02,manager-02
+leg-03,DEF,2025/04/10 18:30,2025/04/10 21:45,ON_TIME,false,airport-03,airport-01,AC-03,manager-01

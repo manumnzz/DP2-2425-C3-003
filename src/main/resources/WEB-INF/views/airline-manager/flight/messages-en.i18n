@@ -1,0 +1,36 @@
+# messages-en.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+master.menu.manager = Manager Menu
+master.menu.airlinemanager.list-flights = Flight List
+airline-manager.flight.list.title = My Flight List
+airlinemanager.flight.list.title = Listing of Flights
+airline-manager.flight.form.title = Flight
+
+
+airlinemanager.flight.list.label.tag = Tag
+airlinemanager.light.list.label.originCity = Origin City
+airlinemanager.flight.list.label.destinationCity = Destination City
+airlinemanager.flight.list.label.scheduledDeparture = Scheduled Departure
+airlinemanager.flight.list.label.scheduledArrival = Scheduled Arrival
+airlinemanager.flight.list.label.cost = Cost
+
+airlinemanager.flight.form.label.tag = Tag
+airlinemanager.flight.form.label.requiresSelfTransfer = Requires Self Transfer?
+airlinemanager.flight.form.label.cost = Cost
+airlinemanager.flight.form.label.description = Description
+airlinemanager.flight.form.label.firstLeg = First Leg
+airlinemanager.flight.form.label.lastLeg = LastLeg
+airlinemanager.flight.form.label.originAirport = Origin Airport
+airlinemanager.flight.form.label.destinationAirport = Destination Airport
+
+airlinemanager.flight.form.button.create = Create
+airlinemanager.flight.form.button.update = Update
+airlinemanager.flight.form.button.Delete = Delete
