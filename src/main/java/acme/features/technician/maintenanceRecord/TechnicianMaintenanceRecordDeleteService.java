@@ -11,6 +11,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircraft.Aircraft;
 import acme.entities.maintenance.MaintenanceRecord;
+import acme.entities.maintenance.MaintenanceStatus;
 import acme.entities.maintenance.Task;
 import acme.realms.Technician;
 
@@ -74,10 +75,12 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 		Dataset dataset;
 		SelectChoices aricraftChoices;
 		Collection<Aircraft> aircrafts;
+		SelectChoices statusChoices;
+		statusChoices = SelectChoices.from(MaintenanceStatus.class, mr.getStatus());
 		aircrafts = this.rp.findAllAricraft();
 		aricraftChoices = SelectChoices.from(aircrafts, "registrationNumber", mr.getAircraft());
-
-		dataset = super.unbindObject(mr, "maintenanceDate", "nextInspectionDue", "status", "estimatedCost", "notes", "draftMode");
+		dataset = super.unbindObject(mr, "maintenanceDate", "nextInspectionDue", "estimatedCost", "notes", "draftMode");
+		dataset.put("status", statusChoices);
 		dataset.put("aircraft", aricraftChoices.getSelected().getKey());
 		dataset.put("aircrafts", aricraftChoices);
 

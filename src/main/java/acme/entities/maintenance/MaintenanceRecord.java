@@ -35,32 +35,32 @@ public class MaintenanceRecord extends AbstractEntity {
 	@Mandatory
 	@Temporal(TemporalType.TIMESTAMP)
 	@Automapped
-	protected Date				maintenanceDate;
+	private Date				maintenanceDate;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected MaintenanceStatus	status;
+	private MaintenanceStatus	status;
 
 	@Mandatory
 	@Temporal(TemporalType.TIMESTAMP)
 	@Automapped
-	protected Date				nextInspectionDue;
+	private Date				nextInspectionDue;
 
 	@Mandatory
 	@ValidMoney
 	@Automapped
-	protected Money				estimatedCost;
+	private Money				estimatedCost;
 
 	@Optional
 	@ValidString
 	@Automapped
-	protected String			notes;
+	private String				notes;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected Boolean			draftMode;
+	private Boolean				draftMode;
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------

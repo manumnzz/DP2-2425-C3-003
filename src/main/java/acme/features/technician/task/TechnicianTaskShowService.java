@@ -11,6 +11,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircraft.Aircraft;
 import acme.entities.maintenance.Task;
+import acme.entities.maintenance.TaskType;
 import acme.realms.Technician;
 
 @GuiService
@@ -49,21 +50,19 @@ public class TechnicianTaskShowService extends AbstractGuiService<Technician, Ta
 	public void unbind(final Task task) {
 
 		Dataset dataset;
-		//		SelectChoices mrChoices;
 		SelectChoices aricraftChoices;
+		SelectChoices typeChoices;
+		typeChoices = SelectChoices.from(TaskType.class, task.getType());
+		System.out.println(typeChoices);
 		Collection<Aircraft> aircrafts;
 		aircrafts = this.rp.findAllAricraft();
 		aricraftChoices = SelectChoices.from(aircrafts, "registrationNumber", task.getAircraft());
-		//		Collection<MaintenanceRecord> mrs;
-		//		mrs = this.rp.getAllMr();
-		//		mrChoices = SelectChoices.from(mrs, "id", task.getMaintenanceRecord());
-
-		dataset = super.unbindObject(task, "type", "description", "priority", "estimatedDuration", "maintenanceRecord", "draftMode");
+		dataset = super.unbindObject(task, "description", "priority", "estimatedDuration", "maintenanceRecord", "draftMode");
 		dataset.put("technician", task.getTechnician().getUserAccount().getUsername());
-		//		dataset.put("maintenanceRecord", mrChoices.getSelected().getKey());
-		//		dataset.put("mrs", mrs);
+		dataset.put("type", typeChoices);
 		dataset.put("aircraft", aricraftChoices.getSelected().getKey());
 		dataset.put("aircrafts", aricraftChoices);
+
 		super.getResponse().addData(dataset);
 
 	}

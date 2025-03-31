@@ -29,27 +29,27 @@ public class Task extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@Automapped
-	protected TaskType			type;
+	private TaskType			type;
 
 	@Mandatory
 	@ValidString
 	@Automapped
-	protected String			description;
+	private String				description;
 
 	@Mandatory
 	@ValidNumber(max = 10)
 	@Automapped
-	protected Integer			priority;
+	private Integer				priority;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected Long				estimatedDuration;
+	private Long				estimatedDuration;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected Boolean			draftMode;
+	private Boolean				draftMode;
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------

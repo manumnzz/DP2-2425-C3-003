@@ -25,7 +25,7 @@
 	<acme:input-textbox code="technician.maintenanceRecord.form.label.nextInspectionDue" path="nextInspectionDue"/>
 	<acme:input-money code="technician.maintenanceRecord.form.label.estimatedCost" path="estimatedCost"/>
 	<acme:input-textbox code="technician.maintenanceRecord.form.label.notes" path="notes"/>
-	<acme:input-textbox code="technician.maintenanceRecord.form.label.status" path="status"/>
+	<acme:input-select code="technician.maintenanceRecord.form.label.status" path="status" choices="${status}"/>
 	<acme:input-select code="technician.maintenanceRecord.form.label.aircraft" path="aircraft" choices="${aircrafts}"/>
 	<acme:input-textbox code="technician.maintenanceRecord.form.label.draftMode" path="draftMode" readonly="true"/>
 	
@@ -48,7 +48,7 @@
 	<acme:input-textbox code="technician.maintenanceRecord.form.label.nextInspectionDue" path="nextInspectionDue" readonly="true"/>
 	<acme:input-money code="technician.maintenanceRecord.form.label.estimatedCost" path="estimatedCost" readonly="true"/>
 	<acme:input-textbox code="technician.maintenanceRecord.form.label.notes" path="notes" readonly="true"/>
-	<acme:input-textbox code="technician.maintenanceRecord.form.label.status" path="status" readonly="true"/>
+	<acme:input-select code="technician.maintenanceRecord.form.label.status" path="status" choices="${status}" readonly="true"/>
 	<acme:input-select code="technician.maintenanceRecord.form.label.aircraft" path="aircraft" choices="${aircrafts}" readonly="true"/>
 	<acme:input-textbox code="technician.maintenanceRecord.form.label.draftMode" path="draftMode" readonly="true"/>
 </jstl:if>
