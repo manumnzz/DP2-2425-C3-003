@@ -1,0 +1,28 @@
+technician.maintenanceRecord.list.title = Listado de registros de mantenimiento
+
+
+technician.maintenanceRecord.list.label.maintenanceDate = Last maintenance Date
+technician.maintenanceRecord.list.label.status = Status
+technician.maintenanceRecord.list.label.nextInspectionDue = Next Maintenance Date
+technician.maintenanceRecord.list.label.estimatedCost = Estimated Cost
+technician.maintenanceRecord.list.label.technician = Technician
+technician.maintenanceRecord.list.label.aircraft = Aircraft
+technician.maintenanceRecord.list.label.draftMode = DraftMode
+
+
+technician.maintenanceRecord.form.label.maintenanceDate = Last maintenance Date
+technician.maintenanceRecord.form.label.status = Status
+technician.maintenanceRecord.form.label.nextInspectionDue = Next Maintenance Date
+technician.maintenanceRecord.form.label.estimatedCost = Estimated Cost
+technician.maintenanceRecord.form.label.technician = Technician
+technician.maintenanceRecord.form.label.aircraft = Aircraft
+technician.maintenanceRecord.form.label.notes = Notes
+technician.maintenanceRecord.form.label.draftMode = DraftMode
+
+technician.maintenanceRecord.form.button.create = Create
+technician.maintenanceRecord.form.button.update = Update
+technician.maintenanceRecord.form.button.delete = Delete
+technician.maintenanceRecord.form.button.publish = Publish
+
+technician.maintenanceRecord.error.nextInspectionDue = The next maintenance must be after the last maintenance
+technician.maintenanceRecord.error.draftMode = Needs to be in Draft Mode
