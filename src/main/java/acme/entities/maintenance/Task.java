@@ -10,7 +10,7 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
-import acme.entities.aircraft.Aircraft;
+import acme.entities.Aircraft;
 import acme.realms.Technician;
 import lombok.Getter;
 import lombok.Setter;
