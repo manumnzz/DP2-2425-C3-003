@@ -3,5 +3,5 @@ package acme.entities;
 
 public enum AirlineType {
 
-	LUUXURY, STANDARD, LOWCOST
+	LUXURY, STANDARD, LOWCOST
 }

@@ -1,0 +1,4 @@
+key,name,iataCode,operationalScope,city,country,website,email,phone
+airport-01,Airline One,AON,INTERNATIONAL,New York,USA,https://www.airlineone.com,contact@airlineone.com,+15551234
+airport-02,SkyJet,SKJ,DOMESTIC,London,UK,https://www.skyjet.com,support@skyjet.com,+4420794609
+airport-03,FlyExpress,FEX,REGIONAL,Madrid,Spain,https://www.flyexpress.com,info@flyexpress.com,+34910123456

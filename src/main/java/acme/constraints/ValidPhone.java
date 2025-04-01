@@ -25,6 +25,11 @@ public @interface ValidPhone {
 
 	String message() default "{acme.validation.phone.message}";
 
-	Class<?>[] groups() default {};
-	Class<? extends Payload>[] payload() default {};
+	Class<?>[] groups() default {
+
+	};
+
+	Class<? extends Payload>[] payload() default {
+
+	};
 }

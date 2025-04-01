@@ -1,5 +1,5 @@
 
-package acme.features.airlinemanager.flights;
+package acme.features.airlinemanager.flight;
 
 import javax.annotation.PostConstruct;
 
@@ -35,10 +35,12 @@ public class AirlineManagerFlightController extends AbstractGuiController<Airlin
 
 	@PostConstruct
 	protected void initialise() {
+
 		super.addBasicCommand("list", this.listService);
 		super.addBasicCommand("show", this.showService);
 		super.addBasicCommand("create", this.createService);
 		super.addBasicCommand("update", this.updateService);
 		super.addBasicCommand("delete", this.deleteService);
 	}
+
 }

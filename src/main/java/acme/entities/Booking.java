@@ -36,27 +36,27 @@ public class Booking extends AbstractEntity {
 	@Mandatory
 	@ValidString(pattern = "^[A-Z0-9]{6,8}$")
 	@Automapped
-	protected String			locatorCode;
+	private String				locatorCode;
 
 	@Mandatory
-	@ValidMoment(past = true)
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	protected Date				purchaseMoment;
+	private Date				purchaseMoment;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected ClassType			travelClass;
+	private ClassType			travelClass;
 
 	@Mandatory
 	@ValidMoney
 	@Automapped
-	protected Money				price;
+	private Money				price;
 
 	@Optional
 	@ValidString(pattern = "^\\d{4}$")
 	@Automapped
-	protected String			lastCreditCardNibble;
+	private String				lastCreditCardNibble;
 
 	// Derived attributes -----------------------------------------------------
 
@@ -65,10 +65,10 @@ public class Booking extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	protected Customer			customer;
+	private Customer			customer;
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	protected Flight			fligth;
+	private Flight				flight;
 }

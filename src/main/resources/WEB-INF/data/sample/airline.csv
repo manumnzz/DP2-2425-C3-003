@@ -1,4 +1,4 @@
 key,name,iataCode,website,type,foundationMoment,phoneNumber,email
-airline-01,Airways International,AIX,https://www.airways.com,LUXURY,2000/05/15 12:00:00,+123456789,contact@airways.com
-airline-02,SkyHigh Airlines,SHX,https://www.skyhigh.com,STANDARD,1995/08/22 09:30:00,+987654321,support@skyhigh.com
-airline-03,Blue Horizon,BHX,https://www.bluehorizon.com,LOWCOST,2010/11/10 14:45:00,+1122334455,support@skyhigh.com
+airline-01,Airways International,AIX,https://www.airways.com,LUXURY,2000/05/15 12:00,+12345678,contact@airways.com
+airline-02,SkyHigh Airlines,SHX,https://www.skyhigh.com,STANDARD,2000/08/22 09:30,+98765432,support@skyhigh.com
+airline-03,Blue Horizon,BHX,https://www.bluehorizon.com,LOWCOST,2010/11/10 14:45,+112233445,support@skyhigh.com
