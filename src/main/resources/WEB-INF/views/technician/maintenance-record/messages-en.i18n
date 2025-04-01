@@ -1,5 +1,5 @@
-technician.maintenanceRecord.list.title = Listado de registros de mantenimiento
-
+technician.maintenanceRecord.list.title = Maintenance Record List
+technician.maintenance-record.form.title = Maintenance Record Form
 
 technician.maintenanceRecord.list.label.maintenanceDate = Last maintenance Date
 technician.maintenanceRecord.list.label.status = Status

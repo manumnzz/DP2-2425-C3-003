@@ -26,7 +26,7 @@
 	<acme:input-textbox code="technician.task.form.label.maintenanceRecord" path="maintenanceRecord"/>
 	<acme:input-select code="technician.task.form.label.aircraft" path="aircraft" choices="${aircrafts}"/>
 	<acme:input-textbox code="technician.task.form.label.technician" path="technician" readonly="true"/>
-	<acme:input-textbox code="technician.task.form.label.draftMode" path="draftMode" readonly="true"/>
+	<acme:input-checkbox code="technician.task.form.label.draftMode" path="draftMode" readonly="true"/>
 	
 
 	<jstl:choose>

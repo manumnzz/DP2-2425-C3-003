@@ -57,7 +57,7 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 	@Override
 	public void validate(final MaintenanceRecord mr) {
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(mr.isDraftMode() == true, "draftMode", "technician.maintenanceRecord.error.draftMode");
+			super.state(mr.getDraftMode(), "draftMode", "technician.maintenanceRecord.error.draftMode");
 
 	}
 

@@ -10,7 +10,6 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircraft.Aircraft;
-import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.Task;
 import acme.entities.maintenance.TaskType;
 import acme.realms.Technician;
@@ -43,12 +42,12 @@ public class TechnicianTaskCreateService extends AbstractGuiService<Technician, 
 	@Override
 	public void bind(final Task task) {
 
-		super.bindObject(task, "type", "description", "priority", "estimatedDuration", "draftMode", "aircraft");
-		int mrId;
-		MaintenanceRecord mr;
-		mrId = super.getRequest().getData("maintenanceRecord", int.class);
-		mr = this.rp.findMrById(mrId);
-		task.setMaintenanceRecord(mr);
+		super.bindObject(task, "type", "description", "priority", "estimatedDuration", "maintenanceRecord", "draftMode", "aircraft");
+		//		int mrId;
+		//		MaintenanceRecord mr;
+		//		mrId = super.getRequest().getData("maintenanceRecord", int.class);
+		//		mr = this.rp.findMrById(mrId);
+		//		task.setMaintenanceRecord(mr);
 
 	}
 
