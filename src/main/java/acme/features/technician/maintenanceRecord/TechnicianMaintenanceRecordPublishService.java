@@ -58,7 +58,7 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 	@Override
 	public void validate(final MaintenanceRecord mr) {
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(mr.getDraftMode() == true, "draftMode", "technician.maintenanceRecord.error.draftMode");
+			super.state(mr.isDraftMode() == true, "draftMode", "technician.maintenanceRecord.error.draftMode");
 
 		if (!super.getBuffer().getErrors().hasErrors("nextInspectionDue"))
 			super.state(mr.getNextInspectionDue().after(mr.getMaintenanceDate()), "nextInspectionDue", "technician.maintenanceRecord.error.nextInspectionDue");
@@ -68,7 +68,7 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 		boolean allDraftMode;
 		tasks = this.rp.getAllAsociatedPublishedTasks(mr);
 		totalTasks = tasks.size();
-		allDraftMode = tasks.stream().allMatch(Task::getDraftMode);
+		allDraftMode = tasks.stream().allMatch(Task::isDraftMode);
 		System.out.println(totalTasks);
 		System.out.println(allDraftMode);
 		super.state(totalTasks >= 1, "*", "technician.maintenaceRecord.form.error.not-enough-tasks");

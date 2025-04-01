@@ -60,7 +60,7 @@ public class MaintenanceRecord extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@Automapped
-	private Boolean				draftMode;
+	private boolean				draftMode;
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
