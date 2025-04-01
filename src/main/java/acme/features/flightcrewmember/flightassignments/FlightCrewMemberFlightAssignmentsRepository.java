@@ -11,7 +11,6 @@ import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Leg;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.FlightAssignment;
-import acme.realms.FlightCrewMember;
 
 @Repository
 public interface FlightCrewMemberFlightAssignmentsRepository extends AbstractRepository {
@@ -33,7 +32,6 @@ public interface FlightCrewMemberFlightAssignmentsRepository extends AbstractRep
 
 	@Query("select count(fcm) from FlightCrewMember fcm where fcm.flightAssignment.id = :assignmentId and fcm.role = 'COPILOT'")
 	int countCopilotsByFlightAssignmentId(int assignmentId);
-
 
 	@Query("select case when l.status = LANDED then true else false end from Leg l where l.id = :legId")
 	boolean isLegCompleted(int legId);
