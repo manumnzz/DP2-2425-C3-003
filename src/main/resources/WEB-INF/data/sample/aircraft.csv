@@ -1,6 +1,6 @@
-key,model,registrationNumber,capacity,cargoWeight,status,optionalDetails
-AC-01,A320,ABC1234,180,20,ACTIVE,Modern commercial aircraft operated by Airline
-AC-02,Boeing 737,DEF5678,150,25,UNDER_MAINTENANCE,Undergoing routine maintenance
-AC-03,Embraer 190,GHI91011,100,30,ACTIVE,Regional aircraft with excellent fuel efficiency
-AC-04,Boeing 747,JKL1234,400,35,UNDER_MAINTENANCE,Heavy maintenance after long-haul flight
-AC-05,Airbus A380,MNO5678,600,50,ACTIVE,Luxury aircraft for intercontinental flights
+key,model,registrationNumber,capacity,cargoWeight,status,optionalDetails,key:airline
+AC-01,A320,ABC1234,180,20,ACTIVE,Modern commercial aircraft operated by Airline,airline-01
+AC-02,Boeing 737,DEF5678,150,25,UNDER_MAINTENANCE,Undergoing routine maintenance,airline-01
+AC-03,Embraer 190,GHI91011,100,30,ACTIVE,Regional aircraft with excellent fuel efficiency,airline-02
+AC-04,Boeing 747,JKL1234,400,35,UNDER_MAINTENANCE,Heavy maintenance after long-haul flight,airline-02
+AC-05,Airbus A380,MNO5678,600,50,ACTIVE,Luxury aircraft for intercontinental flights,airline-03

@@ -10,7 +10,6 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
-import acme.entities.aircraft.Aircraft;
 import acme.realms.Technician;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,22 +28,26 @@ public class Task extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@Automapped
-	protected TaskType			type;
+	private TaskType			type;
 
 	@Mandatory
 	@ValidString
 	@Automapped
-	protected String			description;
+	private String				description;
 
 	@Mandatory
 	@ValidNumber(max = 10)
 	@Automapped
-	protected Integer			priority;
+	private Integer				priority;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected Long				estimatedDuration;
+	private Long				estimatedDuration;
+
+	@Mandatory
+	@Automapped
+	private Boolean				draftMode;
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
@@ -53,15 +56,5 @@ public class Task extends AbstractEntity {
 	@Valid
 	@ManyToOne(optional = false)
 	private Technician			technician;
-
-	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private MaintenanceRecord	maintenanceRecord;
-
-	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private Aircraft			aircraft;
 
 }
