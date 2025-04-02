@@ -34,7 +34,7 @@ public class TechnicianMaintenanceRecordCreateService extends AbstractGuiService
 		mr = new MaintenanceRecord();
 		mr.setTechnician(technician);
 		mr.setDraftMode(true);
-
+		System.out.println(mr.getId());
 		super.getBuffer().addData(mr);
 	}
 

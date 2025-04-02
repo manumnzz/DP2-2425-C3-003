@@ -1,15 +1,12 @@
 
 package acme.features.technician.task;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.aircraft.Aircraft;
 import acme.entities.maintenance.Task;
 import acme.entities.maintenance.TaskType;
 import acme.realms.Technician;
@@ -50,18 +47,11 @@ public class TechnicianTaskShowService extends AbstractGuiService<Technician, Ta
 	public void unbind(final Task task) {
 
 		Dataset dataset;
-		SelectChoices aricraftChoices;
 		SelectChoices typeChoices;
 		typeChoices = SelectChoices.from(TaskType.class, task.getType());
-		System.out.println(typeChoices);
-		Collection<Aircraft> aircrafts;
-		aircrafts = this.rp.findAllAricraft();
-		aricraftChoices = SelectChoices.from(aircrafts, "registrationNumber", task.getAircraft());
-		dataset = super.unbindObject(task, "description", "priority", "estimatedDuration", "maintenanceRecord", "draftMode");
+		dataset = super.unbindObject(task, "description", "priority", "estimatedDuration", "draftMode");
 		dataset.put("technician", task.getTechnician().getUserAccount().getUsername());
 		dataset.put("type", typeChoices);
-		dataset.put("aircraft", aricraftChoices.getSelected().getKey());
-		dataset.put("aircrafts", aricraftChoices);
 
 		super.getResponse().addData(dataset);
 

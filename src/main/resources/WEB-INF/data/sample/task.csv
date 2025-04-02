@@ -1,4 +1,16 @@
-key,key:maintenance-record,key:technician,type,description,priority,estimatedDuration,key:aircraft,draftMode
-task-01,MR-01,technician-01,MAINTENANCE,General inspection and lubrication of engine parts,8,3,AC-01,false
-task-02,MR-02,technician-02,REPAIR,Repairing fuselage cracks and testing stability,9,5,AC-02,false
-task-03,MR-03,technician-01,INSPECTION,Routine inspection of aircraft structure,7,2,AC-03,false
+key,key:technician,type,description,priority,estimatedDuration,draftMode
+task-01,technician-01,MAINTENANCE,Maintenance of all internal parts,8,3,false
+task-02,technician-01,REPAIR,Repairing fuselage cracks and testing stability,9,5,false
+task-03,technician-01,INSPECTION,General inspection and lubrication of engine parts,8,3,false
+task-08,technician-01,INSPECTION,General inspection and lubrication of engine parts,8,3,false
+task-09,technician-01,REPAIR,Repairing fuselage cracks and testing stability,9,5,true
+
+
+task-04,technician-02,REPAIR,Repairing fuselage cracks and testing stability,9,5,false
+task-05,technician-02,MAINTENANCE,Maintenance of all internal parts,8,3,false
+task-06,technician-02,REPAIR,Routine inspection of aircraft structure,7,2,false
+task-07,technician-02,INSPECTION,General inspection and lubrication of engine parts,8,3,false
+task-10,technician-02,MAINTENANCE,Maintenance of all internal parts,8,3,true
+
+
+

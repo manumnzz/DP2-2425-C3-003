@@ -23,8 +23,6 @@
 	<acme:input-textbox code="technician.task.form.label.description" path="description"/>
 	<acme:input-money code="technician.task.form.label.priority" path="priority"/>
 	<acme:input-textbox code="technician.task.form.label.estimatedDuration" path="estimatedDuration"/>
-	<acme:input-textbox code="technician.task.form.label.maintenanceRecord" path="maintenanceRecord"/>
-	<acme:input-select code="technician.task.form.label.aircraft" path="aircraft" choices="${aircrafts}"/>
 	<acme:input-textbox code="technician.task.form.label.technician" path="technician" readonly="true"/>
 	<acme:input-checkbox code="technician.task.form.label.draftMode" path="draftMode" readonly="true"/>
 	
@@ -47,8 +45,6 @@
 	<acme:input-textbox code="technician.task.form.label.description" path="description" readonly="true"/>
 	<acme:input-money code="technician.task.form.label.priority" path="priority" readonly="true"/>
 	<acme:input-textbox code="technician.task.form.label.estimatedDuration" path="estimatedDuration" readonly="true"/>
-	<acme:input-textbox code="technician.task.form.label.maintenanceRecord" path="maintenanceRecord" readonly="true"/>
-	<acme:input-select code="technician.task.form.label.aircraft" path="aircraft" choices="${aircrafts}" readonly="true"/>
 	<acme:input-textbox code="technician.task.form.label.technician" path="technician" readonly="true"/>
 	<acme:input-textbox code="technician.task.form.label.draftMode" path="draftMode" readonly="true"/>
 </jstl:if>

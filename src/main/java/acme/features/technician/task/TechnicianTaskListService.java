@@ -41,8 +41,6 @@ public class TechnicianTaskListService extends AbstractGuiService<Technician, Ta
 
 		dataset = super.unbindObject(task, "type", "description", "priority", "estimatedDuration", "draftMode");
 		dataset.put("technician", task.getTechnician().getUserAccount().getUsername());
-		dataset.put("aircraft", task.getAircraft().getRegistrationNumber());
-		dataset.put("maintenanceRecord", task.getMaintenanceRecord().getId());
 		super.getResponse().addData(dataset);
 
 	}

@@ -23,6 +23,8 @@ technician.maintenanceRecord.form.button.create = Crear
 technician.maintenanceRecord.form.button.update = Editar
 technician.maintenanceRecord.form.button.delete = Borrar
 technician.maintenanceRecord.form.button.publish = Publish
+technician.maintenanceRecord.form.button.tasks = Tareas
+
 
 technician.maintenanceRecord.error.nextInspectionDue = El siguiente mantenimiento debe ser despues del anterior
 technician.maintenanceRecord.error.draftMode = Tiene que estar en modo Borrador

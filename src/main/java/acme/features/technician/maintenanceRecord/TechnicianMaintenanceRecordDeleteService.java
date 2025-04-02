@@ -12,7 +12,6 @@ import acme.client.services.GuiService;
 import acme.entities.aircraft.Aircraft;
 import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.MaintenanceStatus;
-import acme.entities.maintenance.Task;
 import acme.realms.Technician;
 
 @GuiService
@@ -63,10 +62,10 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 
 	@Override
 	public void perform(final MaintenanceRecord mr) {
-		Collection<Task> tasks;
-		tasks = this.rp.getAllAsociatedTasks(mr);
-		this.rp.deleteAll(tasks);
-		this.rp.delete(mr);
+		//		Collection<Task> tasks;
+		//		tasks = this.rp.getAllAsociatedTasks(mr);
+		//		this.rp.deleteAll(tasks);
+		//		this.rp.delete(mr);
 	}
 
 	@Override
