@@ -18,4 +18,3 @@
 <jstl:if test="${!showCreate}">
 	<acme:button code="technician.task.form.button.create" action="/technician/task/create"/>
 </jstl:if>
-

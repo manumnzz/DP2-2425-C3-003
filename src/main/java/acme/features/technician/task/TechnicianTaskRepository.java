@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
 import acme.entities.aircraft.Aircraft;
-import acme.entities.maintenance.MaintenaceTask;
+import acme.entities.maintenance.MaintenanceTask;
 import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.Task;
 import acme.realms.Technician;
@@ -33,22 +33,22 @@ public interface TechnicianTaskRepository extends AbstractRepository {
 	@Query("select t from Task t where t.id = :id")
 	Task findTaskById(int id);
 
-	@Query("select  mt.task from MaintenaceTask mt where mt.maintenanceRecord.id = :mrId")
+	@Query("select  mt.task from MaintenanceTask mt where mt.maintenanceRecord.id = :mrId")
 	Task findTaskByMrId(int mrId);
 
-	@Query("select  mt.maintenanceRecord from MaintenaceTask mt where mt.maintenanceRecord.id = :mrId")
+	@Query("select  mt.maintenanceRecord from MaintenanceTask mt where mt.maintenanceRecord.id = :mrId")
 	MaintenanceRecord findMrById(int mrId);
 
 	@Query("select mr from MaintenanceRecord mr where mr.draftMode = false")
 	List<MaintenanceRecord> getAllMr();
 
-	@Query("select  mt.task from MaintenaceTask mt where mt.maintenanceRecord.id = :mrId")
+	@Query("select  mt.task from MaintenanceTask mt where mt.maintenanceRecord.id = :mrId")
 	Collection<Task> findAllAsociatedTasks(int mrId);
 
-	@Query("select  mt.maintenanceRecord from MaintenaceTask mt where mt.task.id = :id")
+	@Query("select  mt.maintenanceRecord from MaintenanceTask mt where mt.task.id = :id")
 	Set<MaintenanceRecord> findAllAsociatedMaintenaceRecords(int id);
 
-	@Query("select mt from MaintenaceTask mt where mt.task.id = :id")
-	Collection<MaintenaceTask> findMaintenanceTasks(int id);
+	@Query("select mt from MaintenanceTask mt where mt.task.id = :id")
+	Collection<MaintenanceTask> findMaintenanceTasks(int id);
 
 }

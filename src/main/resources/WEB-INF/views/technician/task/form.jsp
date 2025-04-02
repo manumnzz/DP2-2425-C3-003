@@ -41,7 +41,7 @@
 </jstl:if>
 
 <jstl:if test="${draftMode==false}">
-	<acme:input-select code="technician.task.list.label.type" path="type" choices="${typeChoices}" readonly="true"/>
+	<acme:input-select code="technician.task.list.label.type" path="type" choices="${type}" readonly="true"/>
 	<acme:input-textbox code="technician.task.form.label.description" path="description" readonly="true"/>
 	<acme:input-money code="technician.task.form.label.priority" path="priority" readonly="true"/>
 	<acme:input-textbox code="technician.task.form.label.estimatedDuration" path="estimatedDuration" readonly="true"/>

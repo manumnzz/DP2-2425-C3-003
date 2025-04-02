@@ -53,6 +53,9 @@
 		<acme:menu-option code="master.menu.technician" access="hasRealm('Technician')">
 			<acme:menu-suboption code="master.menu.technician.list-maintenance-records" action="/technician/maintenance-record/list" />
 			<acme:menu-suboption code="master.menu.technician.list-tasks" action="/technician/task/list" />
+			<acme:menu-suboption code="master.menu.technician.list-maintenance-task" action="/technician/maintenance-task/list" />
+			<acme:menu-suboption code="master.menu.technician.create-maintenance-task" action="/technician/maintenance-task/create" />
+			
 			
 		</acme:menu-option>
 		

@@ -23,7 +23,11 @@ public class TechnicianMaintenanceRecordCreateService extends AbstractGuiService
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		Technician technician;
+		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+		status = technician != null;
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -32,9 +36,9 @@ public class TechnicianMaintenanceRecordCreateService extends AbstractGuiService
 		Technician technician;
 		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 		mr = new MaintenanceRecord();
+		System.out.println(mr.getId());
 		mr.setTechnician(technician);
 		mr.setDraftMode(true);
-		System.out.println(mr.getId());
 		super.getBuffer().addData(mr);
 	}
 

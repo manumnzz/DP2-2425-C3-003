@@ -21,7 +21,11 @@ public class TechnicianMaintenanceRecordListService extends AbstractGuiService<T
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		Technician technician;
+		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+		status = technician != null;
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override

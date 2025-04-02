@@ -13,18 +13,18 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class MaintenaceTask extends AbstractEntity {
+public class MaintenanceTask extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
 
 	@Optional
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Task				task;
 
 	@Optional
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private MaintenanceRecord	maintenanceRecord;
 
 }
