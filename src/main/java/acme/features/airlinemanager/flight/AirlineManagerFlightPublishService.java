@@ -11,19 +11,18 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Airport;
 import acme.entities.S1.Flight;
-import acme.entities.S1.FlightLeg;
 import acme.entities.S1.Leg;
 import acme.realms.AirlineManager;
 
 @GuiService
-public class AirlineManagerFlightDeleteService extends AbstractGuiService<AirlineManager, Flight> {
+public class AirlineManagerFlightPublishService extends AbstractGuiService<AirlineManager, Flight> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private AirlineManagerFlightRepository repository;
 
-	// AbstractGuiService interface -------------------------------------------
+	// AbstractService<AirlineManager, Flight> -------------------------------------
 
 
 	@Override
@@ -94,15 +93,13 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 
 	@Override
 	public void perform(final Flight flight) {
-		Collection<FlightLeg> flightlegs;
-
-		flightlegs = this.repository.findLegsByFlightId(flight.getId());
-		this.repository.deleteAll(flightlegs);
-		this.repository.delete(flight);
+		flight.setDraftMode(false);
+		this.repository.save(flight);
 	}
 
 	@Override
 	public void unbind(final Flight flight) {
+		int airlineManagerId;
 		Collection<Airport> airports;
 		Collection<Leg> legs;
 		SelectChoices choices1;
@@ -111,15 +108,17 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 		SelectChoices choices4;
 		Dataset dataset;
 
+		airlineManagerId = flight.getAirlineManager().getId();
+
 		// Obtener listas de aeropuertos y legs
 		airports = this.repository.findAllAirports();
-		legs = this.repository.findAllLegs();
+		legs = this.repository.findAllPublishedLegs(airlineManagerId);
 
 		// Crear listas desplegables
 		choices1 = SelectChoices.from(airports, "name", flight.getOriginAirport());
 		choices2 = SelectChoices.from(airports, "name", flight.getDestinationAirport());
-		choices3 = SelectChoices.from(legs, "identifier", flight.getFirstLeg());
-		choices4 = SelectChoices.from(legs, "identifier", flight.getLastLeg());
+		choices3 = SelectChoices.from(legs, "flightNumber", flight.getFirstLeg());
+		choices4 = SelectChoices.from(legs, "flightNumber", flight.getLastLeg());
 
 		// Unbind de los atributos básicos del vuelo
 		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description", "draftMode");
@@ -135,7 +134,6 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 		dataset.put("firstLegs", choices3);
 		dataset.put("lastLegs", choices4);
 
-		// Enviar los datos a la respuesta
 		super.getResponse().addData(dataset);
 	}
 }

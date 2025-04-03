@@ -8,8 +8,6 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-master.menu.manager = Menú del Gerente
-master.menu.airlinemanager.list-legs = Lista de escalas
 airline-manager.leg.list.title = Mi Lista de Escalas
 airlinemanager.leg.list.title = Listado de Escalas
 airline-manager.leg.form.title = Escala

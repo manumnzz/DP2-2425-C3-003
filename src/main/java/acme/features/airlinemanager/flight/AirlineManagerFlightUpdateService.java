@@ -35,7 +35,7 @@ public class AirlineManagerFlightUpdateService extends AbstractGuiService<Airlin
 		masterId = super.getRequest().getData("id", int.class);
 		flight = this.repository.findFlightById(masterId);
 		airlineManager = flight == null ? null : flight.getAirlineManager();
-		status = flight != null && super.getRequest().getPrincipal().hasRealm(airlineManager);
+		status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(airlineManager);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -98,6 +98,7 @@ public class AirlineManagerFlightUpdateService extends AbstractGuiService<Airlin
 
 	@Override
 	public void unbind(final Flight flight) {
+		int airlineManagerId;
 		Collection<Airport> airports;
 		Collection<Leg> legs;
 		SelectChoices choices1;
@@ -106,9 +107,11 @@ public class AirlineManagerFlightUpdateService extends AbstractGuiService<Airlin
 		SelectChoices choices4;
 		Dataset dataset;
 
+		airlineManagerId = flight.getAirlineManager().getId();
+
 		// Obtener listas de aeropuertos y legs
 		airports = this.repository.findAllAirports();
-		legs = this.repository.findAllPublishedLegs();
+		legs = this.repository.findAllPublishedLegs(airlineManagerId);
 
 		// Crear listas desplegables
 		choices1 = SelectChoices.from(airports, "name", flight.getOriginAirport());
@@ -117,7 +120,7 @@ public class AirlineManagerFlightUpdateService extends AbstractGuiService<Airlin
 		choices4 = SelectChoices.from(legs, "flightNumber", flight.getLastLeg());
 
 		// Unbind de los atributos básicos del vuelo
-		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description");
+		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description", "draftMode");
 
 		// Agregar aeropuertos y legs al dataset
 		dataset.put("originAirport", choices1.getSelected().getKey());
@@ -129,10 +132,6 @@ public class AirlineManagerFlightUpdateService extends AbstractGuiService<Airlin
 		dataset.put("lastLeg", choices4.getSelected().getKey());
 		dataset.put("firstLegs", choices3);
 		dataset.put("lastLegs", choices4);
-
-		// Enviar los datos a la respuesta
-		super.getResponse().addData("airports", airports);
-		super.getResponse().addData("legs", legs);
 
 		super.getResponse().addData(dataset);
 	}

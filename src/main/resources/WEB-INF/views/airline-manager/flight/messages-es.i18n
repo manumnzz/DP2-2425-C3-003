@@ -33,3 +33,5 @@ airlinemanager.flight.form.label.destinationAirport = Aeropuerto de Destino
 airlinemanager.flight.form.button.create = Crear
 airlinemanager.flight.form.button.update = Editar
 airlinemanager.flight.form.button.delete = Eliminar
+airlinemanager.flight.form.button.publish = Publicar
+airlinemanager.flight.form.button.legs = Escalas
