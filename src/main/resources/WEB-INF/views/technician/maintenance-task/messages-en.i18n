@@ -1,0 +1,8 @@
+technician.maintenance-task.list.title = MaintenanceTask List
+technician.maintenance-task.form.title = MaintenanceTask Form
+
+technician.maintenanceTask.form.label.id = Id
+technician.maintenanceTask.form.label.maintenanceRecord = MaintenanceRecord
+technician.maintenanceTask.form.label.task = Task
+
+technician.maintenanceTask.form.button.create = create
