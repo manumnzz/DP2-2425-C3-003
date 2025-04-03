@@ -33,4 +33,6 @@ airlinemanager.flight.form.label.destinationAirport = Destination Airport
 
 airlinemanager.flight.form.button.create = Create
 airlinemanager.flight.form.button.update = Update
-airlinemanager.flight.form.button.Delete = Delete
+airlinemanager.flight.form.button.delete = Delete
+airlinemanager.flight.form.button.publish = Publish
+airlinemanager.flight.form.button.legs = Legs

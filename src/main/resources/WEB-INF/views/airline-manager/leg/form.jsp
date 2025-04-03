@@ -20,13 +20,12 @@
 	<acme:input-moment code="airlinemanager.leg.form.label.scheduledDeparture" path="scheduledDeparture"/>
 	<acme:input-moment code="airlinemanager.leg.form.label.scheduledArrival" path="scheduledArrival"/>
 	<acme:input-select code="airlinemanager.leg.form.label.status" path="status" choices="${statuses}"/>
-	<acme:input-checkbox code="airlinemanager.leg.form.label.draftMode" path="draftMode"/>
 	<acme:input-select code="airlinemanager.leg.form.label.departureAirport" path="departureAirport" choices="${departureAirports}"/>
 	<acme:input-select code="airlinemanager.leg.form.label.arrivalAirport" path="arrivalAirport" choices="${arrivalAirports}"/>
 	<acme:input-select code="airlinemanager.leg.form.label.aircraft" path="aircraft" choices="${aircrafts}"/>
 	
 	<jstl:choose>
-		<jstl:when test="${acme:anyOf(_command, 'show|update|delete') && draftMode == true}">
+		<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && draftMode == true}">
 			<acme:submit code="airlinemanager.leg.form.button.update" action="/airline-manager/leg/update"/>
 			<acme:submit code="airlinemanager.leg.form.button.publish" action="/airline-manager/leg/publish"/>
 			<acme:submit code="airlinemanager.leg.form.button.delete" action="/airline-manager/leg/delete"/>

@@ -8,8 +8,6 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-master.menu.manager = Manager Menu
-master.menu.airlinemanager.list-legs = leg List
 airline-manager.leg.list.title = My leg List
 airlinemanager.leg.list.title = Listing of legs
 airline-manager.leg.form.title = leg
