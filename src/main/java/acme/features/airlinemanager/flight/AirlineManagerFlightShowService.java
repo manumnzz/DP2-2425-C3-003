@@ -53,6 +53,7 @@ public class AirlineManagerFlightShowService extends AbstractGuiService<AirlineM
 
 	@Override
 	public void unbind(final Flight flight) {
+		int airlineManagerId;
 		Collection<Airport> airports;
 		Collection<Leg> legs;
 		SelectChoices choices1;
@@ -61,9 +62,11 @@ public class AirlineManagerFlightShowService extends AbstractGuiService<AirlineM
 		SelectChoices choices4;
 		Dataset dataset;
 
+		airlineManagerId = flight.getAirlineManager().getId();
+
 		// Obtener listas de aeropuertos y legs
 		airports = this.repository.findAllAirports();
-		legs = this.repository.findAllPublishedLegs();
+		legs = this.repository.findAllPublishedLegs(airlineManagerId);
 
 		// Crear listas desplegables
 		choices1 = SelectChoices.from(airports, "name", flight.getOriginAirport());
@@ -72,7 +75,7 @@ public class AirlineManagerFlightShowService extends AbstractGuiService<AirlineM
 		choices4 = SelectChoices.from(legs, "flightNumber", flight.getLastLeg());
 
 		// Unbind de los atributos básicos del vuelo
-		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description");
+		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description", "draftMode");
 
 		// Agregar aeropuertos y legs al dataset
 		dataset.put("originAirport", choices1.getSelected().getKey());
