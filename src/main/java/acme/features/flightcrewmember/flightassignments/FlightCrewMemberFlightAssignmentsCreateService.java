@@ -1,6 +1,7 @@
 
 package acme.features.flightcrewmember.flightassignments;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,41 +31,60 @@ public class FlightCrewMemberFlightAssignmentsCreateService extends AbstractGuiS
 
 	@Override
 	public void authorise() {
-		boolean isLeadAttendant;
-		FlightAssignment flightAssignment;
-
-		flightAssignment = this.repository.findFlightAssignmentById(super.getRequest().getPrincipal().getAccountId());
-		isLeadAttendant = flightAssignment != null && flightAssignment.getFlightCrew() == FlightCrew.LEAD_ATTENDANT;
-
-		super.getResponse().setAuthorised(isLeadAttendant);
+		//		boolean isLeadAttendant;
+		//		FlightAssignment flightAssignment;
+		//
+		//		flightAssignment = this.repository.findFlightAssignmentById(super.getRequest().getPrincipal().getAccountId());
+		//		isLeadAttendant = flightAssignment != null && flightAssignment.getFlightCrew() == FlightCrew.LEAD_ATTENDANT;
+		//
+		//		super.getResponse().setAuthorised(isLeadAttendant);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
+		//		FlightAssignment flightAssignment;
+		//		FlightCrewMember flightCrewMember;
+		//		int legId;
+		//		Leg leg;
+		//		Date moment;
+		//
+		//		flightCrewMember = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
+		//		legId = super.getRequest().getData("legId", int.class);
+		//		leg = this.repository.findLegById(legId);
+		//		moment = MomentHelper.getCurrentMoment();
+		//
+		//		flightAssignment = new FlightAssignment();
+		//		flightAssignment.setMoment(moment);
+		//		flightAssignment.setCurrentStatus(CurrentStatus.CONFIRMED);
+		//		flightAssignment.setRemarks("");
+		//		flightAssignment.setFlightCrewMember(flightCrewMember);
+		//		flightAssignment.setLeg(leg);
+		//
+		//		super.getBuffer().addData(flightAssignment);
 		FlightAssignment flightAssignment;
 		FlightCrewMember flightCrewMember;
-		int legId;
-		Leg leg;
-		Date moment;
 
 		flightCrewMember = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
-		legId = super.getRequest().getData("legId", int.class);
-		leg = this.repository.findLegById(legId);
-		moment = MomentHelper.getCurrentMoment();
 
 		flightAssignment = new FlightAssignment();
-		flightAssignment.setMoment(moment);
-		flightAssignment.setCurrentStatus(CurrentStatus.CONFIRMED);
-		flightAssignment.setRemarks("");
 		flightAssignment.setFlightCrewMember(flightCrewMember);
-		flightAssignment.setLeg(leg);
 
 		super.getBuffer().addData(flightAssignment);
 	}
 
 	@Override
 	public void bind(final FlightAssignment flightAssignment) {
-		super.bindObject(flightAssignment, "flightCrew", "currentStatus", "remarks");
+		int legId;
+
+		Leg leg;
+
+		legId = this.getRequest().getData("leg", int.class);
+
+		leg = this.repository.findLegById(legId);
+
+		flightAssignment.setLeg(leg);
+		super.bindObject(flightAssignment, "flightCrew", "moment", "currentStatus", "remarks");
 	}
 
 	@Override
@@ -98,16 +118,23 @@ public class FlightCrewMemberFlightAssignmentsCreateService extends AbstractGuiS
 	public void unbind(final FlightAssignment flightAssignment) {
 		SelectChoices choices1;
 		SelectChoices choices2;
+		SelectChoices choices3;
+		Collection<Leg> legs;
 		Dataset dataset;
+
+		legs = this.repository.findAllLegs();
 
 		choices1 = SelectChoices.from(FlightCrew.class, flightAssignment.getFlightCrew());
 		choices2 = SelectChoices.from(CurrentStatus.class, flightAssignment.getCurrentStatus());
+		choices3 = SelectChoices.from(legs, "flightNumber", flightAssignment.getLeg());
 
-		dataset = super.unbindObject(flightAssignment, "flightCrew", "currentStatus", "remarks");
+		dataset = super.unbindObject(flightAssignment, "flightCrew", "moment", "currentStatus", "remarks");
 		dataset.put("confirmation", false);
 		dataset.put("readonly", false);
 		dataset.put("flightCrews", choices1);
 		dataset.put("currentStatuses", choices2);
+		dataset.put("legs", choices3.getSelected().getKey());
+		dataset.put("legs", choices3);
 
 		super.getResponse().addData(dataset);
 	}

@@ -42,7 +42,7 @@ public class FlightCrewMemberActivityLogShowService extends AbstractGuiService<F
 		FlightCrewMember crewMember;
 
 		flightAssignment = activityLog.getFlightAssignment();
-		crewMember = activityLog.getCrewMember();
+		crewMember = activityLog.getFlightCrewMember();
 
 		dataset = super.unbindObject(activityLog, "flightCrew", "currentStatus", "remarks");
 		dataset.put("confirmation", false);

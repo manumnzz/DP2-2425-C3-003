@@ -47,7 +47,7 @@ public class FlightCrewMemberActivityLogCreateService extends AbstractGuiService
 		activityLog.setIncident("");
 		activityLog.setDescription("");
 		activityLog.setSeverityLevel(0);
-		activityLog.setCrewMember(flightCrewMember);
+		activityLog.setFlightCrewMember(flightCrewMember);
 		activityLog.setFlightAssignment(flightAssignment);
 
 		super.getBuffer().addData(activityLog);
@@ -55,7 +55,7 @@ public class FlightCrewMemberActivityLogCreateService extends AbstractGuiService
 
 	@Override
 	public void bind(final ActivityLog activityLog) {
-		super.unbindObject(activityLog, "moment", "incident", "description", "severityLevel", "crewMember", "flightAssignment");
+		super.unbindObject(activityLog, "moment", "incident", "description", "severityLevel", "flightCrewMember", "flightAssignment");
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class FlightCrewMemberActivityLogCreateService extends AbstractGuiService
 	public void unbind(final ActivityLog activityLog) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(activityLog, "moment", "incident", "description", "severityLevel", "crewMember", "flightAssignment");
+		dataset = super.unbindObject(activityLog, "moment", "incident", "description", "severityLevel", "flightCrewMember", "flightAssignment");
 		dataset.put("confirmation", false);
 		dataset.put("readonly", false);
 

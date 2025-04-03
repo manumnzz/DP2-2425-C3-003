@@ -77,6 +77,9 @@ public class FlightCrewMemberFlightAssignmentsUpdateService extends AbstractGuiS
 
 		if (flightAssignment.getFlightCrew() == FlightCrew.COPILOT)
 			super.state(copilots < 1, "role", "flightAssignment.tooManyCopilots");
+
+		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
+			super.state(flightAssignment.isDraftMode(), "draftMode", "flightcrewmemberactivityLog.error.draftMode");
 	}
 
 	@Override

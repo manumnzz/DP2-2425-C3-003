@@ -9,7 +9,6 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S3.FlightAssignment;
-import acme.entities.S3.FlightCrew;
 import acme.realms.FlightCrewMember;
 
 @GuiService
@@ -25,13 +24,7 @@ public class FlightCrewMemberFlightAssignmentsListService extends AbstractGuiSer
 
 	@Override
 	public void authorise() {
-		boolean isLeadAttendant;
-		FlightAssignment flightAssignment;
-
-		flightAssignment = this.repository.findFlightAssignmentById(super.getRequest().getPrincipal().getAccountId());
-		isLeadAttendant = flightAssignment != null && flightAssignment.getFlightCrew() == FlightCrew.LEAD_ATTENDANT;
-
-		super.getResponse().setAuthorised(isLeadAttendant);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
@@ -39,7 +32,7 @@ public class FlightCrewMemberFlightAssignmentsListService extends AbstractGuiSer
 		Collection<FlightAssignment> flightAssignment;
 		int id;
 
-		id = super.getRequest().getPrincipal().getAccountId();
+		id = super.getRequest().getPrincipal().getActiveRealm().getId();
 		flightAssignment = this.repository.findFlightAssignmentsByCrewMemberId(id);
 
 		super.getBuffer().addData(flightAssignment);
@@ -49,8 +42,8 @@ public class FlightCrewMemberFlightAssignmentsListService extends AbstractGuiSer
 	public void unbind(final FlightAssignment flightAssignment) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(flightAssignment, "flightCrew", "moment", "currentStatus", "remarks", "crewMember", "leg");
-		super.addPayload(dataset, flightAssignment, "text", "moreInfo");
+		dataset = super.unbindObject(flightAssignment, "flightCrew", "moment", "currentStatus", "remarks", "flightCrewMember", "leg");
+		//super.addPayload(dataset, flightAssignment, "text", "moreInfo");
 
 		super.getResponse().addData(dataset);
 	}

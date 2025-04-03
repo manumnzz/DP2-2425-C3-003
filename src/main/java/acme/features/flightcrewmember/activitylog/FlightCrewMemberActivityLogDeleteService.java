@@ -41,7 +41,7 @@ public class FlightCrewMemberActivityLogDeleteService extends AbstractGuiService
 
 	@Override
 	public void bind(final ActivityLog activityLog) {
-		super.unbindObject(activityLog, "moment", "incident", "description", "severityLevel", "crewMember", "flightAssignment");
+		super.unbindObject(activityLog, "moment", "incident", "description", "severityLevel", "flightCrewMember", "flightAssignment");
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class FlightCrewMemberActivityLogDeleteService extends AbstractGuiService
 
 		Dataset dataset;
 
-		dataset = super.unbindObject(activityLog, "moment", "incident", "description", "severityLevel", "crewMember", "flightAssignment");
+		dataset = super.unbindObject(activityLog, "moment", "incident", "description", "severityLevel", "flightCrewMember", "flightAssignment");
 		dataset.put("confirmation", false);
 		dataset.put("readonly", false);
 
