@@ -9,10 +9,10 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.Aircraft;
 import acme.entities.Airport;
 import acme.entities.S1.FlightStatus;
 import acme.entities.S1.Leg;
-import acme.entities.aircraft.Aircraft;
 import acme.realms.AirlineManager;
 
 @GuiService
@@ -74,7 +74,7 @@ public class AirlineManagerLegUpdateService extends AbstractGuiService<AirlineMa
 		aircraft = this.repository.findAircraftById(aircraftId);
 		airlineManager = this.repository.findAirlineManagerById(airlineManagerId);
 
-		super.bindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "status", "draftMode");
+		super.bindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "status");
 		leg.setDepartureAirport(departureAirport);
 		leg.setArrivalAirport(arrivalAirport);
 		leg.setAircraft(aircraft);

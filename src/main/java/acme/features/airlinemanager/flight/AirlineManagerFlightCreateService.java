@@ -11,6 +11,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Airport;
 import acme.entities.S1.Flight;
+import acme.entities.S1.FlightLeg;
 import acme.entities.S1.Leg;
 import acme.realms.AirlineManager;
 
@@ -38,6 +39,7 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 		airlineManager = (AirlineManager) super.getRequest().getPrincipal().getActiveRealm();
 
 		flight = new Flight();
+		flight.setDraftMode(true);
 		flight.setAirlineManager(airlineManager);
 
 		super.getBuffer().addData(flight);
@@ -85,11 +87,26 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 
 	@Override
 	public void perform(final Flight flight) {
+		// 1️⃣ Guardar el vuelo en la BD
 		this.repository.save(flight);
+
+		// 2️⃣ Crear las relaciones en FlightLeg
+		FlightLeg firstFlightLeg = new FlightLeg();
+		firstFlightLeg.setFlight(flight);
+		firstFlightLeg.setLeg(flight.getFirstLeg());
+		firstFlightLeg.setSequence(1); // Primera escala
+		this.repository.save(firstFlightLeg);
+
+		FlightLeg lastFlightLeg = new FlightLeg();
+		lastFlightLeg.setFlight(flight);
+		lastFlightLeg.setLeg(flight.getLastLeg());
+		lastFlightLeg.setSequence(999); // Última escala (ajusta según lógica)
+		this.repository.save(lastFlightLeg);
 	}
 
 	@Override
 	public void unbind(final Flight flight) {
+		int airlineManagerId;
 		Collection<Airport> airports;
 		Collection<Leg> legs;
 		SelectChoices choices1;
@@ -98,9 +115,11 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 		SelectChoices choices4;
 		Dataset dataset;
 
+		airlineManagerId = flight.getAirlineManager().getId();
+
 		// Obtener listas de aeropuertos y legs
 		airports = this.repository.findAllAirports();
-		legs = this.repository.findAllPublishedLegs();
+		legs = this.repository.findAllPublishedLegs(airlineManagerId);
 
 		// Crear listas desplegables
 		choices1 = SelectChoices.from(airports, "name", flight.getOriginAirport());
@@ -109,7 +128,7 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 		choices4 = SelectChoices.from(legs, "flightNumber", flight.getLastLeg());
 
 		// Unbind de los atributos básicos del vuelo
-		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description");
+		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description", "draftMode");
 
 		// Agregar aeropuertos y legs al dataset
 		dataset.put("originAirport", choices1.getSelected().getKey());

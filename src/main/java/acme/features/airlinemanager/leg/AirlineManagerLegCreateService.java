@@ -9,10 +9,12 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.Aircraft;
 import acme.entities.Airport;
+import acme.entities.S1.Flight;
+import acme.entities.S1.FlightLeg;
 import acme.entities.S1.FlightStatus;
 import acme.entities.S1.Leg;
-import acme.entities.aircraft.Aircraft;
 import acme.realms.AirlineManager;
 
 @GuiService
@@ -39,6 +41,7 @@ public class AirlineManagerLegCreateService extends AbstractGuiService<AirlineMa
 		airlineManager = (AirlineManager) super.getRequest().getPrincipal().getActiveRealm();
 
 		leg = new Leg();
+		leg.setDraftMode(true);
 		leg.setAirlineManager(airlineManager);
 
 		super.getBuffer().addData(leg);
@@ -66,7 +69,7 @@ public class AirlineManagerLegCreateService extends AbstractGuiService<AirlineMa
 		aircraft = this.repository.findAircraftById(aircraftId);
 		airlineManager = this.repository.findAirlineManagerById(airlineManagerId);
 
-		super.bindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "status", "draftMode");
+		super.bindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "status");
 		leg.setDepartureAirport(departureAirport);
 		leg.setArrivalAirport(arrivalAirport);
 		leg.setAircraft(aircraft);
@@ -80,7 +83,26 @@ public class AirlineManagerLegCreateService extends AbstractGuiService<AirlineMa
 
 	@Override
 	public void perform(final Leg leg) {
+		// Guardar el nuevo Leg en la base de datos
 		this.repository.save(leg);
+
+		// Buscar el Flight al que pertenece este Leg
+		Flight flight = this.repository.findFlightByLegId(leg.getId());
+
+		// Si encontramos el vuelo, creamos la relación FlightLeg
+		if (flight != null) {
+			FlightLeg flightLeg = new FlightLeg();
+			flightLeg.setFlight(flight);
+			flightLeg.setLeg(leg);
+			flightLeg.setSequence(this.calcularSequence(flight)); // Método para determinar la secuencia
+
+			this.repository.save(flightLeg);
+		}
+	}
+
+	private int calcularSequence(final Flight flight) {
+		Integer maxSequence = this.repository.findMaxSequenceByFlightId(flight.getId());
+		return maxSequence == null ? 1 : maxSequence + 1;
 	}
 
 	@Override

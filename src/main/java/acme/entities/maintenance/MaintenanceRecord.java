@@ -16,7 +16,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
-import acme.entities.aircraft.Aircraft;
+import acme.entities.Aircraft;
 import acme.realms.Technician;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,32 +35,27 @@ public class MaintenanceRecord extends AbstractEntity {
 	@Mandatory
 	@Temporal(TemporalType.TIMESTAMP)
 	@Automapped
-	private Date				maintenanceDate;
+	protected Date				maintenanceDate;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	private MaintenanceStatus	status;
+	protected MaintenanceStatus	status;
 
 	@Mandatory
 	@Temporal(TemporalType.TIMESTAMP)
 	@Automapped
-	private Date				nextInspectionDue;
+	protected Date				nextInspectionDue;
 
 	@Mandatory
 	@ValidMoney
 	@Automapped
-	private Money				estimatedCost;
+	protected Money				estimatedCost;
 
 	@Optional
 	@ValidString
 	@Automapped
-	private String				notes;
-
-	@Mandatory
-	@Valid
-	@Automapped
-	private Boolean				draftMode;
+	protected String			notes;
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------

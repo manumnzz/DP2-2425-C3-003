@@ -30,10 +30,10 @@ public class AirlineManagerLegListService extends AbstractGuiService<AirlineMana
 	@Override
 	public void load() {
 		Collection<Leg> legs;
-		int id;
+		int masterId;
 
-		id = super.getRequest().getPrincipal().getActiveRealm().getId();
-		legs = this.repository.findLegsByAirlineManagerId(id);
+		masterId = super.getRequest().getData("masterId", int.class);
+		legs = this.repository.findAllLegsByFlightId(masterId);
 
 		super.getBuffer().addData(legs);
 
