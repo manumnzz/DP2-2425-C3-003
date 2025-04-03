@@ -4,7 +4,7 @@ package acme.forms;
 import java.util.List;
 
 import acme.client.components.basis.AbstractForm;
-import acme.entities.aircraft.Aircraft;
+import acme.entities.Aircraft;
 import acme.entities.maintenance.MaintenanceRecord;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,8 +1,9 @@
 
-package acme.entities.aircraft;
+package acme.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
@@ -29,40 +30,40 @@ public class Aircraft extends AbstractEntity {
 	@Mandatory
 	@ValidShortText
 	@Automapped
-	protected String			model;
+	private String				model;
 
 	@Mandatory
 	@ValidShortText
 	@Column(unique = true)
-	protected String			registrationNumber;
+	private String				registrationNumber;
 
 	@Mandatory
 	@ValidNumber
 	@Automapped
-	protected Integer			capacity;
+	private Integer				capacity;
 
 	@Mandatory
 	@ValidNumber(min = 20, max = 50)
 	@Automapped
-	protected Integer			cargoWeight;
+	private Integer				cargoWeight;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected AircraftStatus	status;
+	private AircraftStatus		status;
 
 	@Optional
 	@ValidString
 	@Automapped
-	protected String			optionalDetails;
+	private String				optionalDetails;
 
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
 
-	//	@Mandatory
-	//	@Valid
-	//	@ManyToOne(optional = false)
-	//	private Airline			airline;
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Airline				airline;
 
 }

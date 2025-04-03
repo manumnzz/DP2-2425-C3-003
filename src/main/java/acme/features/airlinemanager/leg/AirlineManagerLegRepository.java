@@ -8,11 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
+import acme.entities.Aircraft;
 import acme.entities.Airport;
 import acme.entities.S1.Flight;
 import acme.entities.S1.FlightLeg;
 import acme.entities.S1.Leg;
-import acme.entities.aircraft.Aircraft;
 import acme.realms.AirlineManager;
 
 @Repository

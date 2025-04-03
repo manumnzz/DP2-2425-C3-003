@@ -9,11 +9,11 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.Aircraft;
 import acme.entities.Airport;
 import acme.entities.S1.FlightLeg;
 import acme.entities.S1.FlightStatus;
 import acme.entities.S1.Leg;
-import acme.entities.aircraft.Aircraft;
 import acme.realms.AirlineManager;
 
 @GuiService
