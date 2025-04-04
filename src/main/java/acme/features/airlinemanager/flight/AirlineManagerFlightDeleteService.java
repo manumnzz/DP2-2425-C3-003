@@ -36,7 +36,7 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 		masterId = super.getRequest().getData("id", int.class);
 		flight = this.repository.findFlightById(masterId);
 		airlineManager = flight == null ? null : flight.getAirlineManager();
-		status = super.getRequest().getPrincipal().hasRealm(airlineManager) || flight != null;
+		status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(airlineManager);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -122,7 +122,7 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 		choices4 = SelectChoices.from(legs, "identifier", flight.getLastLeg());
 
 		// Unbind de los atributos básicos del vuelo
-		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description");
+		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description", "draftMode");
 
 		// Agregar aeropuertos y legs al dataset
 		dataset.put("originAirport", choices1.getSelected().getKey());

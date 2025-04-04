@@ -9,8 +9,8 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.maintenance.MaintenanceTask;
 import acme.entities.maintenance.MaintenanceRecord;
+import acme.entities.maintenance.MaintenanceTask;
 import acme.entities.maintenance.Task;
 import acme.entities.maintenance.TaskType;
 import acme.realms.Technician;
@@ -56,7 +56,7 @@ public class TechnicianTaskDeleteService extends AbstractGuiService<Technician, 
 	@Override
 	public void validate(final Task task) {
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(task.getDraftMode(), "draftMode", "technician.task.error.draftMode");
+			super.state(task.isDraftMode(), "draftMode", "technician.task.error.draftMode");
 	}
 
 	@Override

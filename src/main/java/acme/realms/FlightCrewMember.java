@@ -16,10 +16,10 @@ import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidLongText;
 import acme.constraints.ValidPhone;
+import acme.entities.Aircraft;
 import acme.entities.Airline;
 import acme.entities.S1.Flight;
 import acme.entities.S3.AvailabilityStatus;
-import acme.entities.aircraft.Aircraft;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -68,12 +68,12 @@ public class FlightCrewMember extends AbstractRole {
 
 	@Mandatory
 	@Valid
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	private Aircraft			aircraft;
 
 	@Mandatory
 	@Valid
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	private Flight				flight;
 
 	@Mandatory

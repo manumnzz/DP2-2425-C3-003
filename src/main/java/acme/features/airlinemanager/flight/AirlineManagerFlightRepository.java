@@ -38,8 +38,8 @@ public interface AirlineManagerFlightRepository extends AbstractRepository {
 	@Query("SELECT a FROM Airport a")
 	Collection<Airport> findAllAirports();
 
-	@Query("SELECT l FROM Leg l where l.draftMode = false")
-	Collection<Leg> findAllPublishedLegs();
+	@Query("SELECT l FROM Leg l where l.draftMode = false and l.airlineManager.id = :id")
+	Collection<Leg> findAllPublishedLegs(int id);
 
 	@Query("select l from Leg l")
 	Collection<Leg> findAllLegs();

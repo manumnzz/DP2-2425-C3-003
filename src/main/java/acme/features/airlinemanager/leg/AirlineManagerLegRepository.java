@@ -8,10 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
+import acme.entities.Aircraft;
 import acme.entities.Airport;
+import acme.entities.S1.Flight;
 import acme.entities.S1.FlightLeg;
 import acme.entities.S1.Leg;
-import acme.entities.aircraft.Aircraft;
 import acme.realms.AirlineManager;
 
 @Repository
@@ -26,8 +27,8 @@ public interface AirlineManagerLegRepository extends AbstractRepository {
 	@Query("SELECT a FROM Aircraft a")
 	Collection<Aircraft> findAllAircrafts();
 
-	@Query("select l from Leg l where l.airlineManager.id = :id")
-	Collection<Leg> findLegsByAirlineManagerId(@Param("id") int id);
+	@Query("SELECT fl.leg FROM FlightLeg fl WHERE fl.flight.id = :flightId")
+	Collection<Leg> findAllLegsByFlightId(@Param("flightId") int flightId);
 
 	@Query("select a from Airport a where a.id = :departureAirportId")
 	Airport findAirportById(int departureAirportId);
@@ -40,4 +41,11 @@ public interface AirlineManagerLegRepository extends AbstractRepository {
 
 	@Query("select fl from FlightLeg fl where fl.leg.id = :id")
 	Collection<FlightLeg> findFlightsByLegId(int id);
+
+	@Query("SELECT fl.flight FROM FlightLeg fl WHERE fl.leg.id = :legId")
+	Flight findFlightByLegId(@Param("legId") int legId);
+
+	@Query("SELECT MAX(fl.sequence) FROM FlightLeg fl WHERE fl.flight.id = :flightId")
+	Integer findMaxSequenceByFlightId(@Param("flightId") int flightId);
+
 }

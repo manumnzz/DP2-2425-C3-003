@@ -56,7 +56,7 @@ public class TechnicianTaskListAsociatedService extends AbstractGuiService<Techn
 
 		masterId = super.getRequest().getData("masterId", int.class);
 		mr = this.rp.findMrById(masterId);
-		showCreate = mr.getDraftMode() && super.getRequest().getPrincipal().hasRealm(mr.getTechnician());
+		showCreate = mr.isDraftMode() && super.getRequest().getPrincipal().hasRealm(mr.getTechnician());
 		super.getResponse().addGlobal("masterId", masterId);
 		super.getResponse().addGlobal("showCreate", showCreate);
 	}
