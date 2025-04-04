@@ -45,6 +45,10 @@ public class Task extends AbstractEntity {
 	@Valid
 	@Automapped
 	protected Long				estimatedDuration;
+
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
@@ -63,9 +67,5 @@ public class Task extends AbstractEntity {
 	@Valid
 	@ManyToOne(optional = false)
 	private Aircraft			aircraft;
-
-	@Mandatory
-	@Automapped
-	private boolean				draftMode;
 
 }
