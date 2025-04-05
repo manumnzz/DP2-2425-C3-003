@@ -16,13 +16,14 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="airlinemanager.flight.list.label.tag" path="tag" width="5%"/>
-	<acme:list-column code="airlinemanager.flight.list.label.originCity" path="originCity" width="25%"/>
-	<acme:list-column code="airlinemanager.flight.list.label.destinationCity" path="destinationCity" width="25%"/>
-	<acme:list-column code="airlinemanager.flight.list.label.scheduledDeparture" path="scheduledDeparture" width="15%"/>
-	<acme:list-column code="airlinemanager.flight.list.label.scheduledArrival" path="scheduledArrival" width="15%"/>
-	<acme:list-column code="airlinemanager.flight.list.label.cost" path="cost" width="15%"/>
-	<acme:list-payload path="payload"/>
+	<acme:list-column code='airline-manager.flight.list.label.tag' path="tag" width="20%"/>
+	<acme:list-column code='airline-manager.flight.list.label.selfTransfer' path="selfTransfer" width="20%"/>
+	<acme:list-column code='airline-manager.flight.list.label.cost' path="cost" width="20%"/>
+	<acme:list-column code='airline-manager.flight.list.label.originCity' path="originCity" width="20%"/>
+	<acme:list-column code='airline-manager.flight.list.label.destinationCity' path="arrivalAirport.name" width="20%"/>
+	
 </acme:list>
 
-<acme:button code="airlinemanager.flight.form.button.create" action="/airline-manager/flight/create"/>
+<jstl:if test="${_command == 'list'}">
+	<acme:button code="airline-manager.flight.list.button.create" action="/airline-manager/flight/create"/>
+</jstl:if>

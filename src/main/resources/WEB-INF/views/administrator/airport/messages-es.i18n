@@ -8,22 +8,34 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-administrator.airport.list.title = Lista de Aeropuertos
+airline-manager.flight.list.title = Lista de vuelos
 
-administrator.airport.list.label.name = Nombre
-administrator.airport.list.label.iataCode = iata Code
-administrator.airport.list.label.city = Ciudad
-administrator.airport.list.label.country = País
+airline-manager.flight.list.label.tag = Etiqueta
+airline-manager.flight.list.label.selfTransfer = Auto-trasbordo
+airline-manager.flight.list.label.cost = Precio
+airline-manager.flight.list.label.description = Descripcion
+airline-manager.flight.list.label.draft-mode = Modo borrador
 
-administrator.airport.form.label.name = Nombre
-administrator.airport.form.label.iataCode = iata Code
-administrator.airport.form.label.operationalScope = Alcance Operacional
-administrator.airport.form.label.city = Ciudad
-administrator.airport.form.label.country = País
-administrator.airport.form.label.website = Página Web
-administrator.airport.form.label.email = Correo Electrónico
-administrator.airport.form.label.phone = Número de Teléfono
+airline-manager.flight.form.title = Vuelo
 
-administrator.airport.form.button.create = Crear
-administrator.airport.form.button.update = Editar
-administrator.airport.form.button.delete = Borrar
+airline-manager.flight.form.label.tag = Etiqueta
+airline-manager.flight.form.label.selfTransfer = Auto-trasbordo
+airline-manager.flight.form.label.cost = Precio
+airline-manager.flight.form.label.description = Descripción
+airline-manager.flight.form.label.draftMode = Modo borrador
+airline-manager.flight.form.label.scheduledDeparture = Hora de Salida
+airline-manager.flight.form.label.scheduledArrival = Hora de Llegada
+airline-manager.flight.form.label.originCity = Ciudad de origen
+airline-manager.flight.form.label.destinationCity = Ciudad de destino
+airline-manager.flight.form.label.numberOfLayovers = Number of layovers
+
+airline-manager.flight.list.button.create = Crear
+airline-manager.flight.form.button.create = Crear
+airline-manager.flight.form.button.update = Actualizar
+airline-manager.flight.form.button.delete = Eliminar
+airline-manager.flight.form.button.publish = Publicar
+
+airline-manager.flight.publish.error.no-legs = Debe haber algún tramo
+airline-manager.flight.publish.error.no-legs-published = Debe haber algún leg publicado
+
+airline-manager.flight.form.button.legs = Escalas

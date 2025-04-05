@@ -16,29 +16,29 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:form>
-	<acme:input-textbox code="airlinemanager.flight.form.label.tag" path="tag"/>
-	<acme:input-checkbox code="airlinemanager.flight.form.label.requiresSelfTransfer" path="requiresSelfTransfer"/>
-	<acme:input-money code="airlinemanager.flight.form.label.cost" path="cost"/>
-	<acme:input-textarea code="airlinemanager.flight.form.label.description" path="description"/>
-	<acme:input-select code="airlinemanager.flight.form.label.firstLeg" path="firstLeg" choices="${firstLegs}"/>
-	<acme:input-select code="airlinemanager.flight.form.label.lastLeg" path="lastLeg" choices="${lastLegs}"/>
-	<acme:input-select code="airlinemanager.flight.form.label.originAirport" path="originAirport" choices="${originAirports}"/>
-	<acme:input-select code="airlinemanager.flight.form.label.destinationAirport" path="destinationAirport" choices="${destinationAirports}"/>
+	<acme:input-textbox code="airline-manager.flight.form.label.tag" path="tag"/>
+	<acme:input-select code="airline-manager.flight.form.label.selfTransfer" path="selfTransfer" choices="${selfTransfers}"/>
+	<acme:input-money code="airline-manager.flight.form.label.cost" path="cost"/>
+	<acme:input-textarea code="airline-manager.flight.form.label.description" path="description"/>	
+
+	
+	<jstl:if test="${acme:anyOf(_command, 'show|publish|update|delete')}">
+		<acme:input-moment readonly="true" code="airline-manager.flight.form.label.scheduledDeparture" path="scheduledDeparture"/>
+		<acme:input-moment readonly="true" code="airline-manager.flight.form.label.scheduledArrival" path="scheduledArrival"/>
+		<acme:input-textbox readonly="true" code="airline-manager.flight.form.label.originCity" path="originCity"/>
+		<acme:input-textbox readonly="true" code="airline-manager.flight.form.label.destinationCity" path="destinationCity"/>
+		<acme:input-textbox readonly="true" code="airline-manager.flight.form.label.numberOfLayovers" path="numberOfLayovers" />
+    	<acme:button code="airline-manager.flight.form.button.legs" action="/airline-manager/leg/list?flightId=${id}" />
+	</jstl:if>
 	
 	<jstl:choose>
-		<jstl:when test="${_command == 'show' && draftMode == false}">
-			<acme:button code="airlinemanager.flight.form.button.legs" action="/airline-manager/leg/list?masterId=${id}"/>
-		</jstl:when>
 		<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && draftMode == true}">
-			<acme:button code="airlinemanager.flight.form.button.legs" action="/airline-manager/leg/list?masterId=${id}"/>
-			<acme:submit code="airlinemanager.flight.form.button.update" action="/airline-manager/flight/update"/>
-			<acme:submit code="airlinemanager.flight.form.button.publish" action="/airline-manager/flight/publish"/>
-			<acme:submit code="airlinemanager.flight.form.button.delete" action="/airline-manager/flight/delete"/>
-			<acme:submit code="airlinemanager.flight.form.button.publish" action="/airline-manager/flight/publish"/>
-			
+			<acme:submit code="airline-manager.flight.form.button.update" action="/airline-manager/flight/update"/>
+			<acme:submit code="airline-manager.flight.form.button.delete" action="/airline-manager/flight/delete"/>
+			<acme:submit code="airline-manager.flight.form.button.publish" action="/airline-manager/flight/publish"/>
 		</jstl:when>
 		<jstl:when test="${_command == 'create'}">
-			<acme:submit code="airlinemanager.flight.form.button.create" action="/airline-manager/flight/create"/>
-		</jstl:when>
+			<acme:submit code="airline-manager.flight.form.button.create" action="/airline-manager/flight/create"/>
+		</jstl:when>		
 	</jstl:choose>
 </acme:form>

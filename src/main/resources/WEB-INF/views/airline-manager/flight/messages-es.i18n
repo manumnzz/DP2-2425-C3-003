@@ -20,6 +20,8 @@ airlinemanager.flight.list.label.destinationCity = Ciudad de Llegada
 airlinemanager.flight.list.label.scheduledDeparture = Salida Programada
 airlinemanager.flight.list.label.scheduledArrival = Llegada Programada
 airlinemanager.flight.list.label.cost = Coste
+airline-manager.flight.list.label.originCity = Ciudad de Origen
+airline-manager.flight.list.label.destinationCity = Ciudad de Destino
 
 airlinemanager.flight.form.label.tag = Tag
 airlinemanager.flight.form.label.requiresSelfTransfer = Requiere transbordo?

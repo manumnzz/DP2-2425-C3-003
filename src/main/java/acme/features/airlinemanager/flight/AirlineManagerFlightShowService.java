@@ -1,41 +1,33 @@
 
 package acme.features.airlinemanager.flight;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.Airport;
 import acme.entities.S1.Flight;
-import acme.entities.S1.Leg;
+import acme.entities.S1.FlightSelfTransfer;
 import acme.realms.AirlineManager;
 
 @GuiService
 public class AirlineManagerFlightShowService extends AbstractGuiService<AirlineManager, Flight> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
 	private AirlineManagerFlightRepository repository;
-
-	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int masterId;
+		int flightId;
 		Flight flight;
-		AirlineManager airlineManager;
 
-		masterId = super.getRequest().getData("id", int.class);
-		flight = this.repository.findFlightById(masterId);
-		airlineManager = flight == null ? null : flight.getAirlineManager();
-		status = super.getRequest().getPrincipal().hasRealm(airlineManager) || flight != null;
+		flightId = super.getRequest().getData("id", int.class);
+
+		flight = this.repository.findFlightById(flightId);
+
+		boolean status = flight != null && super.getRequest().getPrincipal().hasRealmOfType(AirlineManager.class) && super.getRequest().getPrincipal().getAccountId() == flight.getAirlineManager().getUserAccount().getId();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -53,41 +45,20 @@ public class AirlineManagerFlightShowService extends AbstractGuiService<AirlineM
 
 	@Override
 	public void unbind(final Flight flight) {
-		int airlineManagerId;
-		Collection<Airport> airports;
-		Collection<Leg> legs;
-		SelectChoices choices1;
-		SelectChoices choices2;
-		SelectChoices choices3;
-		SelectChoices choices4;
 		Dataset dataset;
 
-		airlineManagerId = flight.getAirlineManager().getId();
+		SelectChoices selfTransfers = SelectChoices.from(FlightSelfTransfer.class, flight.getSelfTransfer());
 
-		// Obtener listas de aeropuertos y legs
-		airports = this.repository.findAllAirports();
-		legs = this.repository.findAllPublishedLegs(airlineManagerId);
+		dataset = super.unbindObject(flight, "tag", "selfTransfer", "cost", "description", "draftMode");
 
-		// Crear listas desplegables
-		choices1 = SelectChoices.from(airports, "name", flight.getOriginAirport());
-		choices2 = SelectChoices.from(airports, "name", flight.getDestinationAirport());
-		choices3 = SelectChoices.from(legs, "flightNumber", flight.getFirstLeg());
-		choices4 = SelectChoices.from(legs, "flightNumber", flight.getLastLeg());
-
-		// Unbind de los atributos básicos del vuelo
-		dataset = super.unbindObject(flight, "tag", "requiresSelfTransfer", "cost", "description", "draftMode");
-
-		// Agregar aeropuertos y legs al dataset
-		dataset.put("originAirport", choices1.getSelected().getKey());
-		dataset.put("destinationAirport", choices2.getSelected().getKey());
-		dataset.put("originAirports", choices1);
-		dataset.put("destinationAirports", choices2);
-
-		dataset.put("firstLeg", choices3.getSelected().getKey());
-		dataset.put("lastLeg", choices4.getSelected().getKey());
-		dataset.put("firstLegs", choices3);
-		dataset.put("lastLegs", choices4);
+		dataset.put("selfTransfers", selfTransfers);
+		dataset.put("scheduledDeparture", flight.getScheduledDeparture());
+		dataset.put("scheduledArrival", flight.getScheduledArrival());
+		dataset.put("originCity", flight.getOriginCity());
+		dataset.put("destinationCity", flight.getDestinationCity());
+		dataset.put("numberOfLayovers", flight.getNumberOfLayovers());
 
 		super.getResponse().addData(dataset);
 	}
+
 }

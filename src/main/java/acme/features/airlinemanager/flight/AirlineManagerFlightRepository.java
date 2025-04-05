@@ -2,45 +2,31 @@
 package acme.features.airlinemanager.flight;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.Airport;
 import acme.entities.S1.Flight;
-import acme.entities.S1.FlightLeg;
 import acme.entities.S1.Leg;
-import acme.realms.AirlineManager;
 
 @Repository
 public interface AirlineManagerFlightRepository extends AbstractRepository {
 
-	@Query("select f from Flight f where f.airlineManager.id = :id")
-	Collection<Flight> findFlightsByAirlineManagerId(@Param("id") int id);
+	@Query("SELECT f FROM Flight f WHERE f.airlineManager.id = :airlineManagerId")
+	Collection<Flight> findFlightsByManagerId(int airlineManagerId);
 
-	@Query("select f from Flight f where f.id = :id")
-	Flight findFlightById(int id);
+	@Query("SELECT f FROM Flight f WHERE f.id = :masterId")
+	Flight findFlightById(int masterId);
 
-	@Query("select fl from FlightLeg fl where fl.flight.id = :id")
-	Collection<FlightLeg> findLegsByFlightId(int id);
+	@Query("SELECT l FROM Leg l WHERE l.flight.id = :flightId")
+	Collection<Leg> findLegsByFlightId(int flightId);
 
-	@Query("SELECT l FROM Leg l WHERE l.id = :id")
-	Leg findLegById(@Param("id") int id);
+	@Query("SELECT l FROM Leg l WHERE l.flight.id = :flightId AND l.draftMode = false")
+	Collection<Leg> findPublishedLegsByFlightId(int flightId);
 
-	@Query("SELECT a FROM Airport a WHERE a.id = :id")
-	Airport findAirportById(@Param("id") int id);
+	@Query("SELECT l FROM Leg l WHERE l.flight.id = :flightId ORDER BY l.scheduledDeparture ASC")
+	List<Leg> findByFlightIdOrdered(int flightId);
 
-	@Query("SELECT am FROM AirlineManager am WHERE am.id = :id")
-	AirlineManager findAirlineManagerById(@Param("id") int airlineManagerId);
-
-	@Query("SELECT a FROM Airport a")
-	Collection<Airport> findAllAirports();
-
-	@Query("SELECT l FROM Leg l where l.draftMode = false and l.airlineManager.id = :id")
-	Collection<Leg> findAllPublishedLegs(int id);
-
-	@Query("select l from Leg l")
-	Collection<Leg> findAllLegs();
 }
