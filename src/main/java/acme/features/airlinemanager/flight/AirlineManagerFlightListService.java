@@ -14,26 +14,24 @@ import acme.realms.AirlineManager;
 @GuiService
 public class AirlineManagerFlightListService extends AbstractGuiService<AirlineManager, Flight> {
 
-	//Internal state ---------------------------------------------------------
-
 	@Autowired
 	private AirlineManagerFlightRepository repository;
-
-	//AbstractGuiService interface ---------------------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status = super.getRequest().getPrincipal().hasRealmOfType(AirlineManager.class);
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
 		Collection<Flight> flights;
-		int id;
+		int airlineManagerId;
 
-		id = super.getRequest().getPrincipal().getActiveRealm().getId();
-		flights = this.repository.findFlightsByAirlineManagerId(id);
+		airlineManagerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		flights = this.repository.findFlightsByManagerId(airlineManagerId);
 
 		super.getBuffer().addData(flights);
 	}
@@ -42,12 +40,8 @@ public class AirlineManagerFlightListService extends AbstractGuiService<AirlineM
 	public void unbind(final Flight flight) {
 		Dataset dataset;
 
-		// Unbind de los atributos normales
-		dataset = super.unbindObject(flight, "tag", "cost", "originCity", "destinationCity", "scheduledDeparture", "scheduledArrival");
-		super.addPayload(dataset, flight, "requiresSelfTransfer", "description", "originAirport.name", "destinationAirport.name", "firstLeg", "lastLeg", "airlineManager");
+		dataset = super.unbindObject(flight, "tag", "selfTransfer", "cost", "originCity", "destinationCity");
 
-		// Añadir la respuesta con los datos al dataset
 		super.getResponse().addData(dataset);
 	}
-
 }

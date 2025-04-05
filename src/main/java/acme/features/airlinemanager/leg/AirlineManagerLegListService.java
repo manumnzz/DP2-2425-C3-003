@@ -8,45 +8,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.Flight;
 import acme.entities.S1.Leg;
 import acme.realms.AirlineManager;
 
 @GuiService
 public class AirlineManagerLegListService extends AbstractGuiService<AirlineManager, Leg> {
 
-	//Internal state ---------------------------------------------------------
-
 	@Autowired
 	private AirlineManagerLegRepository repository;
-
-	//AbstractGuiService interface ---------------------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		int flightId;
+		Flight flight;
+		AirlineManager manager;
+
+		flightId = super.getRequest().getData("flightId", int.class);
+
+		flight = this.repository.findFlightById(flightId);
+
+		manager = (AirlineManager) super.getRequest().getPrincipal().getActiveRealm();
+
+		boolean status = flight != null && super.getRequest().getPrincipal().hasRealm(manager) && flight.getAirlineManager().equals(manager);
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
 		Collection<Leg> legs;
-		int masterId;
+		int flightId;
 
-		masterId = super.getRequest().getData("masterId", int.class);
-		legs = this.repository.findAllLegsByFlightId(masterId);
+		flightId = super.getRequest().getData("flightId", int.class);
+		legs = this.repository.findLegsByFlightId(flightId);
 
+		super.getResponse().addGlobal("flightId", flightId);
 		super.getBuffer().addData(legs);
-
 	}
 
 	@Override
 	public void unbind(final Leg leg) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "departureAirport.name", "arrivalAirport.name", "draftMode");
-		super.addPayload(dataset, leg, "aircraft", "duration", "status", "flightNumber");
+		dataset = super.unbindObject(leg, "scheduledDeparture", "scheduledArrival", "status");
+
+		dataset.put("flightNumber", leg.getFlightNumber());
+		dataset.put("departureAirport", leg.getDepartureAirport().getIataCode());
+		dataset.put("arrivalAirport", leg.getArrivalAirport().getIataCode());
+		dataset.put("flightId", leg.getFlight().getId());
 
 		super.getResponse().addData(dataset);
 	}
-
 }

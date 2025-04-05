@@ -21,6 +21,8 @@ airlinemanager.flight.list.label.destinationCity = Destination City
 airlinemanager.flight.list.label.scheduledDeparture = Scheduled Departure
 airlinemanager.flight.list.label.scheduledArrival = Scheduled Arrival
 airlinemanager.flight.list.label.cost = Cost
+airline-manager.flight.list.label.originCity = Origin City
+airline-manager.flight.list.label.destinationCity = Destination City
 
 airlinemanager.flight.form.label.tag = Tag
 airlinemanager.flight.form.label.requiresSelfTransfer = Requires Self Transfer?

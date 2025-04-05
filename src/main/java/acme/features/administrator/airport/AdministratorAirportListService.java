@@ -14,12 +14,12 @@ import acme.entities.Airport;
 @GuiService
 public class AdministratorAirportListService extends AbstractGuiService<Administrator, Airport> {
 
-	//Internal state ---------------------------------------------------------
+	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private AdministratorAirportRepository repository;
 
-	//AbstractGuiService interface ---------------------------------------------------------
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -30,6 +30,7 @@ public class AdministratorAirportListService extends AbstractGuiService<Administ
 	@Override
 	public void load() {
 		Collection<Airport> airports;
+
 		airports = this.repository.findAllAirports();
 
 		super.getBuffer().addData(airports);
@@ -39,9 +40,9 @@ public class AdministratorAirportListService extends AbstractGuiService<Administ
 	public void unbind(final Airport airport) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(airport, "name", "iataCode", "city", "country");
-		super.addPayload(dataset, airport, "operationalScope", "website", "email", "phone");
+		dataset = super.unbindObject(airport, "name", "iataCode", "operationalScope", "city", "country");
 
 		super.getResponse().addData(dataset);
 	}
+
 }

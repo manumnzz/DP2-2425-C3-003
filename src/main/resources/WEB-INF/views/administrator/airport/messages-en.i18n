@@ -8,22 +8,34 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-administrator.airport.list.title = Airport List
+airline-manager.flight.list.title = Listing of flights
 
-administrator.airport.list.label.name = Name
-administrator.airport.list.label.iataCode = iataCode
-administrator.airport.list.label.city = City
-administrator.airport.list.label.country = Country
+airline-manager.flight.list.label.tag = Tag
+airline-manager.flight.list.label.selfTransfer = Self Transfer
+airline-manager.flight.list.label.cost = Cost
+airline-manager.flight.list.label.description = Description
+airline-manager.flight.list.label.draft-mode = Draft Mode
 
-administrator.airport.form.label.name = Name
-administrator.airport.form.label.iataCode = iataCode
-administrator.airport.form.label.operationalScope = Operational Scope
-administrator.airport.form.label.city = City
-administrator.airport.form.label.country = Country
-administrator.airport.form.label.website = Web Site
-administrator.airport.form.label.email = Email
-administrator.airport.form.label.phone = Phone
+airline-manager.flight.form.title = Flight
 
-administrator.airport.form.button.create = Create
-administrator.airport.form.button.update = Update
-administrator.airport.form.button.delete = Delete
+airline-manager.flight.form.label.tag = Tag
+airline-manager.flight.form.label.selfTransfer = Self Transfer
+airline-manager.flight.form.label.cost = Cost
+airline-manager.flight.form.label.description = Description
+airline-manager.flight.form.label.draftMode = Draft Mode
+airline-manager.flight.form.label.scheduledDeparture = Scheduled Airport
+airline-manager.flight.form.label.scheduledArrival = Scheduled Arrival
+airline-manager.flight.form.label.originCity = Origin City
+airline-manager.flight.form.label.destinationCity = Destination city
+airline-manager.flight.form.label.numberOfLayovers = Number of layovers
+
+airline-manager.flight.list.button.create = Create
+airline-manager.flight.form.button.create = Create
+airline-manager.flight.form.button.update = Update
+airline-manager.flight.form.button.delete = Delete
+airline-manager.flight.form.button.publish = Publish
+
+airline-manager.flight.publish.error.no-legs = Must be any leg
+airline-manager.flight.publish.error.no-legs-published = Must be any leg published
+
+airline-manager.flight.form.button.legs = Legs
