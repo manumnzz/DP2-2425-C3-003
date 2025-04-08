@@ -15,7 +15,7 @@ import acme.entities.maintenance.Task;
 import acme.realms.Technician;
 
 @GuiService
-public class TechnicianMaintenanceTaskCreateService extends AbstractGuiService<Technician, MaintenanceTask> {
+public class TechnicianMaintenanceTaskDeleteService extends AbstractGuiService<Technician, MaintenanceTask> {
 
 	@Autowired
 	private TechnicianMaintenanceTaskRepository rp;
@@ -45,12 +45,12 @@ public class TechnicianMaintenanceTaskCreateService extends AbstractGuiService<T
 
 	@Override
 	public void validate(final MaintenanceTask mt) {
+		//
 	}
 
 	@Override
 	public void perform(final MaintenanceTask mt) {
-		this.rp.save(mt);
-
+		this.rp.delete(mt);
 	}
 
 	@Override

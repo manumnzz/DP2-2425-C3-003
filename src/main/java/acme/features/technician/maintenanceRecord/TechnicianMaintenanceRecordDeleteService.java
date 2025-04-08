@@ -31,7 +31,7 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 		masterId = super.getRequest().getData("id", int.class);
 		mr = this.rp.findMrById(masterId);
 		technician = mr == null ? null : mr.getTechnician();
-		status = super.getRequest().getPrincipal().hasRealm(technician) || mr != null;
+		status = technician != null && super.getRequest().getPrincipal().getActiveRealm().getId() == technician.getId() && mr != null;
 
 		super.getResponse().setAuthorised(status);
 	}
