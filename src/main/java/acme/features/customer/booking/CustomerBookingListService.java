@@ -6,9 +6,11 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
+import acme.entities.S2.ClassType;
 import acme.realms.Customer;
 
 @GuiService
@@ -24,7 +26,11 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		Customer customer;
+		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
+		status = customer != null;
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -42,7 +48,17 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 	public void unbind(final Booking booking) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(booking, "reference", "status", "creationMoment");
+		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCreditCardNibble", "draftMode");
+
+		/*
+		 * dataset.put("locatorCode", booking.getLocatorCode());
+		 * dataset.put("purchaseMoment", booking.getPurchaseMoment());
+		 * dataset.put("travelClass", booking.getTravelClass());
+		 * dataset.put("price", booking.getPrice());
+		 * dataset.put("locatorCode", booking.getCustomer().getIdentifier());
+		 */
+		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
+		dataset.put("travelClass", travelClassChoices);
 		super.getResponse().addData(dataset);
 	}
 }

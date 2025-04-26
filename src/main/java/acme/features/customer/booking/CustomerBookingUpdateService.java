@@ -1,13 +1,10 @@
 
 package acme.features.customer.booking;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
@@ -15,7 +12,7 @@ import acme.entities.S2.ClassType;
 import acme.realms.Customer;
 
 @GuiService
-public class CustomerBookingCreateService extends AbstractGuiService<Customer, Booking> {
+public class CustomerBookingUpdateService extends AbstractGuiService<Customer, Booking> {
 
 	// Internal state ---------------------------------------------------------
 
@@ -27,21 +24,18 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		Booking booking = this.repository.findBookingById(bookingId);
+
+		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && booking.getLastCreditCardNibble() == null;
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Date moment;
-		Customer customer;
-		Booking booking;
-
-		moment = MomentHelper.getCurrentMoment();
-		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-
-		booking = new Booking();
-		booking.setCustomer(customer);
-		booking.setDraftMode(true);
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		Booking booking = this.repository.findBookingById(bookingId);
 		super.getBuffer().addData(booking);
 	}
 
@@ -51,20 +45,22 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	}
 
 	@Override
-	public void perform(final Booking booking) {
-		this.repository.save(booking);
-	}
-
-	@Override
 	public void validate(final Booking booking) {
+
+		if (booking.getLastCreditCardNibble() != null)
+			super.state(false, "lastCreditCardNibble", "acme.validation.booking.no-modify-after-payment");
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
 			super.state(booking.isDraftMode(), "draftMode", "customer.booking.error.draftMode");
 	}
 
 	@Override
+	public void perform(final Booking booking) {
+		this.repository.save(booking);
+	}
+
+	@Override
 	public void unbind(final Booking booking) {
-		Dataset dataset;
-		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCreditCardNibble", "draftMode");
+		Dataset dataset = super.unbindObject(booking, "locatorCode", "travelClass", "price", "flight", "draftMode");
 
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);

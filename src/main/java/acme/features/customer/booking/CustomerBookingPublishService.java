@@ -12,7 +12,7 @@ import acme.entities.S2.ClassType;
 import acme.realms.Customer;
 
 @GuiService
-public class CustomerBookingShowService extends AbstractGuiService<Customer, Booking> {
+public class CustomerBookingPublishService extends AbstractGuiService<Customer, Booking> {
 
 	// Internal state ---------------------------------------------------------
 
@@ -24,31 +24,40 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 
 	@Override
 	public void authorise() {
-		int bookingId = super.getRequest().getData("id", int.class);
+		int bookingId = super.getRequest().getData("bookingId", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 
-		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
+		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && booking.getLastCreditCardNibble() == null;
+
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int bookingId = super.getRequest().getData("id", int.class);
+		int bookingId = super.getRequest().getData("bookingId", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
+		super.getBuffer().addData(booking);
+	}
 
-		System.out.println("bookingId = " + bookingId);
-		// Importante: Chequear si el booking existe antes de añadirlo al buffer
-		if (booking != null)
-			super.getBuffer().addData(booking);
-		else
-			// Opción 1: Lanzar excepción controlada (recomendado)
-			throw new RuntimeException("Booking with id " + bookingId + " not found");
+	@Override
+	public void bind(final Booking booking) {
+		super.bindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCreditCardNibble", "draftMode");
+	}
+
+	@Override
+	public void validate(final Booking booking) {
+		if (booking.getLastCreditCardNibble() == null || booking.getLastCreditCardNibble().isBlank())
+			super.state(false, "lastCreditCardNibble", "acme.validation.booking.credit-card-required");
+	}
+
+	@Override
+	public void perform(final Booking booking) {
+		this.repository.save(booking);
 	}
 
 	@Override
 	public void unbind(final Booking booking) {
 		Dataset dataset;
-
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCreditCardNibble", "draftMode");
 
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());

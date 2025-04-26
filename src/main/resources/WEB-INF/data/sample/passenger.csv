@@ -1,0 +1,4 @@
+key,fullName,email,passportNumber,dateOfBirth,specialNeeds,draftMode,key:customer
+passenger-01,John Doe,john.doe@example.com,A1234567,2000/05/15 10:30,None,false,customer-01
+passenger-02,Alice Smith,alice.smith@example.com,B7654321,2001/09/22 10:30,Wheelchair,false,customer-02
+passenger-03,Bob Johnson,bob.johnson@example.com,C9876543,2002/02/10 10:30,Vegetarian meal,true,customer-03
