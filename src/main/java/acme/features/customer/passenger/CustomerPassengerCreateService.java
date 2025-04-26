@@ -22,7 +22,6 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void authorise() {
-		System.out.println("AUTHORISE");
 		boolean status;
 		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 		status = customer != null;
@@ -31,7 +30,6 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void load() {
-		System.out.println("LOAD");
 		Passenger passenger;
 		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 		passenger = new Passenger();
@@ -42,27 +40,23 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void bind(final Passenger passenger) {
-		System.out.println("BIND");
 		super.bindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
 	}
 
 	@Override
 	public void validate(final Passenger passenger) {
-		System.out.println("VALIDATE");
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
 			super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
 	}
 
 	@Override
 	public void perform(final Passenger passenger) {
-		System.out.println("Guardando passenger: " + passenger);
 		this.repository.save(passenger);
 		super.getBuffer().addData(passenger);
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
-		System.out.println("UNBIND: " + passenger);
 		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
 		dataset.put("customer", passenger.getCustomer().getUserAccount().getUsername());
 		super.getResponse().addData(dataset);
