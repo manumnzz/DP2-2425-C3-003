@@ -4,7 +4,10 @@ package acme.entities.S4;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -13,6 +16,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
 import acme.constraints.ValidLongText;
+import acme.realms.AssistanceAgent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +29,7 @@ public class Claim extends AbstractEntity {
 
 	@ValidMoment(past = true)
 	@Mandatory
-	@NotNull
+	@Temporal(TemporalType.DATE)
 	private Date				moment;
 
 	@Mandatory
@@ -43,8 +47,16 @@ public class Claim extends AbstractEntity {
 	@Mandatory
 	private boolean				indicator;
 
+	boolean						draftMode;
+
 
 	public enum Type {
 		FLIGHT_ISSUES, LUGGAGE_ISSUES, SECURITY_INCIDENT, OTHER
 	}
+
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private AssistanceAgent assistenceAgent;
 }

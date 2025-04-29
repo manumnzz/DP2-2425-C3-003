@@ -1,0 +1,2 @@
+key,moment,passengerEmail,description,type,indicator,draftMode,key:assistenceAgent
+claim-01,2020/01/01 00:00,email1@mail.com,description1,FLIGHT_ISSUES,true,true,assistance-agent01

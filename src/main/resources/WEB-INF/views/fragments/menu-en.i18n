@@ -41,6 +41,12 @@ master.menu.anonymous.favourite-link-5 = 77858342F: Orta Perez, Manuel
 master.menu.consumer = Consumer
 master.menu.consumer.favourite-link = Favourite link
 
+# master.menu.assistanceagent ##########################################################
+
+master.menu.assistanceagent = Assistance agent
+master.menu.assistanceagent.list-trackinglog = Tracking logs
+master.menu.assistanceagent.list-claim = Claims
+
 # master.menu.user-account ####################################################
 
 master.menu.user-account = Account

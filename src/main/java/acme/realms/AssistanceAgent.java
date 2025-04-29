@@ -4,6 +4,8 @@ package acme.realms;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import acme.client.components.basis.AbstractRole;
 import acme.client.components.mappings.Automapped;
@@ -42,7 +44,7 @@ public class AssistanceAgent extends AbstractRole {
 
 	@ValidMoment(past = true)
 	@Mandatory
-	@Automapped
+	@Temporal(TemporalType.DATE)
 	private Date				moment;
 
 	@Optional

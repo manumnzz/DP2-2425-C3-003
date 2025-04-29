@@ -1,0 +1,16 @@
+master.menu.manager = Manager Menu
+
+
+assistanceagent.trackinglog.list.label.updateTime = Ultima actualizacion
+assistanceagent.trackinglog.list.label.step = Paso
+assistanceagent.trackinglog.list.label.resolutionPercentage = Porcentaje de resolucion
+
+assistanceagent.trackinglog.form.label.updateTime = Ultima actualizacion
+assistanceagent.trackinglog.form.label.step = Paso
+assistanceagent.trackinglog.form.label.resolutionPercentage = Porcentaje de resolucion
+assistanceagent.trackinglog.form.label.resolution = Resolucion
+assistanceagent.trackinglog.form.label.indicator = Indicador
+
+assistanceagent.trackinglog.form.button.create = Crear
+assistanceagent.trackinglog.form.button.update = Actualizar
+assistanceagent.trackinglog.form.button.Delete = Eliminar
