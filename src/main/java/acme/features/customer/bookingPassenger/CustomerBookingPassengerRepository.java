@@ -32,4 +32,10 @@ public interface CustomerBookingPassengerRepository extends AbstractRepository {
 	@Query("select count(bp) from BookingPassenger bp where bp.booking.id = :bookingId and bp.passenger.id = :passengerId")
 	int existsBookingPassenger(int bookingId, int passengerId);
 
+	@Query("select b from Booking b where b.id =:bookingId")
+	Booking findBookingById(int bookingId);
+
+	@Query("select count(bp) from BookingPassenger bp where bp.passenger.id = :passengerId and bp.booking.customer.id = :customerId")
+	int existsBookingPassengerForCustomer(int passengerId, int customerId);
+
 }

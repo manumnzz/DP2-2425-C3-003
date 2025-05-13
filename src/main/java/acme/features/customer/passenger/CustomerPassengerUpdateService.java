@@ -7,42 +7,31 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Passenger;
+import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerPassengerUpdateService extends AbstractGuiService<Customer, Passenger> {
 
-	// Internal state ---------------------------------------------------------
+	@Autowired
+	private CustomerPassengerRepository			repository;
 
 	@Autowired
-	private CustomerPassengerRepository repository;
-
-	// AbstractGuiService interface -------------------------------------------
+	private CustomerBookingPassengerRepository	bookingPassengerRepository;
 
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int passengerId;
-		Passenger passenger;
-		Customer customer;
-
-		passengerId = super.getRequest().getData("id", int.class);
-		passenger = this.repository.findPassengerById(passengerId);
-		customer = passenger == null ? null : passenger.getCustomer();
-		status = super.getRequest().getPrincipal().hasRealm(customer) || passenger != null;
-
+		int passengerId = super.getRequest().getData("id", int.class);
+		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
+		boolean status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0;
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Passenger passenger;
-		int passengerId;
-
-		passengerId = super.getRequest().getData("id", int.class);
-		passenger = this.repository.findPassengerById(passengerId);
-
+		int passengerId = super.getRequest().getData("id", int.class);
+		Passenger passenger = this.repository.findPassengerById(passengerId);
 		super.getBuffer().addData(passenger);
 	}
 
@@ -55,7 +44,6 @@ public class CustomerPassengerUpdateService extends AbstractGuiService<Customer,
 	public void validate(final Passenger passenger) {
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
 			super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
-
 	}
 
 	@Override
@@ -65,10 +53,7 @@ public class CustomerPassengerUpdateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void unbind(final Passenger passenger) {
-		Dataset dataset;
-
-		dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
-		dataset.put("customer", passenger.getCustomer().getUserAccount().getUsername());
+		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
 		super.getResponse().addData(dataset);
 	}
 }

@@ -23,7 +23,6 @@
     <acme:input-textbox code="customer.passenger.form.label.passportNumber" path="passportNumber"/>
     <acme:input-textbox code="customer.passenger.form.label.dateOfBirth" path="dateOfBirth"/>
     <acme:input-textarea code="customer.passenger.form.label.specialNeeds" path="specialNeeds"/>
-	<acme:input-textbox code="customer.passenger.form.label.customer" path="customer" readonly="true"/>
 	<acme:input-checkbox code="customer.passenger.form.label.draftMode" path="draftMode" readonly="true"/>
 
 	
@@ -34,7 +33,7 @@
 			
 		</jstl:when>
 		<jstl:when test="${_command == 'create'}">
-			<acme:submit code="customer.passenger.form.button.create" action="/customer/passenger/create"/>
+			<acme:submit code="customer.passenger.form.button.create" action="/customer/passenger/create?bookingId=${bookingId}"/>
 		</jstl:when>		
 	</jstl:choose>
 </jstl:if>
@@ -45,7 +44,6 @@
 	    <acme:input-textbox code="customer.passenger.form.label.passportNumber" path="passportNumber" readonly="true"/>
 	    <acme:input-textbox code="customer.passenger.form.label.dateOfBirth" path="dateOfBirth" readonly="true"/>
 	    <acme:input-textarea code="customer.passenger.form.label.specialNeeds" path="specialNeeds" readonly="true"/>
-		<acme:input-textbox code="customer.passenger.form.label.customer" path="customer" readonly="true"/>
 		<acme:input-checkbox code="customer.passenger.form.label.draftMode" path="draftMode" readonly="true"/>
 </jstl:if>
 

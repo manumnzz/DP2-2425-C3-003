@@ -24,17 +24,17 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void authorise() {
-		int bookingId = super.getRequest().getData("bookingId", int.class);
+		int bookingId = super.getRequest().getData("id", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 
-		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && booking.getLastCreditCardNibble() == null;
+		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
 
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int bookingId = super.getRequest().getData("bookingId", int.class);
+		int bookingId = super.getRequest().getData("id", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 		super.getBuffer().addData(booking);
 	}
@@ -47,8 +47,8 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 	@Override
 	public void validate(final Booking booking) {
 
-		if (booking.getLastCreditCardNibble() != null)
-			super.state(false, "lastCreditCardNibble", "acme.validation.booking.no-modify-after-payment");
+		//if (booking.getLastCreditCardNibble() != null)
+		//super.state(false, "lastCreditCardNibble", "acme.validation.booking.no-modify-after-payment");
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
 			super.state(booking.isDraftMode(), "draftMode", "customer.booking.error.draftMode");
 	}
@@ -60,10 +60,11 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void unbind(final Booking booking) {
-		Dataset dataset = super.unbindObject(booking, "locatorCode", "travelClass", "price", "flight", "draftMode");
+		Dataset dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCreditCardNibble", "draftMode");
 
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);
+
 		super.getResponse().addData(dataset);
 	}
 }

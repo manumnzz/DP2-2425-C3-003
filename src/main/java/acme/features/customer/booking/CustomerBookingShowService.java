@@ -53,6 +53,7 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);
+		dataset.put("id", booking.getId());
 		super.getResponse().addData(dataset);
 	}
 }
