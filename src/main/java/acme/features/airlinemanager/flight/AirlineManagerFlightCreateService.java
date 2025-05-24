@@ -1,46 +1,40 @@
 
 package acme.features.airlinemanager.flight;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Flight;
 import acme.entities.S1.FlightSelfTransfer;
-import acme.entities.S1.Leg;
 import acme.realms.AirlineManager;
 
 @GuiService
 public class AirlineManagerFlightCreateService extends AbstractGuiService<AirlineManager, Flight> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
 	private AirlineManagerFlightRepository repository;
-
-	// AbstractService<AirlineManager, Flight> -------------------------------------
 
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status = super.getRequest().getPrincipal().hasRealmOfType(AirlineManager.class);
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
 		Flight flight;
-		AirlineManager airlineManager;
+		AirlineManager manager;
 
-		airlineManager = (AirlineManager) super.getRequest().getPrincipal().getActiveRealm();
+		manager = (AirlineManager) super.getRequest().getPrincipal().getActiveRealm();
 
 		flight = new Flight();
 		flight.setDraftMode(true);
-		flight.setAirlineManager(airlineManager);
+		flight.setAirlineManager(manager);
 
 		super.getBuffer().addData(flight);
 	}
@@ -52,21 +46,7 @@ public class AirlineManagerFlightCreateService extends AbstractGuiService<Airlin
 
 	@Override
 	public void validate(final Flight flight) {
-		if (flight == null) {
-			super.state(false, "*", "javax.validation.constraints.NotNull.message");
-			return;
-		}
-		List<Leg> legs = this.repository.findByFlightIdOrdered(flight.getId());
-
-		if (legs != null)
-			for (int i = 0; i < legs.size() - 1; i++) {
-				Leg currentLeg = legs.get(i);
-				Leg nextLeg = legs.get(i + 1);
-
-				boolean isInOrder = !MomentHelper.isAfter(currentLeg.getScheduledArrival(), nextLeg.getScheduledDeparture());
-
-				super.state(isInOrder, "legs[${i}]", "acme.validation.flight.legs.sequential-order");
-			}
+		;
 	}
 
 	@Override

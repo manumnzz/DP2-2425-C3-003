@@ -20,7 +20,7 @@
 	<acme:list-column code='airline-manager.flight.list.label.selfTransfer' path="selfTransfer" width="20%"/>
 	<acme:list-column code='airline-manager.flight.list.label.cost' path="cost" width="20%"/>
 	<acme:list-column code='airline-manager.flight.list.label.originCity' path="originCity" width="20%"/>
-	<acme:list-column code='airline-manager.flight.list.label.destinationCity' path="arrivalAirport.name" width="20%"/>
+	<acme:list-column code='airline-manager.flight.list.label.destinationCity' path="destinationCity" width="20%"/>
 	
 </acme:list>
 

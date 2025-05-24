@@ -23,15 +23,15 @@ public class AirlineManagerLegListService extends AbstractGuiService<AirlineMana
 	public void authorise() {
 		int flightId;
 		Flight flight;
-		AirlineManager manager;
+		AirlineManager airlineManager;
 
 		flightId = super.getRequest().getData("flightId", int.class);
 
 		flight = this.repository.findFlightById(flightId);
 
-		manager = (AirlineManager) super.getRequest().getPrincipal().getActiveRealm();
+		airlineManager = (AirlineManager) super.getRequest().getPrincipal().getActiveRealm();
 
-		boolean status = flight != null && super.getRequest().getPrincipal().hasRealm(manager) && flight.getAirlineManager().equals(manager);
+		boolean status = flight != null && super.getRequest().getPrincipal().hasRealm(airlineManager) && flight.getAirlineManager().equals(airlineManager);
 
 		super.getResponse().setAuthorised(status);
 	}
