@@ -1,18 +1,14 @@
 
 package acme.features.airlinemanager.flight;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Flight;
 import acme.entities.S1.FlightSelfTransfer;
-import acme.entities.S1.Leg;
 import acme.realms.AirlineManager;
 
 @GuiService
@@ -26,12 +22,15 @@ public class AirlineManagerFlightUpdateService extends AbstractGuiService<Airlin
 	public void authorise() {
 		int flightId;
 		Flight flight;
+		AirlineManager airlineManager;
 
 		flightId = super.getRequest().getData("id", int.class);
 
 		flight = this.repository.findFlightById(flightId);
 
-		boolean status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealmOfType(AirlineManager.class) && super.getRequest().getPrincipal().getAccountId() == flight.getAirlineManager().getUserAccount().getId();
+		airlineManager = flight == null ? null : flight.getAirlineManager();
+
+		boolean status = flight != null && airlineManager != null && flight.isDraftMode() && super.getRequest().getPrincipal().getAccountId() == flight.getAirlineManager().getUserAccount().getId();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -54,21 +53,7 @@ public class AirlineManagerFlightUpdateService extends AbstractGuiService<Airlin
 
 	@Override
 	public void validate(final Flight flight) {
-		if (flight == null) {
-			super.state(false, "*", "javax.validation.constraints.NotNull.message");
-			return;
-		}
-		List<Leg> legs = this.repository.findByFlightIdOrdered(flight.getId());
-
-		if (legs != null)
-			for (int i = 0; i < legs.size() - 1; i++) {
-				Leg currentLeg = legs.get(i);
-				Leg nextLeg = legs.get(i + 1);
-
-				boolean isInOrder = !MomentHelper.isAfter(currentLeg.getScheduledArrival(), nextLeg.getScheduledDeparture());
-
-				super.state(isInOrder, "*", "acme.validation.flight.legs.sequential-order");
-			}
+		;
 	}
 
 	@Override

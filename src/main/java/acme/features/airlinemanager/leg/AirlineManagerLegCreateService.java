@@ -2,24 +2,18 @@
 package acme.features.airlinemanager.leg;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.MomentHelper;
-import acme.client.helpers.SpringHelper;
-import acme.client.helpers.StringHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Aircraft;
-import acme.entities.AircraftStatus;
 import acme.entities.Airport;
 import acme.entities.S1.Flight;
 import acme.entities.S1.FlightStatus;
 import acme.entities.S1.Leg;
-import acme.entities.S1.LegRepository;
 import acme.realms.AirlineManager;
 
 @GuiService
@@ -36,12 +30,34 @@ public class AirlineManagerLegCreateService extends AbstractGuiService<AirlineMa
 		AirlineManager manager;
 
 		flightId = super.getRequest().getData("flightId", int.class);
-
 		flight = this.repository.findFlightById(flightId);
-
 		manager = (AirlineManager) super.getRequest().getPrincipal().getActiveRealm();
 
 		boolean status = flight != null && super.getRequest().getPrincipal().hasRealm(manager) && super.getRequest().getPrincipal().getAccountId() == flight.getAirlineManager().getUserAccount().getId();
+
+		if (super.getRequest().getMethod().equals("POST")) {
+			Integer aircraftId = super.getRequest().getData("aircraft", Integer.class);
+			Aircraft aircraft = null;
+
+			if (aircraftId != null && aircraftId != 0)
+				aircraft = this.repository.findAircraftById(aircraftId);
+
+			Integer arrivalAirportId = super.getRequest().getData("arrivalAirport", Integer.class);
+			Airport arrivalAirport = null;
+			if (arrivalAirportId != null && arrivalAirportId != 0)
+				arrivalAirport = this.repository.findAirportById(arrivalAirportId);
+
+			Integer departureAirportId = super.getRequest().getData("departureAirport", Integer.class);
+			Airport departureAirport = null;
+			if (departureAirportId != null && departureAirportId != 0)
+				departureAirport = this.repository.findAirportById(departureAirportId);
+
+			boolean aircraftAutorization = aircraftId != null && aircraftId != 0 && aircraft == null;
+			boolean departureAirportAutorization = departureAirportId != null && departureAirportId != 0 && departureAirport == null;
+			boolean arrivalAirportAutorization = arrivalAirportId != null && arrivalAirportId != 0 && arrivalAirport == null;
+			if (aircraftAutorization || departureAirportAutorization || arrivalAirportAutorization)
+				status = false;
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -78,53 +94,7 @@ public class AirlineManagerLegCreateService extends AbstractGuiService<AirlineMa
 
 	@Override
 	public void validate(final Leg leg) {
-		if (leg == null) {
-			super.state(false, "leg", "javax.validation.constraints.NotNull.message");
-			return;
-		}
-
-		if (!StringHelper.isBlank(leg.getFlightNumber())) {
-			String airlineIataCode = leg.getFlight().getAirlineManager().getAirline().getIataCode();
-			boolean validFlightNumber = StringHelper.startsWith(leg.getFlightNumber(), airlineIataCode, true);
-			super.state(validFlightNumber, "flightNumber", "acme.validation.leg.flightNumber.validFlightNumber.message");
-		}
-
-		if (leg.getScheduledDeparture() != null) {
-			boolean isAfterCurrent = MomentHelper.isAfter(leg.getScheduledDeparture(), MomentHelper.getCurrentMoment());
-			super.state(isAfterCurrent, "scheduledDeparture", "acme.validation.leg.scheduledArrival.must-be-after-current-moment.message");
-		}
-
-		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
-			boolean validScheduledArrival = MomentHelper.isAfter(leg.getScheduledArrival(), leg.getScheduledDeparture());
-			super.state(validScheduledArrival, "scheduledArrival", "acme.validation.leg.scheduledArrival.must-be-after.message");
-		}
-
-		if (!StringHelper.isBlank(leg.getFlightNumber())) {
-			LegRepository repository = SpringHelper.getBean(LegRepository.class);
-			boolean repeatedFlightNumber = repository.findByFlightNumber(leg.getFlightNumber(), leg.getId()).isEmpty();
-			super.state(repeatedFlightNumber, "flightNumber", "acme.validation.leg.flightNumber.repeatedflightNumber.message");
-		}
-
-		if (leg.getAircraft() != null) {
-			if (leg.getAircraft().getStatus().equals(AircraftStatus.UNDER_MAINTENANCE))
-				super.state(false, "aircraft", "acme.validation.leg.aircraft.maintenance.message");
-
-			if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
-				LegRepository repository = SpringHelper.getBean(LegRepository.class);
-				List<Leg> otherLegs = repository.findByAircraftId(leg.getAircraft().getId(), leg.getId());
-				for (Leg otherLeg : otherLegs)
-					if (otherLeg.getScheduledArrival() != null && otherLeg.getScheduledDeparture() != null) {
-						boolean isOverlapping = MomentHelper.isBefore(leg.getScheduledDeparture(), otherLeg.getScheduledArrival()) && MomentHelper.isAfter(leg.getScheduledArrival(), otherLeg.getScheduledDeparture());
-						if (isOverlapping)
-							super.state(false, "aircraft", "acme.validation.leg.aircraft.overlapping.message");
-					}
-			}
-		}
-
-		if (leg.getDepartureAirport() != null && leg.getArrivalAirport() != null) {
-			boolean sameAirport = leg.getDepartureAirport().equals(leg.getArrivalAirport());
-			super.state(!sameAirport, "arrivalAirport", "acme.validation.leg.aircraft.no-same-airport.message");
-		}
+		;
 	}
 
 	@Override

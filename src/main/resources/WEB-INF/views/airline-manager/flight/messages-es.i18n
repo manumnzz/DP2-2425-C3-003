@@ -8,32 +8,31 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-master.menu.manager = Manager Menú
+master.menu.manager = Menú de Manager
 master.menu.airlinemanager.list-flights = Lista de Vuelos
+
 airline-manager.flight.list.title = Mi Lista de Vuelos
+airline-manager.flight.list.label.tag = Tag
+airline-manager.flight.list.label.selfTransfer = Requiere Transbordo
+airline-manager.flight.list.label.cost = Coste
+airline-manager.flight.list.label.originCity = Ciudad de Salida
+airline-manager.flight.list.label.destinationCity = Ciudad de Llegada
+airline-manager.flight.list.button.create = Crear Vuelo
+
 airline-manager.flight.form.title = Vuelo
+airline-manager.flight.form.label.tag = Tag
+airline-manager.flight.form.label.selfTransfer = Requiere Transbordo
+airline-manager.flight.form.label.cost = Coste
+airline-manager.flight.form.label.description = Descripción
+airline-manager.flight.form.label.scheduledDeparture = Salida Programada
+airline-manager.flight.form.label.scheduledArrival = Llegada Programada
+airline-manager.flight.form.label.originCity = Ciudad de Origen
+airline-manager.flight.form.label.destinationCity = Ciudad de Destino
+airline-manager.flight.form.label.numberOfLayovers = Número de Escalas
+airline-manager.flight.form.button.legs = Escalas
+airline-manager.flight.form.button.update = Editar
+airline-manager.flight.form.button.delete = Eliminar
+airline-manager.flight.form.button.publish = Publicar
+airline-manager.flight.form.button.create = Crear
 
-airlinemanager.flight.list.title = Listando Vuelos
-airlinemanager.flight.list.label.tag = Tag
-airlinemanager.flight.list.label.originCity = Ciudad de Salida
-airlinemanager.flight.list.label.destinationCity = Ciudad de Llegada
-airlinemanager.flight.list.label.scheduledDeparture = Salida Programada
-airlinemanager.flight.list.label.scheduledArrival = Llegada Programada
-airlinemanager.flight.list.label.cost = Coste
-airline-manager.flight.list.label.originCity = Ciudad de Origen
-airline-manager.flight.list.label.destinationCity = Ciudad de Destino
 
-airlinemanager.flight.form.label.tag = Tag
-airlinemanager.flight.form.label.requiresSelfTransfer = Requiere transbordo?
-airlinemanager.flight.form.label.cost = Coste
-airlinemanager.flight.form.label.description = Descripción
-airlinemanager.flight.form.label.firstLeg = Primera Escala
-airlinemanager.flight.form.label.lastLeg = Última Escala
-airlinemanager.flight.form.label.originAirport = Aeropuerto de Origen
-airlinemanager.flight.form.label.destinationAirport = Aeropuerto de Destino
-
-airlinemanager.flight.form.button.create = Crear
-airlinemanager.flight.form.button.update = Editar
-airlinemanager.flight.form.button.delete = Eliminar
-airlinemanager.flight.form.button.publish = Publicar
-airlinemanager.flight.form.button.legs = Escalas
