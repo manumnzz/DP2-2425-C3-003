@@ -16,6 +16,8 @@ customer.booking.form.label.travelClass = Travel Class
 customer.booking.form.label.price = Price
 customer.booking.form.label.lastCreditCardNibble = Last Credit Card Nibble
 customer.booking.form.label.draftMode = DraftMode
+customer.booking.form.label.flight=Flight
+
 
 customer.booking.form.button.create = Create
 customer.booking.form.button.update = Update
@@ -30,6 +32,8 @@ customer.booking.list.label.travelClass = Travel Class
 customer.booking.list.label.price = Price
 customer.booking.list.label.lastCreditCardNibble = Last Credit Card Nibble
 customer.booking.list.label.draftMode = DraftMode
+customer.booking.list.label.flight=Flight
+
 
 customer.booking.list.button.create = New Booking
 
@@ -37,3 +41,4 @@ customer.booking.list.label.passengers = Passengers:
 customer.booking.list.button.addPassenger = Add Passenger to Booking
 
 customer.booking.error.locatorCode.duplicate = Locator code already exists
+customer.booking.error.passengers.draftNotAllowed=There cannot be any draft passengers associated with the reservation

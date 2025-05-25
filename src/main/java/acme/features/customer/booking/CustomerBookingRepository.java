@@ -2,11 +2,14 @@
 package acme.features.customer.booking;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
+import acme.entities.S1.Flight;
+import acme.entities.S1.Leg;
 import acme.entities.S2.Booking;
 import acme.entities.S2.Passenger;
 
@@ -24,5 +27,17 @@ public interface CustomerBookingRepository extends AbstractRepository {
 
 	@Query("SELECT b FROM Booking b WHERE b.locatorCode = :locatorCode")
 	Booking findBookingByLocatorCode(String locatorCode);
+
+	@Query("SELECT l FROM Leg l WHERE l.flight.id = :flightId ORDER BY l.scheduledDeparture ASC")
+	List<Leg> findByFlightIdOrdered(int flightId);
+
+	@Query("SELECT f FROM Flight f")
+	Collection<Flight> findAllFlights();
+
+	@Query("SELECT COUNT(bp) FROM BookingPassenger bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = false")
+	int countPublishedByBookingId(int bookingId);
+
+	@Query("SELECT COUNT(bp) FROM BookingPassenger bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = true")
+	int countDraftByBookingId(int bookingId);
 
 }

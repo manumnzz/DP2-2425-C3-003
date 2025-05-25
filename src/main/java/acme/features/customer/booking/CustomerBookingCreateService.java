@@ -1,7 +1,9 @@
 
 package acme.features.customer.booking;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +13,8 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.Flight;
+import acme.entities.S1.Leg;
 import acme.entities.S2.Booking;
 import acme.entities.S2.ClassType;
 import acme.realms.Customer;
@@ -69,15 +73,38 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void unbind(final Booking booking) {
+		Collection<Flight> flights = this.repository.findAllFlights(); // O el método que corresponda
+		SelectChoices flightChoices = new SelectChoices();
+
+		for (Flight flight : flights) {
+			List<Leg> legs = this.repository.findByFlightIdOrdered(flight.getId());
+			if (!legs.isEmpty()) {
+				Leg firstLeg = legs.get(0);
+				Leg lastLeg = legs.get(legs.size() - 1);
+
+				String origin = firstLeg.getDepartureAirport().getIataCode();
+				String destination = lastLeg.getArrivalAirport().getIataCode();
+				String departure = firstLeg.getScheduledDeparture().toString();
+				String arrival = lastLeg.getScheduledArrival().toString();
+
+				String label = origin + " – " + destination + " (" + departure + " – " + arrival + ")";
+				boolean selected = booking.getFlight() != null && booking.getFlight().getId() == flight.getId();
+				flightChoices.add(String.valueOf(flight.getId()), label, selected);
+			}
+		}
+
 		Dataset dataset;
+
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
-		Collection<Flight> flights = this.fl
+
 		Money price = new Money();
 		price.setAmount(0.0);
 		price.setCurrency("USD");
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);
+		dataset.put("flights", flightChoices);
 		dataset.put("price", price);
+
 		super.getResponse().addData(dataset);
 	}
 }

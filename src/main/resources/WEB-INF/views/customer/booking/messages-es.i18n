@@ -15,6 +15,7 @@ customer.booking.form.label.status = Estado:
 customer.booking.form.label.creationDate = Fecha de Creacion:
 customer.booking.form.label.totalPrice = Precio Total:
 customer.booking.form.label.confirmation = Confirme que desea crear esta reserva.
+customer.booking.form.label.flight=Vuelo
 
 customer.booking.form.button.create = Crear
 customer.booking.form.button.update = Actualizar
@@ -25,6 +26,8 @@ customer.booking.list.label.reference = Referencia
 customer.booking.list.label.status = Estado
 customer.booking.list.label.creationDate = Fecha de Creacion
 customer.booking.list.label.totalPrice = Precio Total
+customer.booking.list.label.flight=Vuelo
+
 
 customer.booking.list.button.create = Nueva Reserva
 
@@ -32,3 +35,4 @@ customer.booking.form.label.passengers = Pasajeros:
 customer.booking.form.button.addPassenger = Añadir Pasajero a la Reserva
 
 customer.booking.error.locatorCode.duplicate = El codigo localizador ya existe
+customer.booking.error.passengers.draftNotAllowed=No puede haber pasajeros en borrador asociados a la reserva
