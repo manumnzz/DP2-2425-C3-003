@@ -16,8 +16,8 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
+import acme.entities.Aircraft;
 import acme.entities.Airport;
-import acme.entities.aircraft.Aircraft;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,33 +52,46 @@ public class Leg extends AbstractEntity {
 	@Automapped
 	private FlightStatus		status;
 
+	@Mandatory
+	// HINT: @Valid by default.
+	@Automapped
+	private boolean				draftMode;
+
 	// Derived attributes -----------------------------------------------------
 
 
 	@Transient
 	public double getDuration() {
-		long differenceInMillis = this.scheduledArrival.getTime() - this.scheduledDeparture.getTime();
+		// Verificar que ambos aeropuertos estén asignados
+		if (this.departureAirport != null && this.arrivalAirport != null && this.scheduledDeparture != null && this.scheduledArrival != null) {
 
-		double durationInHours = (double) differenceInMillis / (1000 * 60 * 60);
-
-		return durationInHours;
+			// Cálculo de la duración solo si ambos aeropuertos y las fechas están definidas
+			long differenceInMillis = this.scheduledArrival.getTime() - this.scheduledDeparture.getTime();
+			return (double) differenceInMillis / (1000 * 60 * 60);  // Duración en horas
+		}
+		return 0;  // O cualquier valor predeterminado si no se cumple la condición
 	}
 
 	// Relationships ----------------------------------------------------------
 
 
-	@Mandatory
-	@Valid
-	@ManyToOne
+	@Mandatory()
+	@Valid()
+	@ManyToOne(optional = false)
+	private Flight		flight;
+
+	@Mandatory()
+	@Valid()
+	@ManyToOne(optional = false)
 	private Airport		departureAirport;
 
-	@Mandatory
-	@Valid
-	@ManyToOne
+	@Mandatory()
+	@Valid()
+	@ManyToOne(optional = false)
 	private Airport		arrivalAirport;
 
-	@Mandatory
-	@Valid
-	@ManyToOne
+	@Mandatory()
+	@Valid()
+	@ManyToOne(optional = false)
 	private Aircraft	aircraft;
 }

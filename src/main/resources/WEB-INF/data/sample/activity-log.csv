@@ -1,0 +1,4 @@
+﻿key,moment,incident,description,severityLevel,key:flightCrewMember,key:flightAssignment
+activity-log-01,2022/03/10 14:30,"Turbulence","Completed successfully",7,member-01,flight-assignment-01
+activity-log-02,2022/04/10 18:30,"Turbulence","The second most popular flight",5,member-01,flight-assignment-01
+activity-log-03,2022/02/14 21:00,"Turbulence","Bad weather conditions",2,member-04,flight-assignment-02

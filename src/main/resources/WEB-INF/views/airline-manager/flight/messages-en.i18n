@@ -1,0 +1,38 @@
+# messages-en.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+master.menu.manager = Manager Menu
+master.menu.airlinemanager.list-flights = Flight List
+
+airline-manager.flight.list.title = My Flight List
+airline-manager.flight.list.label.tag = Tag
+airline-manager.flight.list.label.selfTransfer = Requires Transfer
+airline-manager.flight.list.label.cost = Cost
+airline-manager.flight.list.label.originCity = Departure City
+airline-manager.flight.list.label.destinationCity = Arrival City
+airline-manager.flight.list.button.create = Create Flight
+
+airline-manager.flight.form.title = Flight
+airline-manager.flight.form.label.tag = Tag
+airline-manager.flight.form.label.selfTransfer = Requires Transfer
+airline-manager.flight.form.label.cost = Cost
+airline-manager.flight.form.label.description = Description
+airline-manager.flight.form.label.scheduledDeparture = Scheduled Departure
+airline-manager.flight.form.label.scheduledArrival = Scheduled Arrival
+airline-manager.flight.form.label.originCity = Origin City
+airline-manager.flight.form.label.destinationCity = Destination City
+airline-manager.flight.form.label.numberOfLayovers = Number of Layovers
+airline-manager.flight.form.button.legs = Legs
+airline-manager.flight.form.button.update = Update
+airline-manager.flight.form.button.delete = Delete
+airline-manager.flight.form.button.publish = Publish
+airline-manager.flight.form.button.create = Create
+
+

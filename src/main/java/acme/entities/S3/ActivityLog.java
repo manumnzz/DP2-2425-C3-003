@@ -51,12 +51,16 @@ public class ActivityLog extends AbstractEntity {
 	@Automapped
 	private Integer				severityLevel;
 
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
+
 	// Relationships ----------------------------------------------------------
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private FlightCrewMember	crewMember;
+	private FlightCrewMember	flightCrewMember;
 
 	@Mandatory
 	@Valid
