@@ -30,3 +30,5 @@ customer.passenger.list.label.dateOfBirth = Date of Birth
 customer.passenger.list.label.specialNeeds = Special Needs
 
 customer.passenger.list.button.create = Add Passenger
+
+customer.passenger.error.passportNumber.duplicate = There is already a passenger with this passport number

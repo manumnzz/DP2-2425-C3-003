@@ -30,3 +30,5 @@ customer.booking.list.button.create = Nueva Reserva
 
 customer.booking.form.label.passengers = Pasajeros:
 customer.booking.form.button.addPassenger = Añadir Pasajero a la Reserva
+
+customer.booking.error.locatorCode.duplicate = El codigo localizador ya existe

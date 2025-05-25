@@ -2,6 +2,7 @@
 package acme.features.customer.bookingPassenger;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -38,4 +39,9 @@ public interface CustomerBookingPassengerRepository extends AbstractRepository {
 	@Query("select count(bp) from BookingPassenger bp where bp.passenger.id = :passengerId and bp.booking.customer.id = :customerId")
 	int existsBookingPassengerForCustomer(int passengerId, int customerId);
 
+	@Query("select count(bp) from BookingPassenger bp where bp.booking.id = :bookingId and bp.draftMode = false")
+	int countByBookingId(int bookingId);
+
+	@Query("select bp from BookingPassenger bp where bp.booking.id = :bookingId and bp.draftMode = false and bp.passenger.draftMode = false")
+	List<BookingPassenger> findPublishedByBookingId(int bookingId);
 }

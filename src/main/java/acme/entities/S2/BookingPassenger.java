@@ -6,6 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,11 @@ public class BookingPassenger extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	// Attributes -------------------------------------------------------------
+
+	@Mandatory
+	// HINT: @Valid by default.
+	@Automapped
+	private boolean				draftMode;
 
 	// Derived attributes -----------------------------------------------------
 

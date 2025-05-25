@@ -1,4 +1,4 @@
-key,fullName,email,passportNumber,dateOfBirth,specialNeeds,draftMode
-passenger-01,John Doe,john.doe@example.com,A1234567,2000/05/15 10:30,None,false
-passenger-02,Alice Smith,alice.smith@example.com,B7654321,2001/09/22 10:30,Wheelchair,false
-passenger-03,Bob Johnson,bob.johnson@example.com,C9876543,2002/02/10 10:30,Vegetarian meal,true
+key,passportNumber,fullName,email,dateOfBirth,specialNeeds,draftMode
+passenger-01,A1234567,John Doe,john.doe@example.com,2000/05/15 10:30,None,false
+passenger-02,B7654321,Alice Smith,alice.smith@example.com,2001/09/22 10:30,Wheelchair,false
+passenger-03,C9876543,Bob Johnson,bob.johnson@example.com,2002/02/10 10:30,Vegetarian meal,true

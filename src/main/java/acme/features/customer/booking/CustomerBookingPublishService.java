@@ -59,7 +59,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 	@Override
 	public void unbind(final Booking booking) {
 		Dataset dataset;
-		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCreditCardNibble", "draftMode");
+		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
 
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);

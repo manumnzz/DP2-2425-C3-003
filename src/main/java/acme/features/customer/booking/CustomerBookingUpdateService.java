@@ -41,12 +41,16 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void bind(final Booking booking) {
-		super.bindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCreditCardNibble", "draftMode");
+		super.bindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
 	}
 
 	@Override
 	public void validate(final Booking booking) {
-
+		if (!super.getBuffer().getErrors().hasErrors("locatorCode")) {
+			Booking existing = this.repository.findBookingByLocatorCode(booking.getLocatorCode());
+			if (existing != null && existing.getId() != booking.getId())
+				super.state(false, "locatorCode", "customer.booking.error.locatorCode.duplicate");
+		}
 		//if (booking.getLastCreditCardNibble() != null)
 		//super.state(false, "lastCreditCardNibble", "acme.validation.booking.no-modify-after-payment");
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
@@ -60,7 +64,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void unbind(final Booking booking) {
-		Dataset dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCreditCardNibble", "draftMode");
+		Dataset dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
 
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);

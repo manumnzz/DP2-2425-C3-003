@@ -26,3 +26,5 @@ customer.passenger.list.label.fullName = Nombre Completo
 customer.passenger.list.label.passportNumber = Numero de Pasaporte
 
 customer.passenger.list.button.create = Añadir Pasajero
+
+customer.passenger.error.passportNumber.duplicate = Ya hay un pasajero con ese numero de pasaporte

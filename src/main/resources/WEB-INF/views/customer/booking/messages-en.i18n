@@ -35,3 +35,5 @@ customer.booking.list.button.create = New Booking
 
 customer.booking.list.label.passengers = Passengers:
 customer.booking.list.button.addPassenger = Add Passenger to Booking
+
+customer.booking.error.locatorCode.duplicate = Locator code already exists

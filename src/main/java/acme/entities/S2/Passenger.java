@@ -29,19 +29,19 @@ public class Passenger extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidLongText
+	@ValidString(pattern = "^[A-Z0-9]{6,9}$")
 	@Column(unique = true)
+	protected String			passportNumber;
+
+	@Mandatory
+	@ValidLongText
+	@Automapped
 	protected String			fullName;
 
 	@Mandatory
 	@ValidString
 	@Automapped
 	protected String			email;
-
-	@Mandatory
-	@ValidString(pattern = "^[A-Z0-9]{6,9}$")
-	@Automapped
-	protected String			passportNumber;
 
 	@Mandatory
 	@ValidMoment(past = true)

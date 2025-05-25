@@ -53,6 +53,11 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void validate(final Passenger passenger) {
+		if (!super.getBuffer().getErrors().hasErrors("passportNumber")) {
+			Passenger existing = this.repository.findPassengerByPassportNumber(passenger.getPassportNumber());
+			if (existing != null && existing.getId() != passenger.getId())
+				super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
+		}
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
 			super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
 	}

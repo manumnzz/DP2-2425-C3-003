@@ -13,4 +13,6 @@ public interface CustomerPassengerRepository extends AbstractRepository {
 	@Query("select p from Passenger p where p.id = :passengerId")
 	Passenger findPassengerById(final int passengerId);
 
+	@Query("select p from Passenger p where p.passportNumber = :passportNumber")
+	Passenger findPassengerByPassportNumber(String passportNumber);
 }

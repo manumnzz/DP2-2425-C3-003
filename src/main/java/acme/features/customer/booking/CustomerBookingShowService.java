@@ -3,12 +3,14 @@ package acme.features.customer.booking;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
 import acme.entities.S2.ClassType;
+import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
 import acme.realms.Customer;
 
 @GuiService
@@ -17,7 +19,10 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository repository;
+	private CustomerBookingRepository			repository;
+
+	@Autowired
+	private CustomerBookingPassengerRepository	repositoryBP;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -49,11 +54,19 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 	public void unbind(final Booking booking) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCreditCardNibble", "draftMode");
+		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
 
+		Money costPerPassenger = booking.getFlight().getCost();
+		int passengerCount = this.repositoryBP.findPublishedByBookingId(booking.getId()).size();
+
+		Money totalPrice = new Money();
+		totalPrice.setAmount(costPerPassenger.getAmount() * passengerCount);
+		totalPrice.setCurrency(costPerPassenger.getCurrency());
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);
 		dataset.put("id", booking.getId());
+		dataset.put("price", totalPrice);
+		super.addPayload(dataset, booking, "customer.identifier");
 		super.getResponse().addData(dataset);
 	}
 }
