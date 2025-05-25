@@ -21,6 +21,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>Acme-ANS</artifactId>
 	<version>D05</version>
+
 	<packaging>war</packaging>
 	
 	<parent>
@@ -29,4 +30,11 @@
 		<version>25.5.0</version>
 		<relativePath>../../pom-25.5.0.xml</relativePath>
 	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>Acme</groupId>
+			<artifactId>Acme-Framework</artifactId>
+			<version>25.5.0</version>
+		</dependency>
+	</dependencies>
 </project>
