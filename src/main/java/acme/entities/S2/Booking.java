@@ -1,12 +1,14 @@
 
-package acme.entities;
+package acme.entities.S2;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
@@ -35,7 +37,7 @@ public class Booking extends AbstractEntity {
 
 	@Mandatory
 	@ValidString(pattern = "^[A-Z0-9]{6,8}$")
-	@Automapped
+	@Column(unique = true)
 	private String				locatorCode;
 
 	@Mandatory
@@ -48,7 +50,7 @@ public class Booking extends AbstractEntity {
 	@Automapped
 	private ClassType			travelClass;
 
-	@Mandatory
+	@Transient
 	@ValidMoney
 	@Automapped
 	private Money				price;
@@ -57,6 +59,11 @@ public class Booking extends AbstractEntity {
 	@ValidString(pattern = "^\\d{4}$")
 	@Automapped
 	private String				lastCreditCardNibble;
+
+	@Mandatory
+	// HINT: @Valid by default.
+	@Automapped
+	private boolean				draftMode;
 
 	// Derived attributes -----------------------------------------------------
 
