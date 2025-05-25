@@ -37,7 +37,7 @@ public class Flight extends AbstractEntity {
 	@Automapped
 	private String				tag;
 
-
+ 
 	@Mandatory()
 	@Valid()
 	@Automapped()
