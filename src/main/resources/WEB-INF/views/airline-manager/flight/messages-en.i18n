@@ -10,27 +10,29 @@
 
 master.menu.manager = Manager Menu
 master.menu.airlinemanager.list-flights = Flight List
+
 airline-manager.flight.list.title = My Flight List
-airlinemanager.flight.list.title = Listing of Flights
+airline-manager.flight.list.label.tag = Tag
+airline-manager.flight.list.label.selfTransfer = Requires Transfer
+airline-manager.flight.list.label.cost = Cost
+airline-manager.flight.list.label.originCity = Departure City
+airline-manager.flight.list.label.destinationCity = Arrival City
+airline-manager.flight.list.button.create = Create Flight
+
 airline-manager.flight.form.title = Flight
+airline-manager.flight.form.label.tag = Tag
+airline-manager.flight.form.label.selfTransfer = Requires Transfer
+airline-manager.flight.form.label.cost = Cost
+airline-manager.flight.form.label.description = Description
+airline-manager.flight.form.label.scheduledDeparture = Scheduled Departure
+airline-manager.flight.form.label.scheduledArrival = Scheduled Arrival
+airline-manager.flight.form.label.originCity = Origin City
+airline-manager.flight.form.label.destinationCity = Destination City
+airline-manager.flight.form.label.numberOfLayovers = Number of Layovers
+airline-manager.flight.form.button.legs = Legs
+airline-manager.flight.form.button.update = Update
+airline-manager.flight.form.button.delete = Delete
+airline-manager.flight.form.button.publish = Publish
+airline-manager.flight.form.button.create = Create
 
 
-airlinemanager.flight.list.label.tag = Tag
-airlinemanager.light.list.label.originCity = Origin City
-airlinemanager.flight.list.label.destinationCity = Destination City
-airlinemanager.flight.list.label.scheduledDeparture = Scheduled Departure
-airlinemanager.flight.list.label.scheduledArrival = Scheduled Arrival
-airlinemanager.flight.list.label.cost = Cost
-
-airlinemanager.flight.form.label.tag = Tag
-airlinemanager.flight.form.label.requiresSelfTransfer = Requires Self Transfer?
-airlinemanager.flight.form.label.cost = Cost
-airlinemanager.flight.form.label.description = Description
-airlinemanager.flight.form.label.firstLeg = First Leg
-airlinemanager.flight.form.label.lastLeg = LastLeg
-airlinemanager.flight.form.label.originAirport = Origin Airport
-airlinemanager.flight.form.label.destinationAirport = Destination Airport
-
-airlinemanager.flight.form.button.create = Create
-airlinemanager.flight.form.button.update = Update
-airlinemanager.flight.form.button.Delete = Delete

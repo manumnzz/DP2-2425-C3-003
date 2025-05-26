@@ -8,22 +8,23 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-administrator.airport.list.title = Lista de Aeropuertos
-
+administrator.airport.list.title = Lista de aeropuertos
 administrator.airport.list.label.name = Nombre
-administrator.airport.list.label.iataCode = iata Code
+administrator.airport.list.label.iataCode = Código IATA 
+administrator.airport.list.label.operationalScope = Ámbito operativo
 administrator.airport.list.label.city = Ciudad
 administrator.airport.list.label.country = País
+administrator.airport.list.button.create = Crear aeropuerto
 
+administrator.airport.form.title = Aeropuerto
 administrator.airport.form.label.name = Nombre
-administrator.airport.form.label.iataCode = iata Code
-administrator.airport.form.label.operationalScope = Alcance Operacional
+administrator.airport.form.label.iataCode = Código IATA
+administrator.airport.form.label.operationalScope = Ámbito operativo
 administrator.airport.form.label.city = Ciudad
 administrator.airport.form.label.country = País
-administrator.airport.form.label.website = Página Web
-administrator.airport.form.label.email = Correo Electrónico
-administrator.airport.form.label.phone = Número de Teléfono
-
-administrator.airport.form.button.create = Crear
-administrator.airport.form.button.update = Editar
-administrator.airport.form.button.delete = Borrar
+administrator.airport.form.label.website = Página web
+administrator.airport.form.label.email = Correo electrónico
+administrator.airport.form.label.phone = Teléfono de contacto
+administrator.airport.form.label.confirmation = Confirmar
+administrator.airport.form.button.create = Crear aeropuerto
+administrator.airport.form.button.update = Actualizar

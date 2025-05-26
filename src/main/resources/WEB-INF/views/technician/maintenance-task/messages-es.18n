@@ -1,0 +1,14 @@
+technician.maintenance-task.list.title = Listado de Tareas-Mantenimiento
+technician.maintenance-task.form.title = Detalles de Tareas-Manteniemiento
+
+technician.maintenanceTask.form.label.id = Id
+technician.maintenanceTask.form.label.maintenanceRecord = Registro de Mantenimiento
+technician.maintenanceTask.form.label.task = Tarea
+
+technician.maintenanceTask.list.label.maintenanceRecord = Registro de Mantenimiento
+technician.maintenanceTask.list.label.task = Tarea
+technician.maintenanceTask.form.label.maintenanceRecord.id = Registro de Mantenimiento
+technician.maintenanceTask.form.label.task.id = Tarea
+
+technician.maintenanceTask.form.button.create = crear
+technician.maintenanceTask.form.button.delete = borrar

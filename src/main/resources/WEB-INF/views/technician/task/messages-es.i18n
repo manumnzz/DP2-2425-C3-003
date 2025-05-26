@@ -1,0 +1,23 @@
+technician.task.list.title = Listado de Tareas
+technician.task.form.title = Detalles de Tareas
+
+
+technician.task.list.label.type = Tipo
+technician.task.list.label.priority = Prioridad (0-10)
+technician.task.list.label.estimatedDuration = Duracion Estiamda (h)
+technician.task.list.label.maintenanceRecord = Registro de Mantenimiento
+technician.task.list.label.technician = Tecnico
+technician.task.list.label.draftMode = Modo Borrador
+
+technician.task.form.label.type = Tipo
+technician.task.form.label.priority = Prioridad (0-10)
+technician.task.form.label.description = Descripcion
+technician.task.form.label.estimatedDuration = Duracion Estiamda (h)
+technician.task.form.label.maintenanceRecord = Registro de Mantenimiento
+technician.task.form.label.technician = Tecnico
+technician.task.form.label.draftMode = Modo Borrador
+
+technician.task.form.button.create = Crear
+technician.task.form.button.update = Editar
+technician.task.form.button.delete = Borrar
+technician.task.form.button.publish = Publicar

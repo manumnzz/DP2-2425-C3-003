@@ -56,6 +56,10 @@ public class MaintenanceRecord extends AbstractEntity {
 	@ValidString
 	@Automapped
 	protected String			notes;
+
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------

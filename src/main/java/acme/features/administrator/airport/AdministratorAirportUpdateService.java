@@ -14,12 +14,12 @@ import acme.entities.OperationalScope;
 @GuiService
 public class AdministratorAirportUpdateService extends AbstractGuiService<Administrator, Airport> {
 
-	//Internal state ---------------------------------------------------------
+	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private AdministratorAirportRepository repository;
 
-	//AbstractGuiService interface ---------------------------------------------------------
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -30,8 +30,10 @@ public class AdministratorAirportUpdateService extends AbstractGuiService<Admini
 	@Override
 	public void load() {
 		Airport airport;
+		int id;
 
-		airport = new Airport();
+		id = super.getRequest().getData("id", int.class);
+		airport = this.repository.findAirportById(id);
 
 		super.getBuffer().addData(airport);
 	}
@@ -43,7 +45,10 @@ public class AdministratorAirportUpdateService extends AbstractGuiService<Admini
 
 	@Override
 	public void validate(final Airport airport) {
-		;
+		boolean confirmation;
+
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override
@@ -54,12 +59,12 @@ public class AdministratorAirportUpdateService extends AbstractGuiService<Admini
 	@Override
 	public void unbind(final Airport airport) {
 		Dataset dataset;
-		SelectChoices choices;
 
-		choices = SelectChoices.from(OperationalScope.class, airport.getOperationalScope());
+		SelectChoices operationalScopes = SelectChoices.from(OperationalScope.class, airport.getOperationalScope());
 
-		dataset = super.unbindObject(airport, "name", "iataCode", "city", "country", "website", "email", "phone");
-		dataset.put("operationalScopes", choices);
+		dataset = super.unbindObject(airport, "name", "iataCode", "operationalScope", "city", "country", "website", "email", "phone");
+
+		dataset.put("operationalScopes", operationalScopes);
 
 		super.getResponse().addData(dataset);
 	}

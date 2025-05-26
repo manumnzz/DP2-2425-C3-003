@@ -1,0 +1,26 @@
+technician.task.list.title = List Tasks
+technician.task.form.title = Tasks Form
+
+
+technician.task.list.label.type = Type
+technician.task.list.label.priority = Priority (0-10)
+technician.task.list.label.estimatedDuration = Estimated Duration (h)
+technician.task.list.label.maintenanceRecord = Maintenance Record
+technician.task.list.label.technician = Technician
+technician.task.list.label.draftMode = DraftMode
+technician.task.list.label.aircraft = aircraft
+
+
+technician.task.form.label.type = Type
+technician.task.form.label.priority = Priority (0-10)
+technician.task.form.label.description = Description
+technician.task.form.label.estimatedDuration = Estimated Duration (h)
+technician.task.form.label.maintenanceRecord = Maintenance Record
+technician.task.form.label.technician = Technician
+technician.task.form.label.aircraft = aircraft
+technician.task.form.label.draftMode = DraftMode
+
+technician.task.form.button.create = Create
+technician.task.form.button.update = Update
+technician.task.form.button.delete = Delete
+technician.task.form.button.publish = Publish

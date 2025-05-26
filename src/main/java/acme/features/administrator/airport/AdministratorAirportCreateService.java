@@ -14,12 +14,12 @@ import acme.entities.OperationalScope;
 @GuiService
 public class AdministratorAirportCreateService extends AbstractGuiService<Administrator, Airport> {
 
-	//Internal state ---------------------------------------------------------
+	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private AdministratorAirportRepository repository;
 
-	//AbstractGuiService interface ---------------------------------------------------------
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -43,7 +43,10 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 
 	@Override
 	public void validate(final Airport airport) {
-		;
+		boolean confirmation;
+
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override
@@ -54,12 +57,12 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 	@Override
 	public void unbind(final Airport airport) {
 		Dataset dataset;
-		SelectChoices choices;
 
-		choices = SelectChoices.from(OperationalScope.class, airport.getOperationalScope());
+		SelectChoices operationalScopes = SelectChoices.from(OperationalScope.class, airport.getOperationalScope());
 
-		dataset = super.unbindObject(airport, "name", "iataCode", "city", "country", "website", "email", "phone");
-		dataset.put("operationalScopes", choices);
+		dataset = super.unbindObject(airport, "name", "iataCode", "operationalScope", "city", "country", "website", "email", "phone");
+
+		dataset.put("operationalScopes", operationalScopes);
 
 		super.getResponse().addData(dataset);
 	}

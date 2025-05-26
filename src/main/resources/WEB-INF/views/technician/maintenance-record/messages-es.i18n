@@ -1,0 +1,32 @@
+technician.maintenance-record.list.title = Listado de registros de mantenimiento
+technician.maintenance-record.form.title = Detalles de registros de mantenimiento
+
+
+
+technician.maintenanceRecord.list.label.maintenanceDate = Ultimo Mantenimiento
+technician.maintenanceRecord.list.label.status = Estado
+technician.maintenanceRecord.list.label.nextInspectionDue = Proximo Mantenimiento
+technician.maintenanceRecord.list.label.estimatedCost = Coste aporximado
+technician.maintenanceRecord.list.label.technician = Tecinco responsable
+technician.maintenanceRecord.list.label.aircraft = Avion
+technician.maintenanceRecord.list.label.draftMode = Modo Borrador
+
+technician.maintenanceRecord.form.label.maintenanceDate = Ultimo Mantenimiento
+technician.maintenanceRecord.form.label.status = Estado
+technician.maintenanceRecord.form.label.nextInspectionDue = Proximo Mantenimiento
+technician.maintenanceRecord.form.label.estimatedCost = Coste aporximado
+technician.maintenanceRecord.form.label.technician = Tecnico
+technician.maintenanceRecord.form.label.aircraft = Avion
+technician.maintenanceRecord.form.label.notes = Notas
+technician.maintenanceRecord.form.label.draftMode = Modo Borrador
+
+
+technician.maintenanceRecord.form.button.create = Crear
+technician.maintenanceRecord.form.button.update = Editar
+technician.maintenanceRecord.form.button.delete = Borrar
+technician.maintenanceRecord.form.button.publish = Publish
+technician.maintenanceRecord.form.button.tasks = Tareas
+
+
+technician.maintenanceRecord.error.nextInspectionDue = El siguiente mantenimiento debe ser despues del anterior
+technician.maintenanceRecord.error.draftMode = Tiene que estar en modo Borrador
