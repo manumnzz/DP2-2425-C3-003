@@ -57,10 +57,10 @@ public class TechnicianMaintenanceTaskShowService extends AbstractGuiService<Tec
 		mrChoices = SelectChoices.from(mrs, "id", mt.getMaintenanceRecord());
 		tChoices = SelectChoices.from(tasks, "id", mt.getTask());
 		dataset = super.unbindObject(mt, "maintenanceRecord", "task");
-		//		dataset.put("maintenanceRecord", mrChoices.getSelected().getKey());
-		//		dataset.put("mrs", mrs);
-		//		dataset.put("task", tChoices.getSelected().getKey());
-		//		dataset.put("tasks", tasks);
+		dataset.put("maintenanceRecord", mrChoices.getSelected().getKey());
+		dataset.put("mrs", mrChoices);
+		dataset.put("task", tChoices.getSelected().getKey());
+		dataset.put("tasks", tChoices);
 		super.getResponse().addData(dataset);
 
 	}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import acme.client.repositories.AbstractRepository;
 import acme.entities.aircraft.Aircraft;
 import acme.entities.maintenance.MaintenanceRecord;
+import acme.entities.maintenance.MaintenanceTask;
 import acme.entities.maintenance.Task;
 import acme.realms.Technician;
 
@@ -29,6 +30,9 @@ public interface TechnicianMaintenanceRecordRepository extends AbstractRepositor
 
 	@Query("select mr from MaintenanceRecord mr where mr.id = :id")
 	MaintenanceRecord findMrById(int id);
+
+	@Query("select mt from MaintenanceTask mt where mt.maintenanceRecord.id =:id")
+	Collection<MaintenanceTask> findMaintenanceTaskByMrId(int id);
 
 	@Query("select  mt.task from MaintenanceTask mt where mt.maintenanceRecord = :mr")
 	Collection<Task> getAllAsociatedTasks(MaintenanceRecord mr);

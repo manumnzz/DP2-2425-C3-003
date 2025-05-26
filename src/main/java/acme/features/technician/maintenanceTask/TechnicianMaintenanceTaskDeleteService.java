@@ -33,7 +33,10 @@ public class TechnicianMaintenanceTaskDeleteService extends AbstractGuiService<T
 	@Override
 	public void load() {
 		MaintenanceTask mt;
-		mt = new MaintenanceTask();
+		int id;
+
+		id = super.getRequest().getData("id", int.class);
+		mt = this.rp.findMaintenanceTaskById(id);
 		super.getBuffer().addData(mt);
 	}
 
@@ -67,12 +70,11 @@ public class TechnicianMaintenanceTaskDeleteService extends AbstractGuiService<T
 		mrChoices = SelectChoices.from(mrs, "id", mt.getMaintenanceRecord());
 		tChoices = SelectChoices.from(tasks, "id", mt.getTask());
 		dataset = super.unbindObject(mt, "maintenanceRecord", "task");
-		//		dataset.put("maintenanceRecord", mrChoices.getSelected().getKey());
-		//		dataset.put("mrs", mrs);
-		//		dataset.put("task", tChoices.getSelected().getKey());
-		//		dataset.put("tasks", tasks);
+		dataset.put("maintenanceRecord", mrChoices.getSelected().getKey());
+		dataset.put("mrs", mrChoices);
+		dataset.put("task", tChoices.getSelected().getKey());
+		dataset.put("tasks", tChoices);
 		super.getResponse().addData(dataset);
-
 	}
 
 }

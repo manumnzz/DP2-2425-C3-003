@@ -12,6 +12,7 @@ import acme.client.services.GuiService;
 import acme.entities.aircraft.Aircraft;
 import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.MaintenanceStatus;
+import acme.entities.maintenance.Task;
 import acme.realms.Technician;
 
 @GuiService
@@ -62,16 +63,14 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 		if (!super.getBuffer().getErrors().hasErrors("nextInspectionDue"))
 			super.state(mr.getNextInspectionDue().after(mr.getMaintenanceDate()), "nextInspectionDue", "technician.maintenanceRecord.error.nextInspectionDue");
 
-		//		Collection<Task> tasks;
-		//		int totalTasks;
-		//		boolean allDraftMode;
-		//		tasks = this.rp.getAllAsociatedPublishedTasks(mr);
-		//		totalTasks = tasks.size();
-		//		allDraftMode = tasks.stream().allMatch(Task::getDraftMode);
-		//		System.out.println(totalTasks);
-		//		System.out.println(allDraftMode);
-		//		super.state(totalTasks >= 1, "*", "technician.maintenaceRecord.form.error.not-enough-tasks");
-		//		super.state(!allDraftMode, "*", "technician.maintenaceRecord.form.error.not-all-published");
+		Collection<Task> tasks;
+		int totalTasks;
+		boolean allDraftMode;
+		tasks = this.rp.getAllAsociatedPublishedTasks(mr);
+		totalTasks = tasks.size();
+		allDraftMode = tasks.stream().allMatch(Task::getDraftMode);
+		super.state(totalTasks >= 1, "*", "technician.maintenaceRecord.form.error.not-enough-tasks");
+		super.state(!allDraftMode, "*", "technician.maintenaceRecord.form.error.not-all-published");
 
 	}
 

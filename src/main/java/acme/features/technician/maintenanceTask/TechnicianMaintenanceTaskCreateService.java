@@ -39,12 +39,47 @@ public class TechnicianMaintenanceTaskCreateService extends AbstractGuiService<T
 
 	@Override
 	public void bind(final MaintenanceTask mt) {
-		super.bindObject(mt, "maintenanceRecord", "task");
+		int maintenanceRecordId = super.getRequest().getData("maintenanceRecord", int.class);
+		int taskId = super.getRequest().getData("task", int.class);
 
+		MaintenanceRecord maintenanceRecord = this.rp.findMaintenanceRecordById(maintenanceRecordId);
+		Task task = this.rp.findTaskById(taskId);
+
+		mt.setMaintenanceRecord(maintenanceRecord);
+		mt.setTask(task);
 	}
 
 	@Override
 	public void validate(final MaintenanceTask mt) {
+		/*
+		 * No deben existir relaciones repetidas, es decir, mismo proyecto e historia de usuario
+		 * No se pueden crear asignaciones a proyectos ya publicados
+		 * No se pueden crear asignaciones a proyectos de otros managers
+		 * No se pueden crear asignaciones con historias de usuario no publicadas de otros managers
+		 */
+		MaintenanceRecord mr;
+		Task task;
+		Technician technician;
+
+		mr = mt.getMaintenanceRecord();
+		task = mt.getTask();
+		technician = this.rp.findOneTechnicianById(super.getRequest().getPrincipal().getActiveRealm().getId());
+
+		if (!super.getBuffer().getErrors().hasErrors("maintenanceRecord")) {
+			MaintenanceTask existing;
+
+			if (task != null) {
+				existing = this.rp.findOneMtByMrandTask(mr.getId(), task.getId());
+				super.state(existing == null, "*", "technician.maintenance-task.form.error-existing");
+			}
+
+			super.state(mr.getDraftMode(), "maintenanceRecord", "technician.maintenance-task.form.error-draftMode");
+
+			super.state(mr.getTechnician().equals(technician), "*", "technician.maintenance-task.form.error-technician-mr");
+		}
+
+		if (!super.getBuffer().getErrors().hasErrors("task") && task != null)
+			super.state(task.getTechnician().equals(technician) || !task.getDraftMode(), "task", "technician.maintenance-task.form.error-technician-task");
 	}
 
 	@Override
@@ -67,12 +102,11 @@ public class TechnicianMaintenanceTaskCreateService extends AbstractGuiService<T
 		mrChoices = SelectChoices.from(mrs, "id", mt.getMaintenanceRecord());
 		tChoices = SelectChoices.from(tasks, "id", mt.getTask());
 		dataset = super.unbindObject(mt, "maintenanceRecord", "task");
-		//		dataset.put("maintenanceRecord", mrChoices.getSelected().getKey());
-		//		dataset.put("mrs", mrs);
-		//		dataset.put("task", tChoices.getSelected().getKey());
-		//		dataset.put("tasks", tasks);
+		dataset.put("maintenanceRecord", mrChoices.getSelected().getKey());
+		dataset.put("mrs", mrChoices);
+		dataset.put("task", tChoices.getSelected().getKey());
+		dataset.put("tasks", tChoices);
 		super.getResponse().addData(dataset);
-
 	}
 
 }

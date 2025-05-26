@@ -7,7 +7,6 @@ import acme.client.components.basis.AbstractForm;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
-import acme.client.components.validation.ValidString;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,22 +20,18 @@ public class CrewMemberDashboard extends AbstractForm {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString
 	@Automapped
 	private List<String>		lastFiveDestinations;
 
 	@Mandatory
-	@ValidNumber
 	@Automapped
 	private List<Integer>		incidentSeverity;
 
 	@Mandatory
-	@ValidString
 	@Automapped
 	private List<String>		lastCrewMembers;
 
 	@Mandatory
-	@ValidNumber
 	@Automapped
 	private List<Integer>		assignmentsStatus;
 

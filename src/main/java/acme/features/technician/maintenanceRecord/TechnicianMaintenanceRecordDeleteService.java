@@ -12,6 +12,7 @@ import acme.client.services.GuiService;
 import acme.entities.aircraft.Aircraft;
 import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.MaintenanceStatus;
+import acme.entities.maintenance.MaintenanceTask;
 import acme.realms.Technician;
 
 @GuiService
@@ -62,10 +63,10 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 
 	@Override
 	public void perform(final MaintenanceRecord mr) {
-		//		Collection<Task> tasks;
-		//		tasks = this.rp.getAllAsociatedTasks(mr);
-		//		this.rp.deleteAll(tasks);
-		//		this.rp.delete(mr);
+		Collection<MaintenanceTask> mts;
+		mts = this.rp.findMaintenanceTaskByMrId(mr.getId());
+		this.rp.deleteAll(mts);
+		this.rp.delete(mr);
 	}
 
 	@Override
@@ -82,7 +83,6 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 		dataset.put("status", statusChoices);
 		dataset.put("aircraft", aricraftChoices.getSelected().getKey());
 		dataset.put("aircrafts", aricraftChoices);
-
 		super.getResponse().addData(dataset);
 
 	}

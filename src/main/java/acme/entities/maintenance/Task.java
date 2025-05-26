@@ -36,12 +36,12 @@ public class Task extends AbstractEntity {
 	private String				description;
 
 	@Mandatory
-	@ValidNumber(max = 10)
+	@ValidNumber(max = 10, min = 0)
 	@Automapped
 	private Integer				priority;
 
 	@Mandatory
-	@Valid
+	@ValidNumber(min = 0)
 	@Automapped
 	private Long				estimatedDuration;
 

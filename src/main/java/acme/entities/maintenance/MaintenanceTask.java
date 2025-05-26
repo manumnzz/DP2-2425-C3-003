@@ -19,12 +19,12 @@ public class MaintenanceTask extends AbstractEntity {
 
 	@Optional
 	@Valid
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	private Task				task;
 
 	@Optional
 	@Valid
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	private MaintenanceRecord	maintenanceRecord;
 
 }
