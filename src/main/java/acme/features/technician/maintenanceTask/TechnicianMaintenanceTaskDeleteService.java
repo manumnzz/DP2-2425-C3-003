@@ -15,7 +15,7 @@ import acme.entities.maintenance.Task;
 import acme.realms.Technician;
 
 @GuiService
-public class TechnicianMaintenanceTaskShowService extends AbstractGuiService<Technician, MaintenanceTask> {
+public class TechnicianMaintenanceTaskDeleteService extends AbstractGuiService<Technician, MaintenanceTask> {
 
 	@Autowired
 	private TechnicianMaintenanceTaskRepository rp;
@@ -32,19 +32,32 @@ public class TechnicianMaintenanceTaskShowService extends AbstractGuiService<Tec
 
 	@Override
 	public void load() {
-
 		MaintenanceTask mt;
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
 		mt = this.rp.findMaintenanceTaskById(id);
-
 		super.getBuffer().addData(mt);
 	}
 
 	@Override
-	public void unbind(final MaintenanceTask mt) {
+	public void bind(final MaintenanceTask mt) {
+		super.bindObject(mt, "maintenanceRecord", "task");
 
+	}
+
+	@Override
+	public void validate(final MaintenanceTask mt) {
+		//
+	}
+
+	@Override
+	public void perform(final MaintenanceTask mt) {
+		this.rp.delete(mt);
+	}
+
+	@Override
+	public void unbind(final MaintenanceTask mt) {
 		Dataset dataset;
 		Technician technician;
 		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
@@ -62,7 +75,6 @@ public class TechnicianMaintenanceTaskShowService extends AbstractGuiService<Tec
 		dataset.put("task", tChoices.getSelected().getKey());
 		dataset.put("tasks", tChoices);
 		super.getResponse().addData(dataset);
-
 	}
 
 }

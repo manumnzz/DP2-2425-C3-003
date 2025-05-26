@@ -12,6 +12,7 @@ import acme.client.services.GuiService;
 import acme.entities.Aircraft;
 import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.MaintenanceStatus;
+import acme.entities.maintenance.MaintenanceTask;
 import acme.realms.Technician;
 
 @GuiService
@@ -31,7 +32,7 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 		masterId = super.getRequest().getData("id", int.class);
 		mr = this.rp.findMrById(masterId);
 		technician = mr == null ? null : mr.getTechnician();
-		status = super.getRequest().getPrincipal().hasRealm(technician) || mr != null;
+		status = technician != null && super.getRequest().getPrincipal().getActiveRealm().getId() == technician.getId() && mr != null;
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -62,10 +63,10 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 
 	@Override
 	public void perform(final MaintenanceRecord mr) {
-		//		Collection<Task> tasks;
-		//		tasks = this.rp.getAllAsociatedTasks(mr);
-		//		this.rp.deleteAll(tasks);
-		//		this.rp.delete(mr);
+		Collection<MaintenanceTask> mts;
+		mts = this.rp.findMaintenanceTaskByMrId(mr.getId());
+		this.rp.deleteAll(mts);
+		this.rp.delete(mr);
 	}
 
 	@Override
@@ -82,7 +83,6 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 		dataset.put("status", statusChoices);
 		dataset.put("aircraft", aricraftChoices.getSelected().getKey());
 		dataset.put("aircrafts", aricraftChoices);
-
 		super.getResponse().addData(dataset);
 
 	}

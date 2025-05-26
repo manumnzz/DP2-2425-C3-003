@@ -32,22 +32,49 @@ public class TechnicianMaintenanceTaskCreateService extends AbstractGuiService<T
 
 	@Override
 	public void load() {
-		System.out.println("hola");
-
 		MaintenanceTask mt;
 		mt = new MaintenanceTask();
-		System.out.println(mt.getId());
 		super.getBuffer().addData(mt);
 	}
 
 	@Override
 	public void bind(final MaintenanceTask mt) {
-		super.bindObject(mt, "maintenanceRecord", "task");
+		int maintenanceRecordId = super.getRequest().getData("maintenanceRecord", int.class);
+		int taskId = super.getRequest().getData("task", int.class);
 
+		MaintenanceRecord maintenanceRecord = this.rp.findMaintenanceRecordById(maintenanceRecordId);
+		Task task = this.rp.findTaskById(taskId);
+
+		mt.setMaintenanceRecord(maintenanceRecord);
+		mt.setTask(task);
 	}
 
 	@Override
 	public void validate(final MaintenanceTask mt) {
+
+		MaintenanceRecord mr;
+		Task task;
+		Technician technician;
+
+		mr = mt.getMaintenanceRecord();
+		task = mt.getTask();
+		technician = this.rp.findOneTechnicianById(super.getRequest().getPrincipal().getActiveRealm().getId());
+
+		if (!super.getBuffer().getErrors().hasErrors("maintenanceRecord")) {
+			MaintenanceTask existing;
+
+			if (task != null) {
+				existing = this.rp.findOneMtByMrandTask(mr.getId(), task.getId());
+				super.state(existing == null, "*", "technician.maintenance-task.form.error-existing");
+			}
+
+			super.state(mr.isDraftMode(), "maintenanceRecord", "technician.maintenance-task.form.error-draftMode");
+
+			super.state(mr.getTechnician().equals(technician), "*", "technician.maintenance-task.form.error-technician-mr");
+		}
+
+		if (!super.getBuffer().getErrors().hasErrors("task") && task != null)
+			super.state(task.getTechnician().equals(technician) || !task.isDraftMode(), "task", "technician.maintenance-task.form.error-technician-task");
 	}
 
 	@Override
@@ -70,12 +97,11 @@ public class TechnicianMaintenanceTaskCreateService extends AbstractGuiService<T
 		mrChoices = SelectChoices.from(mrs, "id", mt.getMaintenanceRecord());
 		tChoices = SelectChoices.from(tasks, "id", mt.getTask());
 		dataset = super.unbindObject(mt, "maintenanceRecord", "task");
-		//		dataset.put("maintenanceRecord", mrChoices.getSelected().getKey());
-		//		dataset.put("mrs", mrs);
-		//		dataset.put("task", tChoices.getSelected().getKey());
-		//		dataset.put("tasks", tasks);
+		dataset.put("maintenanceRecord", mrChoices.getSelected().getKey());
+		dataset.put("mrs", mrChoices);
+		dataset.put("task", tChoices.getSelected().getKey());
+		dataset.put("tasks", tChoices);
 		super.getResponse().addData(dataset);
-
 	}
 
 }

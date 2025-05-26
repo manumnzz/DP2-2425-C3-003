@@ -9,7 +9,6 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.MaintenanceTask;
 import acme.entities.maintenance.Task;
 import acme.entities.maintenance.TaskType;
@@ -32,7 +31,7 @@ public class TechnicianTaskDeleteService extends AbstractGuiService<Technician, 
 		masterId = super.getRequest().getData("id", int.class);
 		t = this.rp.findTaskById(masterId);
 		technician = t == null ? null : t.getTechnician();
-		status = super.getRequest().getPrincipal().hasRealm(technician) || t != null;
+		status = technician != null && super.getRequest().getPrincipal().getActiveRealm().getId() == technician.getId() && t != null;
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -62,18 +61,8 @@ public class TechnicianTaskDeleteService extends AbstractGuiService<Technician, 
 	@Override
 	public void perform(final Task task) {
 		Collection<MaintenanceTask> mts;
-		Collection<MaintenanceRecord> mrs;
 		mts = this.rp.findMaintenanceTasks(task.getId());
-		if (mts != null) {
-			mrs = this.rp.findAllAsociatedMaintenaceRecords(task.getId());
-			System.out.println(mrs);
-			System.out.println(mts);
-
-			this.rp.deleteAll(mrs);
-		}
-		if (mts != null)
-			this.rp.deleteAll(mts);
-
+		this.rp.deleteAll(mts);
 		this.rp.delete(task);
 
 	}
