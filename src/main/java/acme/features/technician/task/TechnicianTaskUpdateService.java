@@ -51,7 +51,7 @@ public class TechnicianTaskUpdateService extends AbstractGuiService<Technician, 
 	@Override
 	public void validate(final Task task) {
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(task.getDraftMode(), "draftMode", "technician.task.error.draftMode");
+			super.state(task.isDraftMode(), "draftMode", "technician.task.error.draftMode");
 
 	}
 
