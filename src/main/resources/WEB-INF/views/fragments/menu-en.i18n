@@ -43,9 +43,9 @@ master.menu.consumer.favourite-link = Favourite link
 
 # master.menu.assistanceagent ##########################################################
 
-master.menu.assistanceagent = Assistance agent
-master.menu.assistanceagent.list-trackinglog = Tracking logs
-master.menu.assistanceagent.list-claim = Claims
+master.menu.assistance-agent = Assistance agent
+master.menu.assistance-agent.list-completed-claims = Completed claims list
+master.menu.assistance-agent.list-pending-claims = Undergoing claims list
 
 # master.menu.user-account ####################################################
 

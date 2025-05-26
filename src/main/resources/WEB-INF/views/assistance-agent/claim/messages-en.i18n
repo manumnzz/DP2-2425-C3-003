@@ -8,18 +8,32 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-master.menu.manager = Assistance Agent
+# assistance-agent.claim.list
+assistance-agent.claim.list.title = List of Claims
+assistance-agent.claim.list.label.registration-moment = Registration Moment
+assistance-agent.claim.list.label.description = Description
+assistance-agent.claim.list.label.draft-mode = Draft Mode
+assistance-agent.list.label.leg = Segment
 
-assistanceagent.claim.list.label.moment = Moment
-assistanceagent.claim.list.label.passengerEmail = Passenger email
-assistanceagent.claim.list.label.type = Type
+# assistance-agent.claim.form
+assistance-agent.claim.form.title = Claim
+assistance-agent.form.label.registration-moment = Registration Moment
+assistance-agent.form.label.description = Description
+assistance-agent.form.label.passenger-email = Passenger Email
+assistance-agent.form.label.claim-type = Claim Type
+assistance-agent.form.label.draft-mode = Draft Mode
+assistance-agent.form.label.status = Status
+assistance-agent.form.label.leg = Leg
+assistance-agent.claim.form.button.create = Create
+assistance-agent.claim.form.button.delete = Delete
+assistance-agent.claim.form.button.update = Update
+assistance-agent.claim.form.button.publish = Publish
+assistance-agent.claim.form.label.confirmation = Confirm
+assistance-agent.claim.form.button.tracking-log = Show tracking logs
 
-assistanceagent.claim.form.label.moment = Moment
-assistanceagent.claim.form.label.passengerEmail = Passenger email
-assistanceagent.claim.form.label.description = Description
-assistanceagent.claim.form.label.type = Type
-assistanceagent.claim.form.label.indicator = indicator
+acme.validation.claim.invalid-leg-date.message = Claim must be created after the leg's scheduled arrival
+acme.validation.claim.invalid-leg-draftmode.message = Leg must be published
+acme.validation.claim.invalid-draftmode.message = Claim is already published
 
-assistanceagent.claim.form.button.create = Create
-assistanceagent.claim.form.button.update = Update
-assistanceagent.claim.form.button.Delete = Delete
+acme.validation.assistanceagent.invalid-employeecode-pattern.message = Invalid employee code as it does not conform to the established pattern.
+acme.validation.assistanceagent.invalid-employeeCode-initials.message = The client's initials are not reflected in the employee code.

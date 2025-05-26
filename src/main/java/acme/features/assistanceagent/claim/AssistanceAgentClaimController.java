@@ -1,35 +1,40 @@
 
-package acme.features.assistenceagent.trackingLog;
+package acme.features.assistanceagent.claim;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.controllers.AbstractGuiController;
-import acme.entities.S4.TrackingLog;
+import acme.client.controllers.GuiController;
+import acme.entities.S4.Claim;
 import acme.realms.AssistanceAgent;
 
-public class AssistanceAgentTrackingLogController extends AbstractGuiController<AssistanceAgent, TrackingLog> {
+@GuiController
+public class AssistanceAgentClaimController extends AbstractGuiController<AssistanceAgent, Claim> {
 
 	//Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AssistanceAgentTrackingLogListService		listService;
+	private AssistanceAgentClaimListService				listService;
 
 	@Autowired
-	private AssistanceAgentTrackingLogShowService		showService;
+	private AssistanceAgentClaimListUndergoingService	listUdergoingService;
 
 	@Autowired
-	private AssistanceAgentTrackingLogCreateService		createService;
+	private AssistanceAgentClaimShowService				showService;
 
 	@Autowired
-	private AssistanceAgentTrackingLogUpdateService		updateService;
+	private AssistanceAgentClaimCreateService			createService;
 
 	@Autowired
-	private AssistanceAgentTrackingLogDeleteService		deleteService;
+	private AssistanceAgentClaimUpdateService			updateService;
 
 	@Autowired
-	private AssistanceAgentTrackingLogPublishService	publishService;
+	private AssistanceAgentClaimDeleteService			deleteService;
+
+	@Autowired
+	private AssistanceAgentClaimPublishService			publishService;
 
 	//Constructors ---------------------------------------------------------
 
@@ -42,7 +47,9 @@ public class AssistanceAgentTrackingLogController extends AbstractGuiController<
 		super.addBasicCommand("create", this.createService);
 		super.addBasicCommand("update", this.updateService);
 		super.addBasicCommand("delete", this.deleteService);
+
 		super.addCustomCommand("publish", "update", this.publishService);
+		super.addCustomCommand("list-undergoing", "list", this.listUdergoingService);
 	}
 
 }

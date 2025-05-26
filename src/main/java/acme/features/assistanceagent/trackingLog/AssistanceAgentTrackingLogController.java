@@ -1,5 +1,5 @@
 
-package acme.features.assistenceagent.claim;
+package acme.features.assistanceagent.trackingLog;
 
 import javax.annotation.PostConstruct;
 
@@ -7,31 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
-import acme.entities.S4.Claim;
+import acme.entities.S4.TrackingLog;
 import acme.realms.AssistanceAgent;
 
 @GuiController
-public class AssistanceAgentClaimController extends AbstractGuiController<AssistanceAgent, Claim> {
+public class AssistanceAgentTrackingLogController extends AbstractGuiController<AssistanceAgent, TrackingLog> {
 
 	//Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AssistanceAgentClaimListService		listService;
+	private AssistanceAgentTrackingLogListService		listService;
 
 	@Autowired
-	private AssistanceAgentClaimShowService		showService;
+	private AssistanceAgentTrackingLogShowService		showService;
 
 	@Autowired
-	private AssistanceAgentClaimCreateService	createService;
+	private AssistanceAgentTrackingLogCreateService		createService;
 
 	@Autowired
-	private AssistanceAgentClaimUpdateService	updateService;
+	private AssistanceAgentTrackingLogUpdateService		updateService;
 
 	@Autowired
-	private AssistanceAgentClaimDeleteService	deleteService;
+	private AssistanceAgentTrackingLogDeleteService		deleteService;
 
 	@Autowired
-	private AssistanceAgentClaimPublishService	publishService;
+	private AssistanceAgentTrackingLogPublishService	publishService;
 
 	//Constructors ---------------------------------------------------------
 
@@ -44,7 +44,6 @@ public class AssistanceAgentClaimController extends AbstractGuiController<Assist
 		super.addBasicCommand("create", this.createService);
 		super.addBasicCommand("update", this.updateService);
 		super.addBasicCommand("delete", this.deleteService);
-
 		super.addCustomCommand("publish", "update", this.publishService);
 	}
 

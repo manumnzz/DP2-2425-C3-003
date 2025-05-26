@@ -16,10 +16,10 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="assistanceagent.trackinglog.list.label.updateTime" path="updateTime" width="5%"/>
-	<acme:list-column code="assistanceagent.trackinglog.list.label.step" path="step" width="25%"/>
-	<acme:list-column code="assistanceagent.trackinglog.list.label.resolutionPercentage" path="resolutionPercentage" width="25%"/>
-	<acme:list-payload path="payload"/>
+	<acme:list-column code="assistance-agent.tracking-log.list.label.last-update-moment" path="updateTime"/>
+ 	<acme:list-column code="assistance-agent.tracking-log.list.label.status" path="status"/>
+	<acme:list-column code="assistance-agent.tracking-log.label.resolution-percentage" path="resolutionPercentage"/>
 </acme:list>
-
-<acme:button code="assistanceagent.trackinglog.form.button.create" action="/assistance-agent/tracking-log/create"/>
+<jstl:if test="${claimCompleted == true}">
+	<acme:button code="assistance-agent.tracking-log.list.button.create" action="/assistance-agent/tracking-log/create?masterId=${masterId}"/>
+</jstl:if>	

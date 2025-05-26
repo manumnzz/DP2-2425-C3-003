@@ -8,19 +8,32 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-master.menu.manager = Agente de asistencia
+# assistance-agent.claim.list
+assistance-agent.claim.list.title = Lista de reclamaciones
+assistance-agent.claim.list.label.registration-moment =Momento del registro
+assistance-agent.claim.list.label.description =Descripción
+assistance-agent.claim.list.label.draft-mode = Modo borrador
+assistance-agent.list.label.leg = Tramo
 
+# assistance-agent.claim.form
+assistance-agent.claim.form.title = Crear una reclamación
+assistance-agent.form.label.registration-moment = Momento del registro
+assistance-agent.form.label.description = Descripción
+assistance-agent.form.label.passenger-email = Email del pasajero
+assistance-agent.form.label.claim-type = Tipo de reclamacion
+assistance-agent.form.label.draft-mode = Modo borrador
+assistance-agent.form.label.status = Estado
+assistance-agent.form.label.leg = Tramo 
+assistance-agent.claim.form.button.create = Crear
+assistance-agent.claim.form.button.delete = Eliminar
+assistance-agent.claim.form.button.update = Actualizar
+assistance-agent.claim.form.button.publish = Publicar
+assistance-agent.claim.form.label.confirmation = Confirmar
+assistance-agent.claim.form.button.tracking-log = Mostrar registros de seguimiento
 
-assistanceagent.claim.list.label.moment = Momento
-assistanceagent.claim.list.label.passengerEmail = Email del pasajero
-assistanceagent.claim.list.label.type = Tipo
+acme.validation.assistanceagent.invalid-employeecode-pattern.message = Código de empleado no válido ya que no va de acuerdo al patrón establecido.
+acme.validation.assistanceagent.invalid-employeeCode-initials.message = Las iniciales del cliente no se ven reflejadas en el código de empleado
 
-assistanceagent.claim.form.label.moment = Momento
-assistanceagent.claim.form.label.passengerEmail = Email del pasajero
-assistanceagent.claim.form.label.description = Descripcion
-assistanceagent.claim.form.label.type = Tipo
-assistanceagent.claim.form.label.indicator = Indicador
-
-assistanceagent.claim.form.button.create = Crear
-assistanceagent.claim.form.button.update = Actualizar
-assistanceagent.claim.form.button.Delete = Eliminar
+acme.validation.claim.invalid-leg-date.message = La fecha de llegada del tramo debe de ser anterior a la fecha de creacion de la reclamación
+acme.validation.claim.invalid-leg-draftmode.message = El tramo debe de estar publicado
+acme.validation.claim.invalid-draftmode.message = La reclamación esta publicada
