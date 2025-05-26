@@ -1,18 +1,27 @@
 
 package acme.entities.S4;
 
+import java.beans.Transient;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.Length;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
+import acme.client.helpers.SpringHelper;
 import acme.constraints.ValidLongText;
+import acme.entities.S1.Leg;
+import acme.realms.AssistanceAgent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +34,7 @@ public class Claim extends AbstractEntity {
 
 	@ValidMoment(past = true)
 	@Mandatory
-	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date				moment;
 
 	@Mandatory
@@ -35,16 +44,52 @@ public class Claim extends AbstractEntity {
 
 	@ValidLongText
 	@Mandatory
+	@Automapped
 	private String				description;
 
 	@Mandatory
-	private Type				type;
+	@Valid
+	@Automapped
+	private TypeClaim			typeClaim;
 
 	@Mandatory
-	private boolean				indicator;
+	@Automapped
+	@Valid
+	private Boolean				draftMode;
+
+	//Relarions ------------------------------------------------------------
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private AssistanceAgent		assistanceAgent;
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Leg					leg;
+
+	//Derivated ------------------------------------------------------------
 
 
-	public enum Type {
-		FLIGHT_ISSUES, LUGGAGE_ISSUES, SECURITY_INCIDENT, OTHER
+	@Transient
+	public ClaimStatus getAccepted() {
+		TrackingLogRepository repository = SpringHelper.getBean(TrackingLogRepository.class);
+		List<TrackingLog> listLastTr = repository.findLatestTrackingLogPublishedByClaim(this.getId());
+		TrackingLog lastTr;
+		ClaimStatus res = ClaimStatus.PENDING;
+
+		if (listLastTr.isEmpty())
+			lastTr = null;
+		else
+			lastTr = listLastTr.get(0);
+
+		if (lastTr == null) {
+		} else if (lastTr.getStatus() == TrackingLogStatus.ACCEPTED)
+			res = ClaimStatus.ACCEPTED;
+		else if (lastTr.getStatus() == TrackingLogStatus.REJECTED)
+			res = ClaimStatus.REJECTED;
+
+		return res;
 	}
 }
