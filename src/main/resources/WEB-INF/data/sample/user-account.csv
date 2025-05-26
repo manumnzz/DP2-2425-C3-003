@@ -1,10 +1,4 @@
 key,enabled,identity,password,username
-user-account-consumer-01,true,"UserIdentity{name: 'Peter', surname: 'Consumer', email: 'peter@acme.com'}",consumer1,consumer1
-user-account-consumer-02,true,"UserIdentity{name: 'Mary', surname: '貸んい建濯よ芝弾テソ Λορεμ ιπσθμ', email: 'mary@acme.com'}",consumer2,consumer2
-user-account-consumer-03,true,"UserIdentity{name: 'Manolo', surname: '之乎路可良 ᏥᏲᏎᎭ', email: 'manolo@acme.com'}",consumer3,consumer3
-user-account-provider-01,true,"UserIdentity{name: 'Laurel', surname: 'Provider', email: 'laurel@acme.com'}",provider1,provider1
-user-account-provider-02,true,"UserIdentity{name: 'Martina', surname: 'коза თხა', email: 'martina@acme.com'}",provider2,provider2
-user-account-provider-03,true,"UserIdentity{name: 'Antonia', surname: 'אבטיח Æløzå', email: 'antonia@acme.com'}",provider3,provider3
 user-account-technician-01,true,"UserIdentity{name: 'Javier', surname: 'Del Pozo', email: 'jdlpozo@acme.com'}",technician1,technician1
 user-account-technician-02,true,"UserIdentity{name: 'Jesus', surname: 'אבטיח', email: 'Jesus@acme.com'}",technician2,technician2
 user-account-technician-03,true,"UserIdentity{name: 'Jaime', surname: '之乎路 ᏥᏲᏎᎭ', email: 'jaime@acme.com'}",technician3,technician3
@@ -19,3 +13,6 @@ user-account-member,true,"UserIdentity{name: 'Elena', surname: 'Lopez', email: '
 user-account-customer-01,true,"UserIdentity{name: 'Pedro', surname: 'Custumer', email: 'pedro@acme.com'}",customer1,customer1
 user-account-customer-02,true,"UserIdentity{name: 'Maria', surname: '貸んい建濯よ芝弾テソ Λορεμ ιπσ', email: 'maria@acme.com'}",customer2,customer2
 user-account-customer-03,true,"UserIdentity{name: 'Manolete', surname: '之乎路可良 ᏥᏲ', email: 'manolete@acme.com'}",customer3,customer3
+user-account-assistance-agent-01,true,"UserIdentity{name: 'Javier', surname: 'Garcia', email: 'javi@acme.com'}",agent1,agent1
+user-account-assistance-agent-02,true,"UserIdentity{name: 'Pedro', surname: 'Lopez', email: 'pedro@acme.com'}",agent2,agent2
+user-account-assistance-agent-03,true,"UserIdentity{name: 'Jaime', surname: 'Perez', email: 'jaime@acme.com'}",agent3,agent3

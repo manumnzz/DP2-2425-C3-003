@@ -30,8 +30,7 @@ public class AirlineManagerFlightShowService extends AbstractGuiService<AirlineM
 
 		airlineManager = flight == null ? null : flight.getAirlineManager();
 
-		boolean status = flight != null && //
-			airlineManager != null && super.getRequest().getPrincipal().getAccountId() == airlineManager.getUserAccount().getId();
+		boolean status = flight != null && airlineManager != null && super.getRequest().getPrincipal().getAccountId() == airlineManager.getUserAccount().getId();
 
 		super.getResponse().setAuthorised(status);
 	}

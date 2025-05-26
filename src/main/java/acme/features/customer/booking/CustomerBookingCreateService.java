@@ -105,6 +105,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		dataset.put("flights", flightChoices);
 
 		// travelClass como SelectChoices
+
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);
 

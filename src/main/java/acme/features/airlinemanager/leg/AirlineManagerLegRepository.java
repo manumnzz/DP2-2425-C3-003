@@ -4,6 +4,7 @@ package acme.features.airlinemanager.leg;
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
@@ -38,4 +39,14 @@ public interface AirlineManagerLegRepository extends AbstractRepository {
 
 	@Query("SELECT a FROM Aircraft a")
 	Collection<Aircraft> findAllAircrafts();
+
+	@Query("SELECT l FROM Leg l WHERE l.flightNumber = :flightNumber AND l.id <> :id")
+	Collection<Leg> findByFlightNumber(@Param("flightNumber") String flightNumber, @Param("id") int id);
+
+	@Query("SELECT l FROM Leg l WHERE l.flight.id = :flightId AND l.id <> :id")
+	Collection<Leg> findByFlightId(@Param("flightId") int flightId, @Param("id") int id);
+
+	@Query("SELECT l FROM Leg l WHERE l.aircraft.id = :aircraftId AND l.id <> :id")
+	Collection<Leg> findByAircraftId(@Param("aircraftId") int aircraftId, @Param("id") int id);
+
 }

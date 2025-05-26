@@ -5,4 +5,10 @@ technician.maintenanceTask.form.label.id = Id
 technician.maintenanceTask.form.label.maintenanceRecord = MaintenanceRecord
 technician.maintenanceTask.form.label.task = Task
 
+technician.maintenanceTask.list.label.maintenanceRecord = MaintenanceRecord
+technician.maintenanceTask.list.label.task = Task
+technician.maintenanceTask.form.label.maintenanceRecord.id = MaintenanceRecord
+technician.maintenanceTask.form.label.task.id = Task
+
 technician.maintenanceTask.form.button.create = create
+technician.maintenanceTask.form.button.delete = delete

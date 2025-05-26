@@ -12,6 +12,7 @@ import acme.client.services.GuiService;
 import acme.entities.Aircraft;
 import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.MaintenanceStatus;
+import acme.entities.maintenance.Task;
 import acme.realms.Technician;
 
 @GuiService
@@ -31,7 +32,7 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 		masterId = super.getRequest().getData("id", int.class);
 		mr = this.rp.findMrById(masterId);
 		technician = mr == null ? null : mr.getTechnician();
-		status = super.getRequest().getPrincipal().hasRealm(technician) || mr != null;
+		status = technician != null && super.getRequest().getPrincipal().getActiveRealm().getId() == technician.getId() && mr != null;
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -40,7 +41,6 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 	public void load() {
 		MaintenanceRecord mr;
 		int id;
-
 		id = super.getRequest().getData("id", int.class);
 		mr = this.rp.findMrById(id);
 
@@ -62,16 +62,14 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 		if (!super.getBuffer().getErrors().hasErrors("nextInspectionDue"))
 			super.state(mr.getNextInspectionDue().after(mr.getMaintenanceDate()), "nextInspectionDue", "technician.maintenanceRecord.error.nextInspectionDue");
 
-		//		Collection<Task> tasks;
-		//		int totalTasks;
-		//		boolean allDraftMode;
-		//		tasks = this.rp.getAllAsociatedPublishedTasks(mr);
-		//		totalTasks = tasks.size();
-		//		allDraftMode = tasks.stream().allMatch(Task::getDraftMode);
-		//		System.out.println(totalTasks);
-		//		System.out.println(allDraftMode);
-		//		super.state(totalTasks >= 1, "*", "technician.maintenaceRecord.form.error.not-enough-tasks");
-		//		super.state(!allDraftMode, "*", "technician.maintenaceRecord.form.error.not-all-published");
+		Collection<Task> tasks;
+		int totalTasks;
+		boolean allDraftMode;
+		tasks = this.rp.getAllAsociatedPublishedTasks(mr);
+		totalTasks = tasks.size();
+		allDraftMode = tasks.stream().allMatch(Task::isDraftMode);
+		super.state(totalTasks >= 1, "*", "technician.maintenaceRecord.form.error.not-enough-tasks");
+		super.state(!allDraftMode, "*", "technician.maintenaceRecord.form.error.not-all-published");
 
 	}
 

@@ -8,16 +8,14 @@
 <acme:form>	
 	<jstl:choose>
 		<jstl:when test="${acme:anyOf(_command, 'show|delete')}">
- 			<acme:input-textbox code="technician.maintenanceTask.form.label.maintenanceRecord" path="maintenanceRecord"/>
-			<acme:input-textbox code="technician.maintenanceTask.form.label.task" path="task"/>
-		<%--  	<acme:input-select code="technician.maintenanceTask.form.label.maintenanceRecord.id" choices="${mrs}" path="maintenanceRecord.id"/>
-			<acme:input-select code="technician.maintenanceTask.form.label.task.id" path="task.id" choices="${tasks}"/> --%>
+			<acme:input-select code="technician.maintenanceTask.form.label.maintenanceRecord.id" choices="${mrs}" path="maintenanceRecord" readonly="true"/>
+			<acme:input-select code="technician.maintenanceTask.form.label.task.id" path="task" choices="${tasks}" readonly="true"/>
+			<acme:submit code="technician.maintenanceTask.form.button.delete" action="/technician/maintenance-task/delete"/>
+			
 		</jstl:when>
 		<jstl:when test="${_command == 'create'}">
- 			<acme:input-textbox code="technician.maintenanceTask.form.label.maintenanceRecord" path="maintenanceRecord"/>
-			<acme:input-textbox code="technician.maintenanceTask.form.label.task" path="task"/>
-<%-- 			<acme:input-select code="technician.maintenanceTask.form.label.maintenanceRecord.id" path="maintenanceRecord" choices="${mrs}"/>
-			<acme:input-select code="technician.maintenanceTask.form.label.task.id" path="task" choices="${tasks}"/> --%>
+ 			<acme:input-select code="technician.maintenanceTask.form.label.maintenanceRecord.id" path="maintenanceRecord" choices="${mrs}"/>
+			<acme:input-select code="technician.maintenanceTask.form.label.task.id" path="task" choices="${tasks}"/>
 			<acme:submit code="technician.maintenanceTask.form.button.create" action="/technician/maintenance-task/create"/>
 		</jstl:when>
 	</jstl:choose>
