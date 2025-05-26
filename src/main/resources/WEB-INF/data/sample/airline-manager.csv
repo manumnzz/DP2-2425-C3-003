@@ -1,4 +1,4 @@
-﻿key,key:userAccount,identifier,yearsOfExperience,dateOfBirth,pictureUrl
-manager-01,user-account-manager-01,AB123456,16,2002/06/01 00:00,null
-manager-02,user-account-manager-02,CD234567,12,2003/09/11 00:00,null
-manager-03,user-account-manager-03,EF345678,2,2000/03/23 00:00,null
+﻿key,key:userAccount,identifier,yearsOfExperience,dateOfBirth,pictureUrl,key:airline
+manager-01,user-account-manager-01,AB123456,16,2002/06/01 00:00,null,airline-01
+manager-02,user-account-manager-02,CD234567,12,2003/09/11 00:00,null,airline-01
+manager-03,user-account-manager-03,EF345678,2,2000/03/23 00:00,null,airline-01

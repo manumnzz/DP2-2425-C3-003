@@ -50,12 +50,16 @@ public class FlightAssignment extends AbstractEntity {
 	@Automapped
 	private String				remarks;
 
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
+
 	// Relationships ----------------------------------------------------------
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private FlightCrewMember	crewMember;
+	private FlightCrewMember	flightCrewMember;
 
 	@Mandatory
 	@Valid
