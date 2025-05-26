@@ -37,3 +37,5 @@ acme.validation.assistanceagent.invalid-employeeCode-initials.message = Las inic
 acme.validation.claim.invalid-leg-date.message = La fecha de llegada del tramo debe de ser anterior a la fecha de creacion de la reclamación
 acme.validation.claim.invalid-leg-draftmode.message = El tramo debe de estar publicado
 acme.validation.claim.invalid-draftmode.message = La reclamación esta publicada
+
+acme.validation.delete.message = No se puede eliminar si tiene registros de seguimiento asociados

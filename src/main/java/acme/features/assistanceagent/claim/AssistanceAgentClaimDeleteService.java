@@ -116,9 +116,19 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 	@Override
 	public void validate(final Claim claim) {
 		boolean confirmation;
+		boolean hasTrackingLogs = false;
+		int id;
+
+		id = super.getRequest().getData("id", int.class);
+		Collection<TrackingLog> tl = this.repository.findTrackingLogsByClaimId(id);
+
+		if (tl.isEmpty())
+			hasTrackingLogs = true;
+
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 		super.state(claim.getDraftMode(), "*", "acme.validation.claim.invalid-draftmode.message");
+		super.state(hasTrackingLogs, "*", "acme.validation.delete.message");
 	}
 
 	@Override

@@ -37,3 +37,4 @@ acme.validation.claim.invalid-draftmode.message = Claim is already published
 
 acme.validation.assistanceagent.invalid-employeecode-pattern.message = Invalid employee code as it does not conform to the established pattern.
 acme.validation.assistanceagent.invalid-employeeCode-initials.message = The client's initials are not reflected in the employee code.
+acme.validation.delete.message = Can not be deleted if it has tracking logs associated
