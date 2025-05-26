@@ -71,7 +71,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	public void unbind(final Booking booking) {
 		Dataset dataset;
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
-		Collection<Flight> flights = this.fl
+		//Collection<Flight> flights = this.fl
 		Money price = new Money();
 		price.setAmount(0.0);
 		price.setCurrency("USD");

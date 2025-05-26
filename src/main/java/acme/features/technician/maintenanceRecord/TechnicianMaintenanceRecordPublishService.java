@@ -41,7 +41,6 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 	public void load() {
 		MaintenanceRecord mr;
 		int id;
-
 		id = super.getRequest().getData("id", int.class);
 		mr = this.rp.findMrById(id);
 
@@ -68,7 +67,7 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 		boolean allDraftMode;
 		tasks = this.rp.getAllAsociatedPublishedTasks(mr);
 		totalTasks = tasks.size();
-		allDraftMode = tasks.stream().allMatch(Task::getDraftMode);
+		allDraftMode = tasks.stream().allMatch(Task::isDraftMode);
 		super.state(totalTasks >= 1, "*", "technician.maintenaceRecord.form.error.not-enough-tasks");
 		super.state(!allDraftMode, "*", "technician.maintenaceRecord.form.error.not-all-published");
 

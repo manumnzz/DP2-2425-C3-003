@@ -51,12 +51,7 @@ public class TechnicianMaintenanceTaskCreateService extends AbstractGuiService<T
 
 	@Override
 	public void validate(final MaintenanceTask mt) {
-		/*
-		 * No deben existir relaciones repetidas, es decir, mismo proyecto e historia de usuario
-		 * No se pueden crear asignaciones a proyectos ya publicados
-		 * No se pueden crear asignaciones a proyectos de otros managers
-		 * No se pueden crear asignaciones con historias de usuario no publicadas de otros managers
-		 */
+
 		MaintenanceRecord mr;
 		Task task;
 		Technician technician;
@@ -73,13 +68,13 @@ public class TechnicianMaintenanceTaskCreateService extends AbstractGuiService<T
 				super.state(existing == null, "*", "technician.maintenance-task.form.error-existing");
 			}
 
-			super.state(mr.getDraftMode(), "maintenanceRecord", "technician.maintenance-task.form.error-draftMode");
+			super.state(mr.isDraftMode(), "maintenanceRecord", "technician.maintenance-task.form.error-draftMode");
 
 			super.state(mr.getTechnician().equals(technician), "*", "technician.maintenance-task.form.error-technician-mr");
 		}
 
 		if (!super.getBuffer().getErrors().hasErrors("task") && task != null)
-			super.state(task.getTechnician().equals(technician) || !task.getDraftMode(), "task", "technician.maintenance-task.form.error-technician-task");
+			super.state(task.getTechnician().equals(technician) || !task.isDraftMode(), "task", "technician.maintenance-task.form.error-technician-task");
 	}
 
 	@Override
