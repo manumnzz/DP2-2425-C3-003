@@ -24,7 +24,12 @@ public class CustomerPassengerUpdateService extends AbstractGuiService<Customer,
 	public void authorise() {
 		int passengerId = super.getRequest().getData("id", int.class);
 		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		boolean status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0;
+		Passenger passenger = this.repository.findPassengerById(passengerId);
+
+		boolean status = false;
+		if (passenger != null)
+			// Comprueba que pertenece al customer y que está en borrador
+			status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0 && passenger.isDraftMode();
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -44,6 +49,7 @@ public class CustomerPassengerUpdateService extends AbstractGuiService<Customer,
 	public void validate(final Passenger passenger) {
 		if (!super.getBuffer().getErrors().hasErrors("passportNumber")) {
 			Passenger existing = this.repository.findPassengerByPassportNumber(passenger.getPassportNumber());
+			// No es duplicado si es el mismo pasajero
 			if (existing != null && existing.getId() != passenger.getId())
 				super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
 		}

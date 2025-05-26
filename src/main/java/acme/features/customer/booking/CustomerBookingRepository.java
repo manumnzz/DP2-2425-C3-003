@@ -40,4 +40,7 @@ public interface CustomerBookingRepository extends AbstractRepository {
 	@Query("SELECT COUNT(bp) FROM BookingPassenger bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = true")
 	int countDraftByBookingId(int bookingId);
 
+	@Query("SELECT b FROM Booking b WHERE b.locatorCode = :locatorCode AND b.id != :bookingId")
+	Booking findByLocatorCodeAndIdNot(String locatorCode, int bookingId);
+
 }

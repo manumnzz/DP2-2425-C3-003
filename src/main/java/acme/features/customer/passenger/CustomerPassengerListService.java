@@ -42,12 +42,18 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 		Collection<Passenger> passengers = this.repository.findPassengersByBookingId(bookingId);
 		super.getBuffer().addData(passengers);
 
+		// Recupera el booking asociado y añade draftMode al contexto global
+		Booking booking = this.repository.findBookingById(bookingId);
+		boolean draftMode = booking != null && booking.isDraftMode();
+
 		super.getResponse().addGlobal("bookingId", bookingId);
+		super.getResponse().addGlobal("draftMode", draftMode);
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
-		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
+		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode", "id", "version");
 		super.getResponse().addData(dataset);
 	}
+
 }

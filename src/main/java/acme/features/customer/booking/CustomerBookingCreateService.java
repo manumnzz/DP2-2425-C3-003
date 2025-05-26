@@ -32,19 +32,18 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		// Permite la creación a cualquier usuario Customer autenticado
+		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
+		boolean status = customer != null;
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Date moment;
-		Customer customer;
-		Booking booking;
+		Date moment = MomentHelper.getCurrentMoment();
+		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
-		moment = MomentHelper.getCurrentMoment();
-		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-
-		booking = new Booking();
+		Booking booking = new Booking();
 		booking.setCustomer(customer);
 		booking.setDraftMode(true);
 		super.getBuffer().addData(booking);
@@ -52,7 +51,26 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void bind(final Booking booking) {
-		super.bindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
+		super.bindObject(booking, "locatorCode", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
+	}
+
+	@Override
+	public void validate(final Booking booking) {
+		// Validación de locatorCode único
+		if (!super.getBuffer().getErrors().hasErrors("locatorCode")) {
+			Booking existing = this.repository.findByLocatorCodeAndIdNot(booking.getLocatorCode(), booking.getId());
+			if (existing != null && existing.getId() != booking.getId())
+				super.state(false, "locatorCode", "customer.booking.error.locatorCode.duplicate");
+		}
+
+		// Validación de draftMode
+		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
+			super.state(booking.isDraftMode(), "draftMode", "customer.booking.error.draftMode");
+
+		// Validación de travelClass obligatorio
+		if (booking.getTravelClass() == null)
+			super.state(false, "travelClass", "customer.booking.error.travelClass.required");
+
 	}
 
 	@Override
@@ -61,19 +79,9 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	}
 
 	@Override
-	public void validate(final Booking booking) {
-		if (!super.getBuffer().getErrors().hasErrors("locatorCode")) {
-			Booking existing = this.repository.findBookingByLocatorCode(booking.getLocatorCode());
-			if (existing != null && existing.getId() != booking.getId())
-				super.state(false, "locatorCode", "customer.booking.error.locatorCode.duplicate");
-		}
-		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(booking.isDraftMode(), "draftMode", "customer.booking.error.draftMode");
-	}
-
-	@Override
 	public void unbind(final Booking booking) {
-		Collection<Flight> flights = this.repository.findAllFlights(); // O el método que corresponda
+		// Combo de vuelos
+		Collection<Flight> flights = this.repository.findAllFlights();
 		SelectChoices flightChoices = new SelectChoices();
 
 		for (Flight flight : flights) {
@@ -93,18 +101,34 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 			}
 		}
 
-		Dataset dataset;
+		Dataset dataset = super.unbindObject(booking, "locatorCode", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
+		dataset.put("flights", flightChoices);
 
-		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
-
-		Money price = new Money();
-		price.setAmount(0.0);
-		price.setCurrency("USD");
+		// travelClass como SelectChoices
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);
-		dataset.put("flights", flightChoices);
+
+		// price seguro
+		Money price = new Money();
+		if (booking.getFlight() != null && booking.getFlight().getCost() != null)
+			price = booking.getFlight().getCost();
+		else {
+			price.setAmount(0.0);
+			price.setCurrency("USD");
+		}
 		dataset.put("price", price);
+
+		// lastCreditCardNibble como String o vacío
+		dataset.put("lastCreditCardNibble", booking.getLastCreditCardNibble() != null ? booking.getLastCreditCardNibble() : "");
+
+		// id y version
+		dataset.put("id", booking.getId());
+		dataset.put("version", booking.getVersion());
+
+		// Añade el payload
+		super.addPayload(dataset, booking, "customer.identifier");
 
 		super.getResponse().addData(dataset);
 	}
+
 }

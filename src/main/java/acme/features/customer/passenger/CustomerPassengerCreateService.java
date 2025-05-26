@@ -28,9 +28,15 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void authorise() {
-		boolean status;
+		Integer bookingId = super.getRequest().getData("bookingId", Integer.class);
 		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		status = customer != null;
+		boolean status = false;
+
+		if (customer != null && bookingId != null) {
+			Booking booking = this.repositoryBP.findBookingById(bookingId);
+			status = booking != null && booking.getCustomer().getId() == customer.getId() && booking.isDraftMode(); // Solo permite si está en borrador
+		}
+
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -39,10 +45,8 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 		Passenger passenger;
 		passenger = new Passenger();
 		passenger.setDraftMode(true);
-		if (super.getRequest().hasData("bookingId")) {
-			int bookingId = super.getRequest().getData("bookingId", int.class);
-			System.out.println(">>> Booking ID recibido: " + bookingId);
-		}
+		//if (super.getRequest().hasData("bookingId")) 
+		//int bookingId = super.getRequest().getData("bookingId", int.class);
 		super.getBuffer().addData(passenger);
 	}
 
@@ -55,7 +59,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 	public void validate(final Passenger passenger) {
 		if (!super.getBuffer().getErrors().hasErrors("passportNumber")) {
 			Passenger existing = this.repository.findPassengerByPassportNumber(passenger.getPassportNumber());
-			if (existing != null && existing.getId() != passenger.getId())
+			if (existing != null)
 				super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
 		}
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
@@ -68,8 +72,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 		// Relacionar con Booking si bookingId está presente
 		if (super.getRequest().hasData("bookingId")) {
-			int bookingId = super.getRequest().getData("bookingId", int.class);
-			System.out.println(">>> Asociando pasajero al booking con ID: " + bookingId);
+			Integer bookingId = super.getRequest().getData("bookingId", int.class);
 			Booking booking = this.repositoryBP.findBookingById(bookingId);
 
 			if (booking != null) {
@@ -88,7 +91,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
 
 		if (super.getRequest().hasData("bookingId")) {
-			int bookingId = super.getRequest().getData("bookingId", int.class);
+			Integer bookingId = super.getRequest().getData("bookingId", int.class);
 			dataset.put("bookingId", bookingId);
 		}
 

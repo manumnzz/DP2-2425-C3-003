@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Flight;
@@ -21,15 +22,11 @@ import acme.realms.Customer;
 @GuiService
 public class CustomerBookingPublishService extends AbstractGuiService<Customer, Booking> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
 	private CustomerBookingRepository			repository;
 
 	@Autowired
 	private CustomerBookingPassengerRepository	repositoryBP;
-
-	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -37,7 +34,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		int bookingId = super.getRequest().getData("id", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 
-		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && booking.getLastCreditCardNibble() != null;
+		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && booking.isDraftMode(); // Solo permite publicar si está en borrador
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -51,34 +48,38 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 
 	@Override
 	public void bind(final Booking booking) {
-
+		// No hay campos editables en publish, así que normalmente se deja vacío
 	}
 
 	@Override
 	public void validate(final Booking booking) {
+		// lastCreditCardNibble obligatorio
 		if (!super.getBuffer().getErrors().hasErrors("lastCreditCardNibble"))
-			// Comprobar que no esté vacío o null
 			if (booking.getLastCreditCardNibble() == null || booking.getLastCreditCardNibble().trim().isEmpty())
-				super.state(false, "lastCreditCardNibble", "customer.booking.error.lastCreditCardNibble.required");
+				super.state(false, "lastCreditCardNibble", "customer.booking.error.lastCreditCardNibble.required.");
+
+		// Pasajeros publicados obligatorios
 		int bookingId = booking.getId();
 		int publishedPassengers = this.repository.countPublishedByBookingId(bookingId);
 		int draftPassengers = this.repository.countDraftByBookingId(bookingId);
 
 		if (publishedPassengers == 0)
-			super.state(false, "passengers", "customer.booking.error.passengers.required");
+			super.state(false, "passengers", "customer.booking.error.passengers.required.");
 		if (draftPassengers > 0)
-			super.state(false, "passengers", "customer.booking.error.passengers.draftNotAllowed");
+			super.state(false, "passengers", "customer.booking.error.passengers.draftNotAllowed.");
 	}
 
 	@Override
 	public void perform(final Booking booking) {
 		booking.setDraftMode(false);
+		booking.setPurchaseMoment(MomentHelper.getCurrentMoment());
 		this.repository.save(booking);
 	}
 
 	@Override
 	public void unbind(final Booking booking) {
-		Collection<Flight> flights = this.repository.findAllFlights(); // O el método que corresponda
+		// Combo de vuelos
+		Collection<Flight> flights = this.repository.findAllFlights();
 		SelectChoices flightChoices = new SelectChoices();
 
 		for (Flight flight : flights) {
@@ -98,22 +99,42 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 			}
 		}
 
-		Dataset dataset;
-
-		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
+		Dataset dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
 		dataset.put("flights", flightChoices);
 
-		Money costPerPassenger = booking.getFlight().getCost();
-		int passengerCount = this.repositoryBP.findPublishedByBookingId(booking.getId()).size();
+		// travelClass como SelectChoices
+		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
+		dataset.put("travelClass", travelClassChoices);
 
+		// Cálculo seguro del precio
+		Money costPerPassenger = new Money();
+		if (booking.getFlight() != null && booking.getFlight().getCost() != null)
+			costPerPassenger = booking.getFlight().getCost();
+		else {
+			costPerPassenger.setAmount(0.0);
+			costPerPassenger.setCurrency("USD");
+		}
+		int passengerCount = 0;
+		try {
+			passengerCount = this.repositoryBP.findPublishedByBookingId(booking.getId()).size();
+		} catch (Exception e) {
+			passengerCount = 0;
+		}
 		Money totalPrice = new Money();
 		totalPrice.setAmount(costPerPassenger.getAmount() * passengerCount);
 		totalPrice.setCurrency(costPerPassenger.getCurrency());
-
-		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
-		dataset.put("travelClass", travelClassChoices);
-		dataset.put("id", booking.getId());
 		dataset.put("price", totalPrice);
+
+		// lastCreditCardNibble como String o vacío
+		dataset.put("lastCreditCardNibble", booking.getLastCreditCardNibble() != null ? booking.getLastCreditCardNibble() : "");
+
+		// purchaseMoment como String o vacío
+		dataset.put("purchaseMoment", booking.getPurchaseMoment() != null ? booking.getPurchaseMoment().toString() : "");
+
+		// id y version
+		dataset.put("id", booking.getId());
+		dataset.put("version", booking.getVersion());
+
 		super.getResponse().addData(dataset);
 	}
 }

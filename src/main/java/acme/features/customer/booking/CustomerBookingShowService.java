@@ -50,14 +50,15 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 		// Importante: Chequear si el booking existe antes de añadirlo al buffer
 		if (booking != null)
 			super.getBuffer().addData(booking);
-		else
-			// Opción 1: Lanzar excepción controlada (recomendado)
-			throw new RuntimeException("Booking with id " + bookingId + " not found");
+		//else
+
+		//throw new RuntimeException("Booking with id " + bookingId + " not found");
 	}
 
 	@Override
 	public void unbind(final Booking booking) {
-		Collection<Flight> flights = this.repository.findAllFlights(); // O el método que corresponda
+		// Construcción de la lista de vuelos para el combo
+		Collection<Flight> flights = this.repository.findAllFlights();
 		SelectChoices flightChoices = new SelectChoices();
 
 		for (Flight flight : flights) {
@@ -77,24 +78,47 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 			}
 		}
 
-		Dataset dataset;
-
-		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
+		Dataset dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
 		dataset.put("flights", flightChoices);
 
-		Money costPerPassenger = booking.getFlight().getCost();
-		int passengerCount = this.repositoryBP.findPublishedByBookingId(booking.getId()).size();
+		// Manejo seguro de flight y cost
+		Money costPerPassenger = new Money();
+		if (booking.getFlight() != null)
+			costPerPassenger = booking.getFlight().getCost();
 
+		// Número de pasajeros publicados
+		int passengerCount = 0;
+		try {
+			passengerCount = this.repositoryBP.findPublishedByBookingId(booking.getId()).size();
+		} catch (Exception e) {
+			passengerCount = 0;
+		}
+
+		// Precio total
 		Money totalPrice = new Money();
 		totalPrice.setAmount(costPerPassenger.getAmount() * passengerCount);
 		totalPrice.setCurrency(costPerPassenger.getCurrency());
+		dataset.put("price", totalPrice);
 
+		// travelClass como SelectChoices
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);
+
+		// lastCreditCardNibble como String o vacío
+		dataset.put("lastCreditCardNibble", booking.getLastCreditCardNibble() != null ? booking.getLastCreditCardNibble() : "");
+
+		// purchaseMoment con formato
+		String formattedMoment = "";
+		if (booking.getPurchaseMoment() != null)
+			formattedMoment = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm").format(booking.getPurchaseMoment());
+		dataset.put("purchaseMoment", formattedMoment);
+
+		// id y version
 		dataset.put("id", booking.getId());
-		dataset.put("price", totalPrice);
+		dataset.put("version", booking.getVersion());
 
 		super.addPayload(dataset, booking, "customer.identifier");
 		super.getResponse().addData(dataset);
 	}
+
 }

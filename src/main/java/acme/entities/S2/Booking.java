@@ -40,7 +40,7 @@ public class Booking extends AbstractEntity {
 	@Column(unique = true)
 	private String				locatorCode;
 
-	@Mandatory
+	@Optional
 	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				purchaseMoment;

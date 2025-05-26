@@ -23,7 +23,6 @@ public class CustomerPassengerShowService extends AbstractGuiService<Customer, P
 	@Override
 	public void authorise() {
 		int passengerId = super.getRequest().getData("id", int.class);
-		// ¿El customer autenticado tiene algún booking con este passenger?
 		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 		boolean status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0;
 		super.getResponse().setAuthorised(status);
@@ -33,15 +32,15 @@ public class CustomerPassengerShowService extends AbstractGuiService<Customer, P
 	public void load() {
 		int passengerId = super.getRequest().getData("id", int.class);
 		Passenger passenger = this.repository.findPassengerById(passengerId);
-		if (passenger != null)
-			super.getBuffer().addData(passenger);
-		else
-			throw new RuntimeException("Passenger not found");
+		super.getBuffer().addData(passenger);
+
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
-		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
+		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode", "id", "version");
+
 		super.getResponse().addData(dataset);
 	}
+
 }
