@@ -1,4 +1,35 @@
 key,name,iataCode,operationalScope,city,country,website,email,phone
-airport-01,Airline One,AON,INTERNATIONAL,New York,USA,https://www.airlineone.com,contact@airlineone.com,+15551234
-airport-02,SkyJet,SKJ,DOMESTIC,London,UK,https://www.skyjet.com,support@skyjet.com,+4420794609
-airport-03,FlyExpress,FEX,REGIONAL,Madrid,Spain,https://www.flyexpress.com,info@flyexpress.com,+34910123456
+airport-01,Lorem Ipsum Airport,JFK,INTERNATIONAL,New York,USA,http://lorem1.com,contact@lorem1.com,+123456789
+airport-02,Dolor Sit Airport,LAX,DOMESTIC,Los Angeles,USA,http://lorem2.com,contact@lorem2.com,+987654321
+airport-03,Amet Consectetur Airport,LHR,INTERNATIONAL,London,UK,http://lorem3.com,contact@lorem3.com,+1122334455
+airport-04,Adipiscing Elit Airport,CDG,DOMESTIC,Paris,France,http://lorem4.com,contact@lorem4.com,+5566778899
+airport-05,Sed Do Airport,TXL,INTERNATIONAL,Berlin,Germany,http://lorem5.com,contact@lorem5.com,+6677889900
+airport-06,Eiusmod Tempor Airport,HND,DOMESTIC,Tokyo,Japan,http://lorem6.com,contact@lorem6.com,+9988776655
+airport-07,Incididunt Ut Airport,SYD,INTERNATIONAL,Sydney,Australia,http://lorem7.com,contact@lorem7.com,+5544332211
+airport-08,Labore Et Airport,FCO,DOMESTIC,Rome,Italy,http://lorem8.com,contact@lorem8.com,+3322114455
+airport-09,Dolore Magna Airport,MAD,INTERNATIONAL,Madrid,Spain,http://lorem9.com,contact@lorem9.com,+7766554433
+airport-10,Aliqua Airport,PEK,DOMESTIC,Beijing,China,http://lorem10.com,contact@lorem10.com,+8899001122
+airport-11,Ut Enim Airport,DUB,INTERNATIONAL,Dubai,UAE,http://lorem11.com,contact@lorem11.com,+1234432112
+airport-12,Ad Minim Airport,DEL,DOMESTIC,Delhi,India,http://lorem12.com,contact@lorem12.com,+9988227766
+airport-13,Veniam Airport,GIG,INTERNATIONAL,Rio de Janeiro,Brazil,http://lorem13.com,contact@lorem13.com,+6677885544
+airport-14,Quis Nostrud Airport,CPT,DOMESTIC,Cape Town,South Africa,http://lorem14.com,contact@lorem14.com,+1122554466
+airport-15,Exercitation Airport,MEX,INTERNATIONAL,Mexico City,Mexico,http://lorem15.com,contact@lorem15.com,+3344556677
+airport-16,Ullamco Laboris Airport,SIN,DOMESTIC,Singapore,Singapore,http://lorem16.com,contact@lorem16.com,+7788990011
+airport-17,Nisi Ut Airport,HKG,INTERNATIONAL,Hong Kong,China,http://lorem17.com,contact@lorem17.com,+9900112233
+airport-18,Aliquip Ex Airport,IST,DOMESTIC,Istanbul,Turkey,http://lorem18.com,contact@lorem18.com,+5544778899
+airport-19,Ea Commodo Airport,YYZ,INTERNATIONAL,Toronto,Canada,http://lorem19.com,contact@lorem19.com,+7788554433
+airport-20,Consequat Airport,BKK,DOMESTIC,Bangkok,Thailand,http://lorem20.com,contact@lorem20.com,+9988007766
+airport-21,Duis Aute Airport,ICN,INTERNATIONAL,Seoul,South Korea,http://lorem21.com,contact@lorem21.com,+2233445566
+airport-22,Irure Dolor Airport,EZE,DOMESTIC,Buenos Aires,Argentina,http://lorem22.com,contact@lorem22.com,+6655443322
+airport-23,Reprehenderit Airport,SVO,INTERNATIONAL,Moscow,Russia,http://lorem23.com,contact@lorem23.com,+7788996655
+airport-24,Voluptate Airport,CGK,DOMESTIC,Jakarta,Indonesia,http://lorem24.com,contact@lorem24.com,+1133557799
+airport-25,Velit Esse Airport,KUL,INTERNATIONAL,Kuala Lumpur,Malaysia,http://lorem25.com,contact@lorem25.com,+2211334455
+airport-26,Cillum Dolore Airport,AKL,DOMESTIC,Auckland,New Zealand,http://lorem26.com,contact@lorem26.com,+8877665544
+airport-27,Fugiat Nulla Airport,OSL,INTERNATIONAL,Oslo,Norway,http://lorem27.com,contact@lorem27.com,+5566998877
+airport-28,Pariatur Airport,ARN,DOMESTIC,Stockholm,Sweden,http://lorem28.com,contact@lorem28.com,+1122446688
+airport-29,Excepteur Sint Airport,HEL,INTERNATIONAL,Helsinki,Finland,http://lorem29.com,contact@lorem29.com,+9977553311
+airport-30,Occaecat Cupidatat Airport,ZRH,DOMESTIC,Zurich,Switzerland,http://lorem30.com,contact@lorem30.com,+6633221100
+
+
+
+

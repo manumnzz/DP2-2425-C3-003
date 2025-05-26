@@ -18,6 +18,7 @@ import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
 import acme.constraints.ValidPhone;
 import acme.constraints.ValidShortText;
+import acme.entities.S2.AirlineType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,35 +36,35 @@ public class Airline extends AbstractEntity {
 	@Mandatory
 	@ValidShortText
 	@Automapped
-	protected String			name;
+	private String				name;
 
 	@Mandatory
 	@ValidString(pattern = "^[A-Z]{2}X$")
 	@Automapped
-	protected String			iataCode;
+	private String				iataCode;
 
 	@Mandatory
 	@ValidUrl
 	@Automapped
-	protected String			website;
+	private String				website;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	protected AirlineType		type;
+	private AirlineType			type;
 
 	@Mandatory
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	protected Date				foundationMoment;
+	private Date				foundationMoment;
 
 	@Mandatory
 	@ValidPhone
 	@Automapped
-	protected String			phoneNumber;
+	private String				phoneNumber;
 
 	@Optional
 	@ValidEmail
 	@Automapped
-	protected String			email;
+	private String				email;
 }

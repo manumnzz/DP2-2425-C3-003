@@ -1,4 +1,32 @@
-key,tag,requiresSelfTransfer,cost,description,key:firstLeg,key:lastLeg,key:originAirport,key:destinationAirport,key:airline-manager
-flight-01,dsa,true,EUR 500.0,"The most popular flight",leg-01,leg-03,airport-01,airport-03,manager-01
-flight-02,fse,true,EUR 1000.0,"The second most popular flight",leg-03,leg-02,airport-01,airport-02,manager-02
-flight-03,uas,true,EUR 30.0,"The third most popular flight",leg-02,leg-03,airport-02,airport-03,manager-01
+key,tag,selfTransfer,cost,description,draftMode,key:airlineManager
+flight-00,Lorem ipsum dolor sit ame,SELF_TRANSFER,EUR 5000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",TRUE,manager-01
+flight-01,Fastest route,NO_SELF_TRANSFER,USD 3200.50,Direct flight with no layovers.,FALSE,manager-02
+flight-02,Cheapest option,SELF_TRANSFER,EUR 150.75,Budget-friendly flight with a layover.,TRUE,manager-03
+flight-03,Premium experience,NO_SELF_TRANSFER,GBP 7800.20,Luxury seating and gourmet meals.,FALSE,manager-01
+flight-04,Quickest layover,SELF_TRANSFER,USD 420.00,Short transfer time of only 45 minutes.,TRUE,manager-02
+flight-05,Best for families,NO_SELF_TRANSFER,EUR 2950.00,Extra luggage allowance and child-friendly services.,FALSE,manager-03
+flight-06,Weekend special,SELF_TRANSFER,GBP 190.30,Discounted price for weekend travel.,TRUE,manager-01
+flight-07,Scenic route,NO_SELF_TRANSFER,USD 3750.00,Enjoy breathtaking views of the Alps.,FALSE,manager-02
+flight-08,Frequent flyer deal,SELF_TRANSFER,EUR 2300.60,Exclusive offer for loyalty members.,TRUE,manager-03
+flight-09,Overnight flight,NO_SELF_TRANSFER,USD 3100.90,Red-eye flight for night travelers.,FALSE,manager-01
+flight-10,Business class exclusive,SELF_TRANSFER,GBP 6100.25,First-class services with priority check-in.,TRUE,manager-02
+flight-11,Best layover lounge,NO_SELF_TRANSFER,EUR 4950.40,Extended layover in Dubai.,FALSE,manager-03
+flight-12,Most booked,SELF_TRANSFER,USD 2750.10,Highly rated flight with top services.,TRUE,manager-01
+flight-13,Longest flight,NO_SELF_TRANSFER,GBP 9200.70,Ultra-long-haul flight from London to Sydney.,FALSE,manager-02
+flight-14,Regional favorite,SELF_TRANSFER,EUR 1850.50,Popular route within Europe.,TRUE,manager-03
+flight-15,Budget student fare,NO_SELF_TRANSFER,USD 1350.00,Discounted fare for students.,FALSE,manager-01
+flight-16,Sunset journey,SELF_TRANSFER,GBP 3650.90,Perfect timing to catch a sunset.,TRUE,manager-02
+flight-17,Popular for tourists,NO_SELF_TRANSFER,EUR 4100.80,Best for visiting historic landmarks.,FALSE,manager-03
+flight-18,Winter escape,SELF_TRANSFER,USD 2650.35,Escape the cold to tropical beaches.,TRUE,manager-01
+flight-19,Best-rated airline,NO_SELF_TRANSFER,GBP 5550.20,Top-rated airline for comfort.,FALSE,manager-02
+flight-20,Freight-friendly,SELF_TRANSFER,EUR 6800.60,Additional cargo space available.,TRUE,manager-03
+flight-21,Extreme weather flight,NO_SELF_TRANSFER,USD 7350.75,Designed for harsh weather.,FALSE,manager-01
+flight-22,Island hopper,SELF_TRANSFER,GBP 2100.80,Short layovers at multiple islands.,TRUE,manager-02
+flight-23,Corporate special,NO_SELF_TRANSFER,EUR 8800.90,Exclusive flight for business.,FALSE,manager-03
+flight-24,Best night view,SELF_TRANSFER,USD 4200.20,Layover at a city known for its lights.,TRUE,manager-01
+flight-25,Snow adventure,NO_SELF_TRANSFER,GBP 5100.55,Ideal for skiers heading to the Alps.,FALSE,manager-02
+flight-26,Most flexible,SELF_TRANSFER,EUR 3800.00,Flexible date changes allowed.,TRUE,manager-03
+flight-27,Quiet cabin,NO_SELF_TRANSFER,USD 6700.45,Soundproof cabins for peaceful travel.,FALSE,manager-01
+flight-28,Pet-friendly,SELF_TRANSFER,GBP 2500.75,Allows in-cabin pets.,TRUE,manager-02
+flight-29,Newly added route,NO_SELF_TRANSFER,EUR 7250.30,Brand-new flight route.,FALSE,manager-03
+

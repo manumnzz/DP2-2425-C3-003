@@ -9,7 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.aircraft.Aircraft;
+import acme.entities.Aircraft;
 import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.MaintenanceStatus;
 import acme.entities.maintenance.MaintenanceTask;
@@ -57,7 +57,7 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 	@Override
 	public void validate(final MaintenanceRecord mr) {
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(mr.getDraftMode(), "draftMode", "technician.maintenanceRecord.error.draftMode");
+			super.state(mr.isDraftMode(), "draftMode", "technician.maintenanceRecord.error.draftMode");
 
 	}
 

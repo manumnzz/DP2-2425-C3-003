@@ -1,11 +1,8 @@
 
 package acme.forms;
 
-import java.util.List;
-
 import acme.client.components.basis.AbstractForm;
 import acme.client.components.datatypes.Money;
-import acme.entities.S1.Leg;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +16,7 @@ public class CustomersDashboards extends AbstractForm {
 
 	// Attributes -------------------------------------------------------------
 
-	List<Leg>					lastFiveDestinations;
+	String						lastFiveDestinations;
 	Money						moneyInBookingsLastYear;
 	int							totalBookings;
 
