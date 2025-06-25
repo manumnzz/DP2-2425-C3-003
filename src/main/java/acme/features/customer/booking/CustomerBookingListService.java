@@ -10,7 +10,11 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
+<<<<<<< Updated upstream
 import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
+=======
+import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
+>>>>>>> Stashed changes
 import acme.realms.Customer;
 
 @GuiService
@@ -20,7 +24,11 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 	private CustomerBookingRepository			repository;
 
 	@Autowired
+<<<<<<< Updated upstream
 	private CustomerBookingPassengerRepository	repositoryBP;
+=======
+	private CustomerBookingRecordRepository	repositoryBP;
+>>>>>>> Stashed changes
 
 
 	@Override

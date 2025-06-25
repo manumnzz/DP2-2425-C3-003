@@ -7,7 +7,7 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Passenger;
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
+import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
 import acme.realms.Customer;
 
 @GuiService
@@ -17,7 +17,7 @@ public class CustomerPassengerUpdateService extends AbstractGuiService<Customer,
 	private CustomerPassengerRepository			repository;
 
 	@Autowired
-	private CustomerBookingPassengerRepository	bookingPassengerRepository;
+	private CustomerBookingRecordRepository	bookingPassengerRepository;
 
 
 	@Override

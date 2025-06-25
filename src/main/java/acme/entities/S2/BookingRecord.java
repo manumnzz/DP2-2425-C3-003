@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class BookingPassenger extends AbstractEntity {
+public class BookingRecord extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
 
@@ -33,11 +33,11 @@ public class BookingPassenger extends AbstractEntity {
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Booking				booking;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Passenger			passenger;
 }

@@ -15,7 +15,7 @@ import acme.entities.S1.Flight;
 import acme.entities.S1.Leg;
 import acme.entities.S2.Booking;
 import acme.entities.S2.ClassType;
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
+import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
 import acme.realms.Customer;
 
 @GuiService
@@ -27,7 +27,7 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 	private CustomerBookingRepository			repository;
 
 	@Autowired
-	private CustomerBookingPassengerRepository	repositoryBP;
+	private CustomerBookingRecordRepository	repositoryBP;
 
 	// AbstractGuiService interface -------------------------------------------
 

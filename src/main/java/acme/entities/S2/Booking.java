@@ -41,7 +41,11 @@ public class Booking extends AbstractEntity {
 	private String				locatorCode;
 
 	@Optional
+<<<<<<< Updated upstream
 	@ValidMoment
+=======
+	@ValidMoment(past = true)
+>>>>>>> Stashed changes
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				purchaseMoment;
 
@@ -61,9 +65,9 @@ public class Booking extends AbstractEntity {
 	private String				lastCreditCardNibble;
 
 	@Mandatory
-	// HINT: @Valid by default.
+	@Valid
 	@Automapped
-	private boolean				draftMode;
+	private Boolean				draftMode;
 
 	// Derived attributes -----------------------------------------------------
 

@@ -7,9 +7,8 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
-import acme.entities.S2.BookingPassenger;
+import acme.entities.S2.BookingRecord;
 import acme.entities.S2.Passenger;
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
 import acme.realms.Customer;
 
 @GuiService
@@ -18,10 +17,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerPassengerRepository			repository;
-
-	@Autowired
-	private CustomerBookingPassengerRepository	repositoryBP;
+	private CustomerPassengerRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -33,7 +29,11 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 		boolean status = false;
 
 		if (customer != null && bookingId != null) {
+<<<<<<< Updated upstream
 			Booking booking = this.repositoryBP.findBookingById(bookingId);
+=======
+			Booking booking = this.repository.findBookingById(bookingId);
+>>>>>>> Stashed changes
 			status = booking != null && booking.getCustomer().getId() == customer.getId() && booking.isDraftMode(); // Solo permite si está en borrador
 		}
 
@@ -62,8 +62,8 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 			if (existing != null)
 				super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
 		}
-		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
+		//if (!super.getBuffer().getErrors().hasErrors("draftMode"))
+		//	super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
 	}
 
 	@Override
@@ -73,13 +73,17 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 		// Relacionar con Booking si bookingId está presente
 		if (super.getRequest().hasData("bookingId")) {
 			Integer bookingId = super.getRequest().getData("bookingId", int.class);
+<<<<<<< Updated upstream
 			Booking booking = this.repositoryBP.findBookingById(bookingId);
+=======
+			Booking booking = this.repository.findBookingById(bookingId);
+>>>>>>> Stashed changes
 
 			if (booking != null) {
-				BookingPassenger bp = new BookingPassenger();
+				BookingRecord bp = new BookingRecord();
 				bp.setBooking(booking);
 				bp.setPassenger(passenger);
-				this.repositoryBP.save(bp);
+				this.repository.save(bp);
 			}
 		}
 

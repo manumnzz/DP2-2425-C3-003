@@ -10,7 +10,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
 import acme.entities.S2.Passenger;
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
+import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
 import acme.realms.Customer;
 
 @GuiService
@@ -19,7 +19,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingPassengerRepository repository;
+	private CustomerBookingRecordRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -44,10 +44,10 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 
 		// Recupera el booking asociado y añade draftMode al contexto global
 		Booking booking = this.repository.findBookingById(bookingId);
-		boolean draftMode = booking != null && booking.isDraftMode();
+		//boolean draftMode = booking != null && booking.isDraftMode();
 
 		super.getResponse().addGlobal("bookingId", bookingId);
-		super.getResponse().addGlobal("draftMode", draftMode);
+		//super.getResponse().addGlobal("draftMode", draftMode);
 	}
 
 	@Override

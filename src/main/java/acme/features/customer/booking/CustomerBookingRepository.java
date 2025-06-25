@@ -22,7 +22,7 @@ public interface CustomerBookingRepository extends AbstractRepository {
 	@Query("SELECT b FROM Booking b WHERE b.customer.id = :customerId")
 	Collection<Booking> findBookingsByCustomerId(int customerId);
 
-	@Query("select bp.passenger from BookingPassenger bp where bp.booking.id = :bookingId")
+	@Query("select bp.passenger from BookingRecord bp where bp.booking.id = :bookingId")
 	Collection<Passenger> findAllPassengersByBookingId(int bookingId);
 
 	@Query("SELECT b FROM Booking b WHERE b.locatorCode = :locatorCode")
@@ -34,10 +34,17 @@ public interface CustomerBookingRepository extends AbstractRepository {
 	@Query("SELECT f FROM Flight f")
 	Collection<Flight> findAllFlights();
 
+<<<<<<< Updated upstream
 	@Query("SELECT COUNT(bp) FROM BookingPassenger bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = false")
 	int countPublishedByBookingId(int bookingId);
 
 	@Query("SELECT COUNT(bp) FROM BookingPassenger bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = true")
+=======
+	@Query("SELECT COUNT(bp) FROM BookingRecord bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = false")
+	int countPublishedByBookingId(int bookingId);
+
+	@Query("SELECT COUNT(bp) FROM BookingRecord bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = true")
+>>>>>>> Stashed changes
 	int countDraftByBookingId(int bookingId);
 
 	@Query("SELECT b FROM Booking b WHERE b.locatorCode = :locatorCode AND b.id != :bookingId")

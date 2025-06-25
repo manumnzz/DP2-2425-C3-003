@@ -1,5 +1,5 @@
 
-package acme.features.customer.passenger;
+package acme.features.customer.bookingRecord;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,13 +13,7 @@ import acme.entities.S2.BookingRecord;
 import acme.entities.S2.Passenger;
 
 @Repository
-public interface CustomerPassengerRepository extends AbstractRepository {
-
-	@Query("select p from Passenger p where p.id = :passengerId")
-	Passenger findPassengerById(final int passengerId);
-
-	@Query("select p from Passenger p where p.passportNumber = :passportNumber")
-	Passenger findPassengerByPassportNumber(String passportNumber);
+public interface CustomerBookingRecordRepository extends AbstractRepository {
 
 	@Query("select bp from BookingRecord bp where bp.booking.customer.id = :customerId")
 	Collection<BookingRecord> findAllBookingPassengerByCustomerId(int customerId);

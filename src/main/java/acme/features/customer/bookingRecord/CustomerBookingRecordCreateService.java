@@ -1,5 +1,5 @@
 
-package acme.features.customer.bookingPassenger;
+package acme.features.customer.bookingRecord;
 
 import java.util.Collection;
 
@@ -10,17 +10,17 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
-import acme.entities.S2.BookingPassenger;
+import acme.entities.S2.BookingRecord;
 import acme.entities.S2.Passenger;
 import acme.realms.Customer;
 
 @GuiService
-public class CustomerBookingPassengerCreateService extends AbstractGuiService<Customer, BookingPassenger> {
+public class CustomerBookingRecordCreateService extends AbstractGuiService<Customer, BookingRecord> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingPassengerRepository repository;
+	private CustomerBookingRecordRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -36,17 +36,17 @@ public class CustomerBookingPassengerCreateService extends AbstractGuiService<Cu
 
 	@Override
 	public void load() {
-		BookingPassenger bp = new BookingPassenger();
+		BookingRecord bp = new BookingRecord();
 		super.getBuffer().addData(bp);
 	}
 
 	@Override
-	public void bind(final BookingPassenger bp) {
+	public void bind(final BookingRecord bp) {
 		super.bindObject(bp, "booking", "passenger");
 	}
 
 	@Override
-	public void perform(final BookingPassenger bp) {
+	public void perform(final BookingRecord bp) {
 		if (this.repository.existsBookingPassenger(bp.getBooking().getId(), bp.getPassenger().getId()) == 0)
 			this.repository.save(bp);
 		else {
@@ -55,7 +55,7 @@ public class CustomerBookingPassengerCreateService extends AbstractGuiService<Cu
 	}
 
 	@Override
-	public void unbind(final BookingPassenger bp) {
+	public void unbind(final BookingRecord bp) {
 		Dataset dataset;
 		Customer customer;
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
