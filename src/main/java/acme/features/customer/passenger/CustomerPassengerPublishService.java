@@ -13,7 +13,7 @@ import acme.realms.Customer;
 public class CustomerPassengerPublishService extends AbstractGuiService<Customer, Passenger> {
 
 	@Autowired
-	private CustomerPassengerRepository			repository;
+	private CustomerPassengerRepository		repository;
 
 	@Autowired
 	private CustomerBookingRecordRepository	bookingPassengerRepository;
@@ -41,7 +41,7 @@ public class CustomerPassengerPublishService extends AbstractGuiService<Customer
 	@Override
 	public void validate(final Passenger passenger) {
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
+			super.state(passenger.getDraftMode(), "draftMode", "customer.passenger.error.draftMode");
 	}
 
 	@Override

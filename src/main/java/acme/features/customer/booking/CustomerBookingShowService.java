@@ -15,7 +15,6 @@ import acme.entities.S1.Flight;
 import acme.entities.S1.Leg;
 import acme.entities.S2.Booking;
 import acme.entities.S2.ClassType;
-import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
 import acme.realms.Customer;
 
 @GuiService
@@ -24,10 +23,7 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository			repository;
-
-	@Autowired
-	private CustomerBookingRecordRepository	repositoryBP;
+	private CustomerBookingRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -46,7 +42,6 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 		int bookingId = super.getRequest().getData("id", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 
-		System.out.println("bookingId = " + bookingId);
 		// Importante: Chequear si el booking existe antes de añadirlo al buffer
 		if (booking != null)
 			super.getBuffer().addData(booking);
@@ -89,7 +84,7 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 		// Número de pasajeros publicados
 		int passengerCount = 0;
 		try {
-			passengerCount = this.repositoryBP.findPublishedByBookingId(booking.getId()).size();
+			passengerCount = this.repository.findPublishedByBookingId(booking.getId()).size();
 		} catch (Exception e) {
 			passengerCount = 0;
 		}

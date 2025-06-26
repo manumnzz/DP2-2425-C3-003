@@ -20,13 +20,13 @@
     
 	<jstl:choose>
 		<jstl:when test="${_command == 'show'}">
-			<acme:input-textbox code="customer.bookingPassenger.label.booking" path="booking"/>
-			<acme:input-textbox code="customer.bookingPassenger.label.passenger" path="passenger"/>
+			<acme:input-textbox code="customer.bookingRecord.label.booking" path="booking"/>
+			<acme:input-textbox code="customer.bookingRecord.label.passenger" path="passenger"/>
 		</jstl:when>
 		<jstl:when test="${_command == 'create'}">
-			<acme:input-select code="customer.bookingPassenger.label.booking.id" path="booking" choices="${bookings}"/>
-			<acme:input-select code="customer.bookingPassenger.label.passenger.id" path="passenger" choices="${passengers}"/>
-			<acme:submit code="customer.bookingPassenger.form.button.create" action="/customer/booking-passenger/create"/>
+			<acme:input-select code="customer.bookingRecord.label.booking.id" path="booking" choices="${bookings}"/>
+			<acme:input-select code="customer.bookingRecord.label.passenger.id" path="passenger" choices="${passengers}"/>
+			<acme:submit code="customer.bookingRecord.form.button.create" action="/customer/booking-record/create"/>
 		</jstl:when>
 	</jstl:choose>
 </acme:form>

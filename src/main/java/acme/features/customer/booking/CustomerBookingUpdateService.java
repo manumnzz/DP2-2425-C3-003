@@ -15,11 +15,6 @@ import acme.entities.S1.Flight;
 import acme.entities.S1.Leg;
 import acme.entities.S2.Booking;
 import acme.entities.S2.ClassType;
-<<<<<<< Updated upstream
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
-=======
-import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
->>>>>>> Stashed changes
 import acme.realms.Customer;
 
 @GuiService
@@ -28,14 +23,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository			repository;
-
-	@Autowired
-<<<<<<< Updated upstream
-	private CustomerBookingPassengerRepository	repositoryBP;
-=======
-	private CustomerBookingRecordRepository	repositoryBP;
->>>>>>> Stashed changes
+	private CustomerBookingRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -45,7 +33,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		int bookingId = super.getRequest().getData("id", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 
-		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && booking.isDraftMode(); // Solo autoriza si está en borrador
+		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()); // Solo autoriza si está en borrador
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -71,8 +59,8 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		}
 		//if (booking.getLastCreditCardNibble() != null)
 		//super.state(false, "lastCreditCardNibble", "acme.validation.booking.no-modify-after-payment");
-		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(booking.isDraftMode(), "draftMode", "customer.booking.error.draftMode");
+		//if (!super.getBuffer().getErrors().hasErrors("draftMode"))
+		//	super.state(booking.isDraftMode(), "draftMode", "customer.booking.error.draftMode");
 	}
 
 	@Override
@@ -116,7 +104,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 		int passengerCount = 0;
 		try {
-			passengerCount = this.repositoryBP.findPublishedByBookingId(booking.getId()).size();
+			passengerCount = this.repository.findPublishedByBookingId(booking.getId()).size();
 		} catch (Exception e) {
 			passengerCount = 0;
 		}

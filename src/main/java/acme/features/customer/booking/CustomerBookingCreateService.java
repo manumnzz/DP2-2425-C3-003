@@ -32,9 +32,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void authorise() {
-		// Permite la creación a cualquier usuario Customer autenticado
-		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		boolean status = customer != null;
+		boolean status = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -65,7 +63,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 		// Validación de draftMode
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(booking.isDraftMode(), "draftMode", "customer.booking.error.draftMode");
+			super.state(booking.getDraftMode(), "draftMode", "customer.booking.error.draftMode");
 
 		// Validación de travelClass obligatorio
 		if (booking.getTravelClass() == null)

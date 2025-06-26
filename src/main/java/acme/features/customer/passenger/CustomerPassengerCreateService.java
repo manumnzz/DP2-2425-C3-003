@@ -24,19 +24,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void authorise() {
-		Integer bookingId = super.getRequest().getData("bookingId", Integer.class);
-		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		boolean status = false;
-
-		if (customer != null && bookingId != null) {
-<<<<<<< Updated upstream
-			Booking booking = this.repositoryBP.findBookingById(bookingId);
-=======
-			Booking booking = this.repository.findBookingById(bookingId);
->>>>>>> Stashed changes
-			status = booking != null && booking.getCustomer().getId() == customer.getId() && booking.isDraftMode(); // Solo permite si está en borrador
-		}
-
+		boolean status = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -44,60 +32,72 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 	public void load() {
 		Passenger passenger;
 		passenger = new Passenger();
+		int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		Customer customer = this.repository.findCustomerById(customerId);
+
 		passenger.setDraftMode(true);
-		//if (super.getRequest().hasData("bookingId")) 
-		//int bookingId = super.getRequest().getData("bookingId", int.class);
+		passenger.setCustomer(customer);
+
 		super.getBuffer().addData(passenger);
+
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		super.getResponse().addGlobal("bookingId", bookingId);
 	}
 
 	@Override
 	public void bind(final Passenger passenger) {
-		super.bindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
+		super.bindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds");
 	}
 
 	@Override
 	public void validate(final Passenger passenger) {
-		if (!super.getBuffer().getErrors().hasErrors("passportNumber")) {
-			Passenger existing = this.repository.findPassengerByPassportNumber(passenger.getPassportNumber());
-			if (existing != null)
-				super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
-		}
+		//if (!super.getBuffer().getErrors().hasErrors("passportNumber")) {
+		//	Passenger existing = this.repository.findPassengerByPassportNumber(passenger.getPassportNumber());
+		//	if (existing != null)
+		//		super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
+		//}
 		//if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-		//	super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
+		//	super.state(passenger.getDraftMode(), "draftMode", "customer.passenger.error.draftMode");
 	}
 
 	@Override
 	public void perform(final Passenger passenger) {
+		passenger.setDraftMode(true);
 		this.repository.save(passenger);
 
-		// Relacionar con Booking si bookingId está presente
-		if (super.getRequest().hasData("bookingId")) {
-			Integer bookingId = super.getRequest().getData("bookingId", int.class);
-<<<<<<< Updated upstream
-			Booking booking = this.repositoryBP.findBookingById(bookingId);
-=======
-			Booking booking = this.repository.findBookingById(bookingId);
->>>>>>> Stashed changes
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		Booking booking = this.repository.findBookingById(bookingId);
 
-			if (booking != null) {
-				BookingRecord bp = new BookingRecord();
-				bp.setBooking(booking);
-				bp.setPassenger(passenger);
-				this.repository.save(bp);
-			}
+		if (booking != null) {
+			BookingRecord record = new BookingRecord();
+			record.setBooking(booking);
+			record.setPassenger(passenger);
+			//record.setDraftMode(true);
+			this.repository.save(record);
 		}
 
-		super.getBuffer().addData(passenger);
+		// Relacionar con Booking si bookingId está presente
+		//if (super.getRequest().hasData("bookingId")) {
+		//	Integer bookingId = super.getRequest().getData("bookingId", int.class);
+		//	Booking booking = this.repository.findBookingById(bookingId);
+
+		//	if (booking != null) {
+		//		BookingRecord bp = new BookingRecord();
+		//		bp.setBooking(booking);
+		//		bp.setPassenger(passenger);
+		//		this.repository.save(bp);
+		//	}
+		//}
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
 		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
 
-		if (super.getRequest().hasData("bookingId")) {
-			Integer bookingId = super.getRequest().getData("bookingId", int.class);
-			dataset.put("bookingId", bookingId);
-		}
+		//if (super.getRequest().hasData("bookingId")) {
+		//	Integer bookingId = super.getRequest().getData("bookingId", int.class);
+		//	dataset.put("bookingId", bookingId);
+		//}
 
 		super.getResponse().addData(dataset);
 	}

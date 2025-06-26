@@ -16,25 +16,17 @@ import acme.entities.S1.Flight;
 import acme.entities.S1.Leg;
 import acme.entities.S2.Booking;
 import acme.entities.S2.ClassType;
-<<<<<<< Updated upstream
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
-=======
-import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
->>>>>>> Stashed changes
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingPublishService extends AbstractGuiService<Customer, Booking> {
 
-	@Autowired
-	private CustomerBookingRepository			repository;
+	// Internal state ---------------------------------------------------------
 
 	@Autowired
-<<<<<<< Updated upstream
-	private CustomerBookingPassengerRepository	repositoryBP;
-=======
-	private CustomerBookingRecordRepository	repositoryBP;
->>>>>>> Stashed changes
+	private CustomerBookingRepository repository;
+
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -42,7 +34,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		int bookingId = super.getRequest().getData("id", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 
-		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && booking.isDraftMode(); // Solo permite publicar si está en borrador
+		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -52,11 +44,6 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		int bookingId = super.getRequest().getData("id", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 		super.getBuffer().addData(booking);
-	}
-
-	@Override
-	public void bind(final Booking booking) {
-		// No hay campos editables en publish, así que normalmente se deja vacío
 	}
 
 	@Override
@@ -85,8 +72,12 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 	}
 
 	@Override
+	public void bind(final Booking booking) {
+
+	}
+
+	@Override
 	public void unbind(final Booking booking) {
-		// Combo de vuelos
 		Collection<Flight> flights = this.repository.findAllFlights();
 		SelectChoices flightChoices = new SelectChoices();
 
@@ -124,7 +115,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		}
 		int passengerCount = 0;
 		try {
-			passengerCount = this.repositoryBP.findPublishedByBookingId(booking.getId()).size();
+			passengerCount = this.repository.findPublishedByBookingId(booking.getId()).size();
 		} catch (Exception e) {
 			passengerCount = 0;
 		}

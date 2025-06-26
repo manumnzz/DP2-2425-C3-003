@@ -55,7 +55,7 @@ public class Customer extends AbstractRole {
 	@Optional
 	@ValidNumber(max = 500000)
 	@Automapped
-	protected double			earnedPoints;
+	protected Double			earnedPoints;
 
 	// Derived attributes -----------------------------------------------------
 

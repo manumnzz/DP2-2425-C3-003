@@ -26,6 +26,6 @@
     <acme:list-payload path="payload"/>  
 </acme:list>  
 
-<jstl:if test="${draftMode}">
+<jstl:if test="${acme:anyOf(_command, 'list')}">
 	<acme:button code="customer.passenger.list.button.create" action="/customer/passenger/create?bookingId=${bookingId}"/>  
 </jstl:if>

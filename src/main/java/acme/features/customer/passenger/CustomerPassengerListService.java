@@ -10,7 +10,6 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
 import acme.entities.S2.Passenger;
-import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
 import acme.realms.Customer;
 
 @GuiService
@@ -19,7 +18,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRecordRepository repository;
+	private CustomerPassengerRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -29,30 +28,38 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 		boolean status;
 		Booking booking;
 		int bookingId;
-		bookingId = super.getRequest().getData("bookingId", int.class);
-		booking = this.repository.findBookingById(bookingId);
-		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		status = booking != null && booking.getCustomer().getId() == customer.getId();
+		if (super.getRequest().getData().containsKey("bookingId")) {
+			bookingId = super.getRequest().getData("bookingId", int.class);
+			booking = this.repository.findBookingById(bookingId);
+			Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
+			status = booking != null && booking.getCustomer().getId() == customer.getId();
+		} else
+			status = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int bookingId = super.getRequest().getData("bookingId", int.class);
-		Collection<Passenger> passengers = this.repository.findPassengersByBookingId(bookingId);
+		Collection<Passenger> passengers;
+		int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		int bookingId;
+		if (super.getRequest().getData().containsKey("bookingId")) {
+			bookingId = super.getRequest().getData("bookingId", int.class);
+			super.getResponse().addGlobal("bookingId", bookingId);
+			passengers = this.repository.findPassengersByBookingId(bookingId);
+		} else
+			passengers = this.repository.findPassengerByCustomerId(customerId);
+		System.out.println(passengers);
 		super.getBuffer().addData(passengers);
 
-		// Recupera el booking asociado y añade draftMode al contexto global
-		Booking booking = this.repository.findBookingById(bookingId);
-		//boolean draftMode = booking != null && booking.isDraftMode();
-
-		super.getResponse().addGlobal("bookingId", bookingId);
-		//super.getResponse().addGlobal("draftMode", draftMode);
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
-		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode", "id", "version");
+		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
+		Boolean containsBookingId = super.getRequest().getData().containsKey("bookingId");
+		super.getRequest().addData("containsBookingId", containsBookingId);
 		super.getResponse().addData(dataset);
 	}
 

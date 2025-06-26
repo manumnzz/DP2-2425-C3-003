@@ -24,7 +24,7 @@
     <acme:input-checkbox code="customer.booking.form.label.draftMode" path="draftMode" readonly="true"/>
     <jstl:choose>
         <jstl:when test="${_command == 'create'}">
-            <acme:submit code="customer.booking.form.button.create" action="/customer/booking/create?bookingId=${id}"/>
+            <acme:submit code="customer.booking.form.button.create" action="/customer/booking/create"/>
         </jstl:when>
 		<jstl:when test="${_command == 'show' && draftMode == false}">
 			<acme:button code="customer.booking.form.button.passengers" action="/customer/passenger/list?bookingId=${id}" />

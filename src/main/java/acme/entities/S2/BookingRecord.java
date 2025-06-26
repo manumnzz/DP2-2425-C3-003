@@ -6,7 +6,6 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
-import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,10 +21,14 @@ public class BookingRecord extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	@Mandatory
-	// HINT: @Valid by default.
-	@Automapped
-	private boolean				draftMode;
+	/*
+	 * @Mandatory
+	 * 
+	 * @Valid
+	 * 
+	 * @Automapped
+	 * private Boolean draftMode;
+	 */
 
 	// Derived attributes -----------------------------------------------------
 

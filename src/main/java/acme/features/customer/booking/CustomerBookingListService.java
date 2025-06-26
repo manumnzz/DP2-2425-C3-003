@@ -10,25 +10,16 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
-<<<<<<< Updated upstream
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
-=======
-import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
->>>>>>> Stashed changes
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingListService extends AbstractGuiService<Customer, Booking> {
 
+	// Internal state ---------------------------------------------------------
 	@Autowired
-	private CustomerBookingRepository			repository;
+	private CustomerBookingRepository repository;
 
-	@Autowired
-<<<<<<< Updated upstream
-	private CustomerBookingPassengerRepository	repositoryBP;
-=======
-	private CustomerBookingRecordRepository	repositoryBP;
->>>>>>> Stashed changes
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -43,7 +34,6 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 		int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		Collection<Booking> bookings = this.repository.findBookingsByCustomerId(customerId);
 		// Debug: imprime los ids de los bookings cargados
-		System.out.println("Bookings loaded: " + bookings.stream().map(Booking::getId).toList());
 		super.getBuffer().addData(bookings);
 	}
 
@@ -58,7 +48,7 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 
 		int passengerCount = 0;
 		try {
-			passengerCount = this.repositoryBP.findPublishedByBookingId(booking.getId()).size();
+			passengerCount = this.repository.findPublishedByBookingId(booking.getId()).size();
 		} catch (Exception e) {
 			passengerCount = 0;
 		}

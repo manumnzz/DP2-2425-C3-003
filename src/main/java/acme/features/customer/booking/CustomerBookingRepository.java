@@ -11,6 +11,7 @@ import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Flight;
 import acme.entities.S1.Leg;
 import acme.entities.S2.Booking;
+import acme.entities.S2.BookingRecord;
 import acme.entities.S2.Passenger;
 
 @Repository
@@ -34,20 +35,16 @@ public interface CustomerBookingRepository extends AbstractRepository {
 	@Query("SELECT f FROM Flight f")
 	Collection<Flight> findAllFlights();
 
-<<<<<<< Updated upstream
-	@Query("SELECT COUNT(bp) FROM BookingPassenger bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = false")
-	int countPublishedByBookingId(int bookingId);
-
-	@Query("SELECT COUNT(bp) FROM BookingPassenger bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = true")
-=======
 	@Query("SELECT COUNT(bp) FROM BookingRecord bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = false")
 	int countPublishedByBookingId(int bookingId);
 
 	@Query("SELECT COUNT(bp) FROM BookingRecord bp WHERE bp.booking.id = :bookingId AND bp.passenger.draftMode = true")
->>>>>>> Stashed changes
 	int countDraftByBookingId(int bookingId);
 
 	@Query("SELECT b FROM Booking b WHERE b.locatorCode = :locatorCode AND b.id != :bookingId")
 	Booking findByLocatorCodeAndIdNot(String locatorCode, int bookingId);
+
+	@Query("select bp from BookingRecord bp where bp.booking.id = :bookingId and bp.passenger.draftMode = false")
+	List<BookingRecord> findPublishedByBookingId(int bookingId);
 
 }

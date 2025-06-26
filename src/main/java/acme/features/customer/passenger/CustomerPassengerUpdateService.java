@@ -14,7 +14,7 @@ import acme.realms.Customer;
 public class CustomerPassengerUpdateService extends AbstractGuiService<Customer, Passenger> {
 
 	@Autowired
-	private CustomerPassengerRepository			repository;
+	private CustomerPassengerRepository		repository;
 
 	@Autowired
 	private CustomerBookingRecordRepository	bookingPassengerRepository;
@@ -29,7 +29,7 @@ public class CustomerPassengerUpdateService extends AbstractGuiService<Customer,
 		boolean status = false;
 		if (passenger != null)
 			// Comprueba que pertenece al customer y que está en borrador
-			status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0 && passenger.isDraftMode();
+			status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0;
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -54,7 +54,7 @@ public class CustomerPassengerUpdateService extends AbstractGuiService<Customer,
 				super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
 		}
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
+			super.state(passenger.getDraftMode(), "draftMode", "customer.passenger.error.draftMode");
 	}
 
 	@Override
