@@ -23,40 +23,24 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 
 	@Override
 	public void authorise() {
-
+		boolean status;
+		int masterId;
 		Claim claim;
-		int claimId;
-		int userAccountId;
-		int assistanceAgentId;
-		int ownerId;
-		boolean res;
-		boolean isClaimCreator = false;
-		boolean isAssistanceAgent;
+		AssistanceAgent assistanceAgent;
 
-		if (!super.getRequest().hasData("id"))
-			res = false;
-		else {
-			isAssistanceAgent = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
-			claimId = super.getRequest().getData("id", int.class);
-			userAccountId = super.getRequest().getPrincipal().getAccountId();
-			assistanceAgentId = this.repository.findAssistanceAgentIdByUserAccountId(userAccountId);
+		masterId = super.getRequest().getData("id", int.class);
+		claim = this.repository.findClaimById(masterId);
+		assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
+		status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null;
 
-			claim = this.repository.findClaimById(claimId);
+		super.getResponse().setAuthorised(status);
 
-			if (claim != null) {
-				ownerId = this.repository.findAssistanceAgentIdByClaimId(claimId);
-				isClaimCreator = assistanceAgentId == ownerId;
-			}
-
-			res = claim != null && isAssistanceAgent && isClaimCreator;
-		}
-		super.getResponse().setAuthorised(res);
 	}
 
 	@Override
 	public void load() {
-		int id;
 		Claim claim;
+		int id;
 
 		id = super.getRequest().getData("id", int.class);
 		claim = this.repository.findClaimById(id);
@@ -66,25 +50,26 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 
 	@Override
 	public void unbind(final Claim claim) {
-
 		Dataset dataset;
-		SelectChoices selectedLeg;
-		SelectChoices choicesType;
 		Collection<Leg> legs;
-
+		SelectChoices typeChoices;
+		SelectChoices legChoices;
+		int assistanceAgentId;
 		AssistanceAgent assistanceAgent;
-		int agentId;
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
 
-		choicesType = SelectChoices.from(TypeClaim.class, claim.getTypeClaim());
+		typeChoices = SelectChoices.from(TypeClaim.class, claim.getTypeClaim());
+		assistanceAgentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		assistanceAgent = this.repository.findAssistanceAgentById(assistanceAgentId);
 		legs = this.repository.findAllPublishedLegs(assistanceAgent.getAirline().getId());
-		selectedLeg = SelectChoices.from(legs, "flightNumber", claim.getLeg());
-		dataset = super.unbindObject(claim, "moment", "passengerEmail", "description", "typeClaim", "draftMode");
-		dataset.put("legs", selectedLeg);
-		dataset.put("leg", selectedLeg.getSelected().getKey());
-		dataset.put("typeClaim", choicesType);
-		dataset.put("status", claim.getAccepted());
+		if (!legs.contains(claim.getLeg()))
+			claim.setLeg(null);
+		legChoices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
+
+		dataset = super.unbindObject(claim, "moment", "passengerEmail", "description", "draftMode");
+		dataset.put("types", typeChoices);
+		dataset.put("legs", legChoices);
+		dataset.put("trackingLogStatus", claim.getIndicator());
+
 		super.getResponse().addData(dataset);
 
 	}

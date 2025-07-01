@@ -1,7 +1,6 @@
 
 package acme.features.assistanceagent.claim;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -27,111 +26,105 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void authorise() {
-		String metodo = super.getRequest().getMethod();
-		String type;
-		int legId;
-		Leg leg;
-		Collection<Leg> publishedLegs;
-		boolean res = true;
-		boolean isAssistanceAgent;
-		boolean correctEnum = true;
-		boolean correctLeg = true;
-		boolean alreadyExists = true;
-		AssistanceAgent assistanceAgent;
-		int agentId;
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
-		boolean fakeUpdate = true;
+		boolean status;
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
+		super.getResponse().setAuthorised(status);
 
-		if (super.getRequest().hasData("id")) {
-			Integer id = super.getRequest().getData("id", Integer.class);
-			if (id != 0)
-				fakeUpdate = false;
+		if (status) {
+			String method;
+			int claimId, legId, assistanceAgentId;
+			Claim claim;
+			Leg leg;
+			AssistanceAgent assistanceAgent;
+			Collection<Leg> legs;
+
+			method = super.getRequest().getMethod();
+
+			if (method.equals("GET"))
+				status = true;
+			else {
+				assistanceAgentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+				assistanceAgent = this.repository.findAssistanceAgentById(assistanceAgentId);
+				claimId = super.getRequest().getData("id", int.class);
+				claim = this.repository.findClaimById(claimId);
+				legId = super.getRequest().getData("leg", int.class);
+				legs = this.repository.findAllPublishedLegs(assistanceAgent.getAirline().getId());
+				leg = this.repository.findLegById(legId);
+				status = (legId == 0 || legs.contains(leg)) && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
+			}
 		}
 
-		isAssistanceAgent = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
-		if (metodo.equals("POST")) {
-			type = super.getRequest().getData("typeClaim", String.class);
-			legId = super.getRequest().getData("leg", int.class);
-			leg = this.repository.findLegById(legId);
-			publishedLegs = this.repository.findAllPublishedLegs(assistanceAgent.getAirline().getId());
-			if (!Arrays.toString(TypeClaim.values()).concat("0").contains(type))
-				correctEnum = false;
-			if (!publishedLegs.contains(leg) && legId != 0)
-				correctLeg = false;
-
-			res = correctEnum && correctLeg && alreadyExists && fakeUpdate;
-		} else
-			res = isAssistanceAgent && alreadyExists && fakeUpdate;
-
-		super.getResponse().setAuthorised(res);
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
 		Claim claim;
+		AssistanceAgent assistanceAgent;
+		Date registrationMoment;
+
+		assistanceAgent = (AssistanceAgent) super.getRequest().getPrincipal().getActiveRealm();
+		registrationMoment = MomentHelper.getCurrentMoment();
 
 		claim = new Claim();
 
-		super.getBuffer().addData(claim);
+		claim.setMoment(registrationMoment);
+		claim.setPassengerEmail("");
+		claim.setDescription("");
+		claim.setTypeClaim(TypeClaim.FLIGHT_ISSUES);
+		claim.setAssistanceAgent(assistanceAgent);
+		claim.setDraftMode(true);
 
+		super.getBuffer().addData(claim);
 	}
 
 	@Override
 	public void bind(final Claim claim) {
-		Date moment = MomentHelper.getCurrentMoment();
-		int userAccountId;
-		AssistanceAgent assistanceAgent;
-		Integer legId;
-		Leg leg;
 
-		legId = super.getRequest().getData("leg", int.class);
-		leg = this.repository.findLegById(legId);
-
-		userAccountId = super.getRequest().getPrincipal().getAccountId();
-		assistanceAgent = this.repository.findAssistanceAgentByUserAccountId(userAccountId);
-		super.bindObject(claim, "passengerEmail", "description", "typeClaim");
-
-		claim.setMoment(moment);
-		claim.setAssistanceAgent(assistanceAgent);
-		claim.setDraftMode(true);
-		claim.setLeg(leg);
+		super.bindObject(claim, "passengerEmail", "description", "typeClaim", "leg");
 
 	}
 
 	@Override
 	public void perform(final Claim claim) {
-		this.repository.save(claim);
+		Date registrationMoment;
 
+		registrationMoment = MomentHelper.getCurrentMoment();
+		claim.setMoment(registrationMoment);
+		claim.setDraftMode(true);
+		this.repository.save(claim);
 	}
 
 	@Override
 	public void validate(final Claim claim) {
 		boolean confirmation;
-
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
+
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+		super.state(claim.getDraftMode(), "*", "acme.validation.claim.invalid-draftmode.message");
 	}
 
 	@Override
 	public void unbind(final Claim claim) {
 		Dataset dataset;
-		SelectChoices choicesType;
-		SelectChoices selectedLeg;
 		Collection<Leg> legs;
-		choicesType = SelectChoices.from(TypeClaim.class, claim.getTypeClaim());
+		SelectChoices typeChoices;
+		SelectChoices legChoices;
+		int assistanceAgentId;
 		AssistanceAgent assistanceAgent;
-		int agentId;
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
+
+		typeChoices = SelectChoices.from(TypeClaim.class, claim.getTypeClaim());
+		assistanceAgentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		assistanceAgent = this.repository.findAssistanceAgentById(assistanceAgentId);
 		legs = this.repository.findAllPublishedLegs(assistanceAgent.getAirline().getId());
-		selectedLeg = SelectChoices.from(legs, "flightNumber", claim.getLeg());
-		dataset = super.unbindObject(claim, "passengerEmail", "description", "typeClaim");
-		dataset.put("legs", selectedLeg);
-		dataset.put("leg", selectedLeg.getSelected().getKey());
-		dataset.put("typeClaim", choicesType);
-		dataset.put("draftMode", true);
-		dataset.put("confirmation", false);
+		if (!legs.contains(claim.getLeg()))
+			claim.setLeg(null);
+		legChoices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
+
+		dataset = super.unbindObject(claim, "passengerEmail", "description", "typeClaim", "draftMode", "leg");
+		dataset.put("types", typeChoices);
+		dataset.put("legs", legChoices);
+		dataset.put("trackingLogStatus", claim.getIndicator());
 
 		super.getResponse().addData(dataset);
 

@@ -1,13 +1,10 @@
 
 package acme.features.assistanceagent.trackingLog;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S4.TrackingLog;
@@ -23,77 +20,53 @@ public class AssistanceAgentTrackingLogDeleteService extends AbstractGuiService<
 
 	@Override
 	public void authorise() {
-		int trId;
-		TrackingLog tr;
-		int userAccountId;
-		int assistanceAgentId;
-		int ownerId;
-		boolean isTrackingLogCreator = false;
-		boolean res;
-		boolean isAssistanceAgent;
-		if (!super.getRequest().hasData("id"))
-			res = false;
-		else {
-			trId = super.getRequest().getData("id", int.class);
-			tr = this.repository.findTrackingLogById(trId);
+		boolean status;
+		int trackingLogId;
+		TrackingLog trackingLog;
 
-			isAssistanceAgent = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
-			userAccountId = super.getRequest().getPrincipal().getAccountId();
-			assistanceAgentId = this.repository.findAssistanceAgentIdByUserAccountId(userAccountId).getId();
-			if (tr != null) {
-				ownerId = this.repository.findAssistanceAgentIdByTrackingLogId(trId).getId();
-				isTrackingLogCreator = assistanceAgentId == ownerId;
-			}
+		trackingLogId = super.getRequest().getData("id", int.class);
+		trackingLog = this.repository.findTrackingLogById(trackingLogId);
+		status = trackingLog != null && trackingLog.getClaim() != null && trackingLog.getDraftMode() && !trackingLog.getClaim().getDraftMode() && super.getRequest().getPrincipal().hasRealm(trackingLog.getClaim().getAssistanceAgent());
 
-			res = tr != null && isAssistanceAgent && isTrackingLogCreator && tr.getDraftMode();
-		}
-		super.getResponse().setAuthorised(res);
-
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		TrackingLog tr;
 		int id;
+		TrackingLog trackingLog;
+
 		id = super.getRequest().getData("id", int.class);
-		tr = this.repository.findTrackingLogById(id);
+		trackingLog = this.repository.findTrackingLogById(id);
 
-		super.getBuffer().addData(tr);
-
+		super.getBuffer().addData(trackingLog);
 	}
 
 	@Override
-	public void bind(final TrackingLog tr) {
-		Date moment = MomentHelper.getCurrentMoment();
-		super.bindObject(tr, "step", "resolutionPercentage", "status", "resolution");
-		tr.setUpdateTime(moment);
+	public void bind(final TrackingLog trackinglog) {
+		super.bindObject(trackinglog, "step", "resolutionPercentage", "status", "resolution");
 	}
 
 	@Override
-	public void perform(final TrackingLog tr) {
-		this.repository.delete(tr);
+	public void validate(final TrackingLog trackingLog) {
+		;
 	}
 
 	@Override
-	public void validate(final TrackingLog tr) {
-		boolean confirmation;
-
-		confirmation = super.getRequest().getData("confirmation", boolean.class);
-		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+	public void perform(final TrackingLog trackingLog) {
+		this.repository.delete(trackingLog);
 	}
 
 	@Override
 	public void unbind(final TrackingLog trackingLog) {
 		Dataset dataset;
-		int masterId;
-		SelectChoices choicesStatus;
+		SelectChoices StatusChoices;
 
-		choicesStatus = SelectChoices.from(TrackingLogStatus.class, trackingLog.getStatus());
-		masterId = trackingLog.getClaim().getId();
-		dataset = super.unbindObject(trackingLog, "step", "resolutionPercentage", "status", "resolution");
-		dataset.put("masterId", masterId);
-		dataset.put("draftMode", trackingLog.getDraftMode());
-		dataset.put("statuses", choicesStatus);
+		StatusChoices = SelectChoices.from(TrackingLogStatus.class, trackingLog.getStatus());
+
+		dataset = super.unbindObject(trackingLog, "lastUpdateMoment", "step", "resolutionPercentage", "status", "resolution", "draftMode");
+		dataset.put("status", StatusChoices);
+		dataset.put("masterId", trackingLog.getClaim().getId());
 
 		super.getResponse().addData(dataset);
 

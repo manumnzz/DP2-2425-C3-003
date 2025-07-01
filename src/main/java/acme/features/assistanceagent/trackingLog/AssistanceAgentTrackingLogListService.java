@@ -24,9 +24,10 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 		boolean status;
 		int masterId;
 		Claim claim;
+
 		masterId = super.getRequest().getData("masterId", int.class);
-		claim = this.repository.findClaimByMasterId(masterId);
-		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null;
+		claim = this.repository.findClaimById(masterId);
+		status = claim != null && !claim.getDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -34,37 +35,35 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 	public void load() {
 		Collection<TrackingLog> trackingLogs;
 		int masterId;
-		masterId = super.getRequest().getData("masterId", int.class);
 
-		trackingLogs = this.repository.findTrackingLogsByMasterId(masterId);
+		masterId = super.getRequest().getData("masterId", int.class);
+		trackingLogs = this.repository.findAllTrackingLogsByClaimId(masterId);
+
 		super.getBuffer().addData(trackingLogs);
+
 	}
 
 	@Override
-	public void unbind(final TrackingLog tr) {
+	public void unbind(final TrackingLog trackingLog) {
 		Dataset dataset;
-		dataset = super.unbindObject(tr, "updateTime", "status", "resolutionPercentage");
-		Claim claim;
-		int masterId;
 
-		masterId = super.getRequest().getData("masterId", int.class);
-		claim = this.repository.findClaimByMasterId(masterId);
-		dataset.put("claim", claim);
+		dataset = super.unbindObject(trackingLog, "updateTime", "step", "resolutionPercentage", "status", "resolution", "draftMode");
 
 		super.getResponse().addData(dataset);
 	}
 
 	@Override
-	public void unbind(final Collection<TrackingLog> trackingLog) {
+	public void unbind(final Collection<TrackingLog> trackingLogs) {
 		int masterId;
-		boolean claimCompleted = true;
+		Claim claim;
+		final boolean showCreate;
 
 		masterId = super.getRequest().getData("masterId", int.class);
-		if (this.repository.findTrackingLogs100PercentageByMasterId(masterId).size() >= 2)
-			claimCompleted = false;
+		claim = this.repository.findClaimById(masterId);
+		showCreate = claim.getDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 
-		super.getResponse().addGlobal("claimCompleted", claimCompleted);
 		super.getResponse().addGlobal("masterId", masterId);
+		super.getResponse().addGlobal("showCreate", showCreate);
 	}
 
 }

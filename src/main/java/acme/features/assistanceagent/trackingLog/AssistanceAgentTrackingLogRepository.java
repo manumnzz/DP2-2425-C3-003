@@ -2,7 +2,6 @@
 package acme.features.assistanceagent.trackingLog;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -10,47 +9,25 @@ import org.springframework.stereotype.Repository;
 import acme.client.repositories.AbstractRepository;
 import acme.entities.S4.Claim;
 import acme.entities.S4.TrackingLog;
-import acme.realms.AssistanceAgent;
 
 @Repository
 public interface AssistanceAgentTrackingLogRepository extends AbstractRepository {
 
-	@Query("select a from AssistanceAgent a where a.userAccount.id = :userAccountId")
-	AssistanceAgent findAssistanceAgentIdByUserAccountId(int userAccountId);
+	@Query("SELECT t from TrackingLog t where t.id = :id")
+	TrackingLog findTrackingLogById(int id);
 
-	@Query("select t.claim.assistanceAgent from TrackingLog t where t.id = :trId")
-	AssistanceAgent findAssistanceAgentIdByTrackingLogId(int trId);
+	@Query("SELECT t from TrackingLog t where t.claim = :claimId")
+	Collection<TrackingLog> findTrackingLog(int claimId);
 
-	@Query("select tr from TrackingLog tr where tr.claim.id = :masterId")
-	Collection<TrackingLog> findTrackingLogsByMasterId(int masterId);
+	@Query("SELECT c from Claim c where c.id = :id")
+	Claim findClaimById(int id);
 
-	@Query("select tr from TrackingLog tr where tr.claim.id = :masterId and tr.draftMode = false")
-	Collection<TrackingLog> findPublishedTrackingLogsByMasterId(int masterId);
+	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :id")
+	Collection<TrackingLog> findAllTrackingLogsByClaimId(int id);
 
-	@Query("select c from Claim c where c.id = :masterId")
-	Claim findClaimByMasterId(int masterId);
+	@Query("SELECT t.claim FROM TrackingLog t WHERE t.id=:id")
+	Claim findClaimByTrackinglogId(int id);
 
-	@Query("select tr from TrackingLog tr where tr.id = :trId")
-	TrackingLog findTrackingLogById(int trId);
-
-	@Query("select tr.claim from TrackingLog tr where tr.id = :trId")
-	Claim findClaimByTrackingLogId(int trId);
-
-	@Query("select tr from TrackingLog tr where tr.claim.id = :masterId and tr.resolutionPercentage = 100")
-	Collection<TrackingLog> findTrackingLogs100PercentageByMasterId(int masterId);
-
-	@Query("select tr from TrackingLog tr where tr.claim.id = :masterId order by tr.resolutionPercentage desc")
-	Collection<TrackingLog> findTopByClaimIdOrderByResolutionPercentageDesc(int masterId);
-
-	@Query("select tr from TrackingLog tr where tr.claim.id = :masterId and tr.resolutionPercentage <> 100")
-	Collection<TrackingLog> findTrackingLogsWithout100PercentageByMasterId(int masterId);
-
-	@Query("select c.assistanceAgent from Claim c where c.id = :claimId")
-	AssistanceAgent findAssistanceAgentIdByClaimId(int claimId);
-
-	@Query("select tr from TrackingLog tr where tr.claim.id = :masterId and tr.resolutionPercentage = 100 and tr.draftMode = false")
-	Collection<TrackingLog> findTrackingLogs100PercentageAndPublishedByMasterId(int masterId);
-
-	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId AND t.resolutionPercentage <> 100.00")
-	List<TrackingLog> findLatestTrackingLogByClaimExcluding100(Integer claimId);
+	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :id ORDER BY t.updateTime DESC")
+	Collection<TrackingLog> findOrderTrackingLogs(int id);
 }
