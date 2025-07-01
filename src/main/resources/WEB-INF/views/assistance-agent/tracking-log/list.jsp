@@ -16,10 +16,13 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="assistance-agent.tracking-log.list.label.last-update-moment" path="updateTime"/>
- 	<acme:list-column code="assistance-agent.tracking-log.list.label.status" path="status"/>
-	<acme:list-column code="assistance-agent.tracking-log.label.resolution-percentage" path="resolutionPercentage"/>
+	<acme:list-column code="assistanceAgent.tracking-log.list.label.lastUpdateMoment" path="updateTime" width="20%"/>
+	<acme:list-column code="assistanceAgent.tracking-log.list.label.resolutionPercentage" path="resolutionPercentage" width="20%"/>
+	<acme:list-column code="assistanceAgent.tracking-log.list.label.indicator" path="status" width="20%"/>
+	<acme:list-column code="assistanceAgent.tracking-log.list.label.draftMode" path="draftMode" width="20%"/>
+	<acme:list-payload path="payload"/>
 </acme:list>
-<jstl:if test="${claimCompleted == true}">
-	<acme:button code="assistance-agent.tracking-log.list.button.create" action="/assistance-agent/tracking-log/create?masterId=${masterId}"/>
-</jstl:if>	
+
+<jstl:if test="${_command == 'list'}">
+	<acme:button code="assistanceAgent.tracking-log.list.button.create" action="/assistance-agent/tracking-log/create?masterId=${masterId}"/>
+</jstl:if>		

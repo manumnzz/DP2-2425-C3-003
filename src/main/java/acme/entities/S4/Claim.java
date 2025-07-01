@@ -2,8 +2,8 @@
 package acme.entities.S4;
 
 import java.beans.Transient;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Index;
@@ -12,8 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
-
-import org.hibernate.validator.constraints.Length;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
@@ -44,7 +42,7 @@ public class Claim extends AbstractEntity {
 
 	@Mandatory
 	@ValidEmail
-	@Length(min = 0, max = 255)
+	@Automapped
 	private String				passengerEmail;
 
 	@ValidString(min = 1, max = 255)
@@ -78,23 +76,9 @@ public class Claim extends AbstractEntity {
 
 
 	@Transient
-	public ClaimStatus getAccepted() {
+	public TrackingLogStatus getIndicator() {
 		TrackingLogRepository repository = SpringHelper.getBean(TrackingLogRepository.class);
-		List<TrackingLog> listLastTr = repository.findLatestTrackingLogPublishedByClaim(this.getId());
-		TrackingLog lastTr;
-		ClaimStatus res = ClaimStatus.PENDING;
-
-		if (listLastTr.isEmpty())
-			lastTr = null;
-		else
-			lastTr = listLastTr.get(0);
-
-		if (lastTr == null) {
-		} else if (lastTr.getStatus() == TrackingLogStatus.ACCEPTED)
-			res = ClaimStatus.ACCEPTED;
-		else if (lastTr.getStatus() == TrackingLogStatus.REJECTED)
-			res = ClaimStatus.REJECTED;
-
+		TrackingLogStatus res = repository.findOrderedTrackingLogs(this.getId()).stream().max(Comparator.comparingDouble(TrackingLog::getResolutionPercentage)).map(TrackingLog::getStatus).orElse(TrackingLogStatus.PENDING);
 		return res;
 	}
 }

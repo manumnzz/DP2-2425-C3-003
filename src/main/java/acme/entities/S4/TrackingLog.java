@@ -18,12 +18,14 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidScore;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidTrackingLog;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@ValidTrackingLog
 @Table(indexes = {
 	@Index(columnList = "claim_id")
 })

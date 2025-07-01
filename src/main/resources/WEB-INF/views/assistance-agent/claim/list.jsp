@@ -16,12 +16,15 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="assistance-agent.claim.list.label.registration-moment" path="moment"/>
- 	<acme:list-column code="assistance-agent.claim.list.label.description" path="description"/>
-	<acme:list-column code="assistance-agent.claim.list.label.draft-mode" path="draftMode"/>
+	<acme:list-column code="assistanceAgent.claim.list.label.registrationMoment" path="moment" width="20%"/>
+	<acme:list-column code="assistanceAgent.claim.list.label.type" path="typeClaim" width="20%"/>
+	<acme:list-column code="assistanceAgent.claim.list.label.leg" path="leg.flightNumber" width="20%"/>
+	<acme:list-column code="assistanceAgent.claim.list.label.trackingLogType" path="trackingLogStatus" width="20%"/>
+	<acme:list-column code="assistanceAgent.claim.list.label.draftMode" path="draftMode" width="20%"/>
+	<acme:list-payload path="payload"/>
 </acme:list>
 
-<acme:button code="assistance-agent.claim.form.button.create" action="/assistance-agent/claim/create"/>
+<acme:button code="assistanceAgent.claim.list.button.create" action="/assistance-agent/claim/create"/>		
 
 <style>
 	td {

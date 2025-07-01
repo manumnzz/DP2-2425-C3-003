@@ -30,7 +30,7 @@ trackinglog-24,2020/08/15 12:57,"Lorem ipsum dolor sit ame",99,PENDING,null,fals
 trackinglog-25,2020/08/15 12:58,"Lorem ipsum dolor sit ame",100,REJECTED,"Claim rejected, invalid format",true,claim-01
 # status - variations
 trackinglog-26,2020/08/15 12:59,"Lorem ipsum dolor sit ame",100,ACCEPTED,"Doors problem solved",false,claim-02
-trackinglog-27,2020/08/15 12:59,"Lorem ipsum dolor sit ame",100,PENDING,"Doors problem solved",false,claim-02
+trackinglog-27,2020/08/15 12:59,"Lorem ipsum dolor sit ame",99,PENDING,"Doors problem solved",false,claim-02
 trackinglog-28,2020/08/15 12:59,"Lorem ipsum dolor sit ame",100,REJECTED,"Doors problem solved",false,claim-02
 # resolution - variations
 trackinglog-29,2020/08/15 13:01,"Lorem ipsum dolor sit ame",10,PENDING,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",false,claim-03

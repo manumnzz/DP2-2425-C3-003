@@ -23,65 +23,44 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 
 	@Override
 	public void authorise() {
-		Claim claim;
+		boolean status;
 		int claimId;
-		int userAccountId;
-		int assistanceAgentId;
-		int ownerId;
-		boolean res = true;
-		boolean isClaimCreator = false;
-		boolean isAssistanceAgent;
-		int legId;
-		Leg leg;
-		Collection<Leg> publishedLegs;
-		String type;
-		String metodo = super.getRequest().getMethod();
-		boolean correctEnum = false;
-		boolean correctLeg = true;
 		AssistanceAgent assistanceAgent;
-		int agentId;
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
-
+		Claim claim;
 		claimId = super.getRequest().getData("id", int.class);
 		claim = this.repository.findClaimById(claimId);
+		assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
+		status = claim != null && claim.getDraftMode() && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
 
-		isAssistanceAgent = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
-		claimId = super.getRequest().getData("id", int.class);
-		userAccountId = super.getRequest().getPrincipal().getAccountId();
-		assistanceAgentId = this.repository.findAssistanceAgentIdByUserAccountId(userAccountId);
-		claim = this.repository.findClaimById(claimId);
-		if (!super.getRequest().hasData("id"))
-			res = false;
-		else {
-			if (claim != null) {
-				ownerId = this.repository.findAssistanceAgentIdByClaimId(claimId);
-				isClaimCreator = assistanceAgentId == ownerId;
-			}
+		if (status) {
+			String method;
+			int legId, assistanceAgentId;
+			Leg leg;
+			Collection<Leg> legs;
 
-			res = claim != null && isAssistanceAgent && isClaimCreator && claim.getDraftMode();
-			if (metodo.equals("POST")) {
-				type = super.getRequest().getData("typeClaim", String.class);
+			method = super.getRequest().getMethod();
+
+			if (method.equals("GET"))
+				status = true;
+			else {
+				assistanceAgentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+				assistanceAgent = this.repository.findAssistanceAgentById(assistanceAgentId);
+				claimId = super.getRequest().getData("id", int.class);
+				claim = this.repository.findClaimById(claimId);
 				legId = super.getRequest().getData("leg", int.class);
+				legs = this.repository.findAllPublishedLegs(assistanceAgent.getAirline().getId());
 				leg = this.repository.findLegById(legId);
-				publishedLegs = this.repository.findAllPublishedLegs(assistanceAgent.getAirline().getId());
-				for (TypeClaim t : TypeClaim.values())
-					if (t.name().equals(type))
-						correctEnum = true;
-				if (!publishedLegs.contains(leg))
-					correctLeg = false;
-				res = false;
-				if (claim != null)
-					res = correctEnum && correctLeg && claim.getDraftMode();
+				status = (legId == 0 || legs.contains(leg)) && claim != null && claim.getDraftMode() && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
 			}
 		}
-		super.getResponse().setAuthorised(res);
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int id;
 		Claim claim;
+		int id;
 
 		id = super.getRequest().getData("id", int.class);
 		claim = this.repository.findClaimById(id);
@@ -91,21 +70,9 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 
 	@Override
 	public void bind(final Claim claim) {
-		int userAccountId;
-		AssistanceAgent assistanceAgent;
 
-		userAccountId = super.getRequest().getPrincipal().getAccountId();
-		assistanceAgent = this.repository.findAssistanceAgentByUserAccountId(userAccountId);
-		super.bindObject(claim, "passengerEmail", "description", "typeClaim");
+		super.bindObject(claim, "passengerEmail", "description", "typeClaim", "leg");
 
-		claim.setAssistanceAgent(assistanceAgent);
-
-	}
-
-	@Override
-	public void perform(final Claim claim) {
-		claim.setDraftMode(false);
-		this.repository.save(claim);
 	}
 
 	@Override
@@ -115,30 +82,35 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 		super.state(claim.getDraftMode(), "*", "acme.validation.claim.invalid-draftmode.message");
+	}
 
+	@Override
+	public void perform(final Claim claim) {
+		claim.setDraftMode(false);
+		this.repository.save(claim);
 	}
 
 	@Override
 	public void unbind(final Claim claim) {
-
 		Dataset dataset;
-		SelectChoices selectedLeg;
 		Collection<Leg> legs;
-		SelectChoices choicesType;
-
+		SelectChoices typeChoices;
+		SelectChoices legChoices;
+		int assistanceAgentId;
 		AssistanceAgent assistanceAgent;
-		int agentId;
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
 
-		choicesType = SelectChoices.from(TypeClaim.class, claim.getTypeClaim());
+		typeChoices = SelectChoices.from(TypeClaim.class, claim.getTypeClaim());
+		assistanceAgentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		assistanceAgent = this.repository.findAssistanceAgentById(assistanceAgentId);
 		legs = this.repository.findAllPublishedLegs(assistanceAgent.getAirline().getId());
-		selectedLeg = SelectChoices.from(legs, "flightNumber", claim.getLeg());
-		dataset = super.unbindObject(claim, "moment", "passengerEmail", "description", "typeClaim");
-		dataset.put("draftMode", claim.getDraftMode());
-		dataset.put("legs", selectedLeg);
-		dataset.put("leg", selectedLeg.getSelected().getKey());
-		dataset.put("typeClaim", choicesType);
+		if (!legs.contains(claim.getLeg()))
+			claim.setLeg(null);
+		legChoices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
+
+		dataset = super.unbindObject(claim, "moment", "passengerEmail", "description", "typeClaim", "draftMode", "leg");
+		dataset.put("types", typeChoices);
+		dataset.put("legs", legChoices);
+		dataset.put("trackingLogStatus", claim.getIndicator());
 
 		super.getResponse().addData(dataset);
 	}
