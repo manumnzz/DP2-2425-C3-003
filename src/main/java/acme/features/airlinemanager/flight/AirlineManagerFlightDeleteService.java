@@ -23,19 +23,11 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 
 	@Override
 	public void authorise() {
-		int flightId;
-		Flight flight;
-		AirlineManager airlineManager;
-		flightId = super.getRequest().getData("id", int.class);
+		int flightId = super.getRequest().getData("id", int.class);
+		Flight flight = this.repository.findFlightById(flightId);
+		AirlineManager airlineManager = flight == null ? null : flight.getAirlineManager();
 
-		flight = this.repository.findFlightById(flightId);
-
-		airlineManager = flight == null ? null : flight.getAirlineManager();
-
-		boolean status = flight != null && // 
-			airlineManager != null && // 
-			flight.isDraftMode() && //
-			super.getRequest().getPrincipal().getAccountId() == flight.getAirlineManager().getUserAccount().getId();
+		boolean status = flight != null && airlineManager != null && flight.isDraftMode() && super.getRequest().getPrincipal().getAccountId() == airlineManager.getUserAccount().getId();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -58,7 +50,11 @@ public class AirlineManagerFlightDeleteService extends AbstractGuiService<Airlin
 
 	@Override
 	public void validate(final Flight flight) {
-		;
+		assert flight != null;
+
+		Collection<Leg> publishedLegs = this.repository.findPublishedLegsByFlightId(flight.getId());
+
+		super.state(publishedLegs.isEmpty(), "*", "airline-manager.flight.form.error.deletingWithPublishedLeg");
 	}
 
 	@Override
