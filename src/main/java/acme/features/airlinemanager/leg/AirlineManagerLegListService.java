@@ -44,7 +44,10 @@ public class AirlineManagerLegListService extends AbstractGuiService<AirlineMana
 		flightId = super.getRequest().getData("flightId", int.class);
 		legs = this.repository.findLegsByFlightId(flightId);
 
+		Flight flight = this.repository.findFlightById(flightId);
+
 		super.getResponse().addGlobal("flightId", flightId);
+		super.getResponse().addGlobal("draftMode", flight.isDraftMode());
 		super.getBuffer().addData(legs);
 	}
 
