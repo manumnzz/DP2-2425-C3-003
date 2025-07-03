@@ -10,23 +10,28 @@
 
 customer.booking.form.title = Formulario de Reserva
 
-customer.booking.form.label.reference = Referencia:
-customer.booking.form.label.status = Estado:
-customer.booking.form.label.creationDate = Fecha de Creacion:
-customer.booking.form.label.totalPrice = Precio Total:
-customer.booking.form.label.confirmation = Confirme que desea crear esta reserva.
-customer.booking.form.label.flight=Vuelo
+customer.booking.form.label.locatorCode = Código localizador
+customer.booking.form.label.purchaseMoment = Momento de compra
+customer.booking.form.label.travelClass = Clase de viaje
+customer.booking.form.label.price = Precio
+customer.booking.form.label.lastCreditCardNibble = Últimos dígitos de la tarjeta de crédito
+customer.booking.form.label.draftMode = Modo borrador
+customer.booking.form.label.flight = Vuelo
 
 customer.booking.form.button.create = Crear
 customer.booking.form.button.update = Actualizar
+customer.booking.form.button.publish = Publicar
+customer.booking.form.button.passengers = Pasajeros
 
 customer.booking.list.title = Listado de Reservas
 
-customer.booking.list.label.reference = Referencia
-customer.booking.list.label.status = Estado
-customer.booking.list.label.creationDate = Fecha de Creacion
-customer.booking.list.label.totalPrice = Precio Total
-customer.booking.list.label.flight=Vuelo
+customer.booking.list.label.locatorCode = Código localizador
+customer.booking.list.label.purchaseMoment = Momento de compra
+customer.booking.list.label.travelClass = Clase de viaje
+customer.booking.list.label.price = Precio
+customer.booking.list.label.lastCreditCardNibble = Últimos dígitos de la tarjeta de crédito
+customer.booking.list.label.draftMode = Modo borrador
+customer.booking.list.label.flight = Vuelo
 
 
 customer.booking.list.button.create = Nueva Reserva
@@ -34,5 +39,9 @@ customer.booking.list.button.create = Nueva Reserva
 customer.booking.form.label.passengers = Pasajeros:
 customer.booking.form.button.addPassenger = Añadir Pasajero a la Reserva
 
-customer.booking.error.locatorCode.duplicate = El codigo localizador ya existe
-customer.booking.error.passengers.draftNotAllowed=No puede haber pasajeros en borrador asociados a la reserva
+customer.booking.error.locatorCode.duplicate = El código localizador ya existe
+customer.booking.error.draftMode = Reserva en modo borrador
+customer.booking.error.travelClass.required = Clase de viaje obligatoria
+customer.booking.error.passengers.required = No hay pasajeros publicados asociados
+customer.booking.error.price.invalid = Error al verificar el precio de la reserva
+customer.booking.error.passengers.draftNotAllowed=No puede haber pasajeros borrador asociados a la reserva

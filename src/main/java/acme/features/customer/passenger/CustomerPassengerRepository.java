@@ -55,4 +55,10 @@ public interface CustomerPassengerRepository extends AbstractRepository {
 	@Query("select c from Customer c where c.id = :customerId")
 	Customer findCustomerById(Integer customerId);
 
+	@Query("SELECT COUNT(p) FROM Passenger p WHERE p.customer.id = :customerId AND p.passportNumber = :passportNumber")
+	int countByCustomerIdAndPassportNumber(int customerId, String passportNumber);
+
+	@Query("SELECT p FROM Passenger p WHERE p.customer.id = :customerId AND p.passportNumber = :passportNumber")
+	List<Passenger> findByCustomerIdAndPassportNumber(int customerId, String passportNumber);
+
 }

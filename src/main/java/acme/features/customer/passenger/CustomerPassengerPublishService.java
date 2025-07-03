@@ -23,7 +23,8 @@ public class CustomerPassengerPublishService extends AbstractGuiService<Customer
 	public void authorise() {
 		int passengerId = super.getRequest().getData("id", int.class);
 		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		boolean status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0;
+		Passenger passenger = this.repository.findPassengerById(passengerId);
+		boolean status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0 && passenger.getDraftMode();
 		super.getResponse().setAuthorised(status);
 	}
 

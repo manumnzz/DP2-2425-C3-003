@@ -31,8 +31,8 @@
 		</jstl:when>
         <jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && draftMode ==true}">
             <acme:button code="customer.booking.form.button.passengers" action="/customer/passenger/list?bookingId=${id}" />
-			<acme:submit code="customer.booking.form.button.update" action="/customer/booking/update"/>
-			<acme:submit code="customer.booking.form.button.publish" action="/customer/booking/publish"/>
+			<acme:submit code="customer.booking.form.button.update" action="/customer/booking/update?bookingId=${id}"/>
+			<acme:submit code="customer.booking.form.button.publish" action="/customer/booking/publish?bookingId=${id}"/>
         </jstl:when>
     </jstl:choose>
 </acme:form>

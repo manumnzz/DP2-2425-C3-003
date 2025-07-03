@@ -15,19 +15,16 @@ import acme.realms.Customer;
 @GuiService
 public class CustomerPassengerListService extends AbstractGuiService<Customer, Passenger> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
 	private CustomerPassengerRepository repository;
-
-	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
 	public void authorise() {
 		boolean status;
-		Booking booking;
 		int bookingId;
+		Booking booking = null;
+
 		if (super.getRequest().getData().containsKey("bookingId")) {
 			bookingId = super.getRequest().getData("bookingId", int.class);
 			booking = this.repository.findBookingById(bookingId);
@@ -43,14 +40,16 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	public void load() {
 		Collection<Passenger> passengers;
 		int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		int bookingId;
+
 		if (super.getRequest().getData().containsKey("bookingId")) {
-			bookingId = super.getRequest().getData("bookingId", int.class);
+			int bookingId = super.getRequest().getData("bookingId", int.class);
 			super.getResponse().addGlobal("bookingId", bookingId);
+			Booking booking = this.repository.findBookingById(bookingId);
+			super.getResponse().addGlobal("bookingDraftMode", booking.getDraftMode());
 			passengers = this.repository.findPassengersByBookingId(bookingId);
 		} else
 			passengers = this.repository.findPassengerByCustomerId(customerId);
-		System.out.println(passengers);
+
 		super.getBuffer().addData(passengers);
 
 	}
@@ -58,9 +57,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	@Override
 	public void unbind(final Passenger passenger) {
 		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
-		Boolean containsBookingId = super.getRequest().getData().containsKey("bookingId");
-		super.getRequest().addData("containsBookingId", containsBookingId);
+
 		super.getResponse().addData(dataset);
 	}
-
 }

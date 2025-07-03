@@ -21,15 +21,6 @@ public class BookingRecord extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	/*
-	 * @Mandatory
-	 * 
-	 * @Valid
-	 * 
-	 * @Automapped
-	 * private Boolean draftMode;
-	 */
-
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------

@@ -47,6 +47,14 @@ master.menu.assistance-agent = Assistance agent
 master.menu.assistance-agent.list-completed-claims = Completed claims list
 master.menu.assistance-agent.list-pending-claims = Undergoing claims list
 
+# master.menu.customer ##########################################################
+
+master.menu.customer = Customer
+master.menu.customer.list-bookings = List bookings
+master.menu.customer.list-passengers = List passengers
+master.menu.customer.list-booking-records = List booking records
+master.menu.customer.dashboard = Show dashboard
+
 # master.menu.user-account ####################################################
 
 master.menu.user-account = Account

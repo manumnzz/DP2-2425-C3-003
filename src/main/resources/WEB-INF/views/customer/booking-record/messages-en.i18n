@@ -8,25 +8,18 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-customer.booking.form.title = Booking Form
+customer.booking-record.list.title = Booking records
+customer.booking-record.form.title = Booking record
 
-customer.booking.form.label.reference = Reference:
-customer.booking.form.label.status = Status:
-customer.booking.form.label.creationDate = Creation Date:
-customer.booking.form.label.totalPrice = Total Price:
-customer.booking.form.label.confirmation = Confirm that you wish to create this booking.
+# Booking Record Labels
+customer.bookingRecord.form.label.booking=Booking
+customer.bookingRecord.form.label.passenger=Passenger
 
-customer.booking.form.button.create = Create
-customer.booking.form.button.update = Update
+# Booking Record Buttons
+customer.bookingRecord.form.button.delete=Delete Booking Record
+customer.bookingRecord.form.button.create=Create Booking Record
+customer.bookingRecord.list.button.create=Create New Booking Record
 
-customer.booking.list.title = Listing of bookings
-
-customer.booking.list.label.reference = Reference
-customer.booking.list.label.status = Status
-customer.booking.list.label.creationDate = Creation Date
-customer.booking.list.label.totalPrice = Total Price
-
-customer.booking.list.button.create = New Booking
-
-customer.booking.form.label.passengers = Passengers:
-customer.booking.form.button.addPassenger = Add Passenger to Booking
+# List Columns
+customer.booking-record.form.label.booking=Booking Locator Code
+customer.booking-record.form.label.passenger=Passenger Full Name

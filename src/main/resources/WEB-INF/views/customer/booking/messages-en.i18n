@@ -21,7 +21,7 @@ customer.booking.form.label.flight=Flight
 
 customer.booking.form.button.create = Create
 customer.booking.form.button.update = Update
-
+customer.booking.form.button.publish = Publish
 customer.booking.form.button.passengers = Passengers
 
 customer.booking.list.title = Listing of bookings
@@ -41,4 +41,8 @@ customer.booking.list.label.passengers = Passengers:
 customer.booking.list.button.addPassenger = Add Passenger to Booking
 
 customer.booking.error.locatorCode.duplicate = Locator code already exists
+customer.booking.error.draftMode = Booking in draftMode
+customer.booking.error.travelClass.required = Travel class required
+customer.booking.error.passengers.required = There are no associated published passengers
+customer.booking.error.price.invalid = Error in verifying the reservation price
 customer.booking.error.passengers.draftNotAllowed=There cannot be any draft passengers associated with the reservation

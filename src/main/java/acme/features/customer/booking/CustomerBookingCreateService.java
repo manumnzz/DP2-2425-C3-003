@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
@@ -107,15 +106,8 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);
 
-		// price seguro
-		Money price = new Money();
-		if (booking.getFlight() != null && booking.getFlight().getCost() != null)
-			price = booking.getFlight().getCost();
-		else {
-			price.setAmount(0.0);
-			price.setCurrency("USD");
-		}
-		dataset.put("price", price);
+		// precio calculado usando getPrice()
+		dataset.put("price", booking.getPrice());
 
 		// lastCreditCardNibble como String o vacío
 		dataset.put("lastCreditCardNibble", booking.getLastCreditCardNibble() != null ? booking.getLastCreditCardNibble() : "");

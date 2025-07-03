@@ -16,9 +16,11 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>  
 
 <acme:list>  
-	<acme:list-column code="customer.booking-passenger.form.label.booking" path="booking" width="10%"/>
-	<acme:list-column code="customer.booking-passenger.form.label.passenger" path="passenger" width="10%"/>
- 
+	<acme:list-column code="customer.booking-record.form.label.booking" path="bookingLocCode" width="10%"/>
+	<acme:list-column code="customer.booking-record.form.label.passenger" path="passengerFullName" width="10%"/>
+ 	<acme:list-payload path="payload"/>
 </acme:list>  
 
-<acme:button code="customer.booking-passenger.list.button.create" action="/customer/booking-passenger/create"/>  
+<jstl:if test="${_command == 'list'}">
+	<acme:button code="customer.bookingRecord.list.button.create" action="/customer/booking-record/create"/>
+</jstl:if>

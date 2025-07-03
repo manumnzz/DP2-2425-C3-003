@@ -19,3 +19,4 @@ booking-17,customer-08,flight-02,UJ8Z7E,2012/01/07 00:00,ECONOMY,0001,false
 booking-18,customer-09,flight-10,IK8Z7E,2012/01/07 00:00,ECONOMY,1234,false
 booking-19,customer-01,flight-11,LO8Z7E,2012/01/07 00:00,ECONOMY,5678,false
 booking-20,customer-02,flight-11,XX8Z7E,2012/01/07 00:00,ECONOMY,9012,false
+booking-21,customer-01,flight-01,ZZZ999,2012/01/07 00:00,ECONOMY,0001,true

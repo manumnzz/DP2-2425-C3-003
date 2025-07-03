@@ -17,7 +17,6 @@ import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidLongText;
-import acme.constraints.ValidShortText;
 import acme.realms.Customer;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,7 +53,7 @@ public class Passenger extends AbstractEntity {
 	protected Date				dateOfBirth;
 
 	@Optional
-	@ValidShortText
+	@ValidString(min = 1, max = 50)
 	@Automapped
 	protected String			specialNeeds;
 

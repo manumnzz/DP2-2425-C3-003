@@ -14,28 +14,33 @@ import acme.realms.Customer;
 @GuiService
 public class CustomerPassengerCreateService extends AbstractGuiService<Customer, Passenger> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
 	private CustomerPassengerRepository repository;
-
-	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		boolean status = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+		boolean status = false;
+
+		if (super.getRequest().getData().containsKey("bookingId")) {
+			int bookingId = super.getRequest().getData("bookingId", int.class);
+			Booking booking = this.repository.findBookingById(bookingId);
+			Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
+
+			// Solo si el booking existe, es del mismo customer, y está en modo borrador
+			status = booking != null && booking.getCustomer().getId() == customer.getId() && Boolean.TRUE.equals(booking.getDraftMode());
+		}
+
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Passenger passenger;
-		passenger = new Passenger();
+		Passenger passenger = new Passenger();
+		passenger.setDraftMode(true);
+
 		int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		Customer customer = this.repository.findCustomerById(customerId);
-
-		passenger.setDraftMode(true);
 		passenger.setCustomer(customer);
 
 		super.getBuffer().addData(passenger);
@@ -51,13 +56,10 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void validate(final Passenger passenger) {
-		//if (!super.getBuffer().getErrors().hasErrors("passportNumber")) {
-		//	Passenger existing = this.repository.findPassengerByPassportNumber(passenger.getPassportNumber());
-		//	if (existing != null)
-		//		super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
-		//}
-		//if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-		//	super.state(passenger.getDraftMode(), "draftMode", "customer.passenger.error.draftMode");
+		if (!super.getBuffer().getErrors().hasErrors("passportNumber")) {
+			int count = this.repository.countByCustomerIdAndPassportNumber(passenger.getCustomer().getId(), passenger.getPassportNumber());
+			super.state(count == 0, "passportNumber", "acme.validation.passenger.duplicate-passport");
+		}
 	}
 
 	@Override
@@ -72,34 +74,13 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 			BookingRecord record = new BookingRecord();
 			record.setBooking(booking);
 			record.setPassenger(passenger);
-			//record.setDraftMode(true);
 			this.repository.save(record);
 		}
-
-		// Relacionar con Booking si bookingId está presente
-		//if (super.getRequest().hasData("bookingId")) {
-		//	Integer bookingId = super.getRequest().getData("bookingId", int.class);
-		//	Booking booking = this.repository.findBookingById(bookingId);
-
-		//	if (booking != null) {
-		//		BookingRecord bp = new BookingRecord();
-		//		bp.setBooking(booking);
-		//		bp.setPassenger(passenger);
-		//		this.repository.save(bp);
-		//	}
-		//}
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
 		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
-
-		//if (super.getRequest().hasData("bookingId")) {
-		//	Integer bookingId = super.getRequest().getData("bookingId", int.class);
-		//	dataset.put("bookingId", bookingId);
-		//}
-
 		super.getResponse().addData(dataset);
 	}
-
 }

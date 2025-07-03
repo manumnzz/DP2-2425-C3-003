@@ -8,25 +8,17 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-customer.booking.form.title = Formulario de Reserva
+customer.booking-record.list.title = Registros de reservas
+customer.booking-record.form.title = Registro de reserva
+# Etiquetas de Registro de Reserva
+customer.bookingRecord.form.label.booking=Reserva
+customer.bookingRecord.form.label.passenger=Pasajero
 
-customer.booking.form.label.reference = Referencia:
-customer.booking.form.label.status = Estado:
-customer.booking.form.label.creationDate = Fecha de Creacion:
-customer.booking.form.label.totalPrice = Precio Total:
-customer.booking.form.label.confirmation = Confirme que desea crear esta reserva.
+# Botones de Registro de Reserva
+customer.bookingRecord.form.button.delete=Eliminar Registro de Reserva
+customer.bookingRecord.form.button.create=Crear Registro de Reserva
+customer.bookingRecord.list.button.create=Crear Nuevo Registro de Reserva
 
-customer.booking.form.button.create = Crear
-customer.booking.form.button.update = Actualizar
-
-customer.booking.list.title = Listado de Reservas
-
-customer.booking.list.label.reference = Referencia
-customer.booking.list.label.status = Estado
-customer.booking.list.label.creationDate = Fecha de Creacion
-customer.booking.list.label.totalPrice = Precio Total
-
-customer.booking.list.button.create = Nueva Reserva
-
-customer.booking.form.label.passengers = Pasajeros:
-customer.booking.form.button.addPassenger = Añadir Pasajero a la Reserva
+# Columnas de Lista
+customer.booking-record.form.label.booking=Código Localizador de Reserva
+customer.booking-record.form.label.passenger=Nombre Completo del Pasajero

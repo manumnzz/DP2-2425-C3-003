@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
@@ -33,7 +32,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		int bookingId = super.getRequest().getData("id", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 
-		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()); // Solo autoriza si está en borrador
+		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && booking.getDraftMode();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -93,26 +92,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		Dataset dataset = super.unbindObject(booking, "locatorCode", "travelClass", "lastCreditCardNibble", "draftMode", "flight");
 		dataset.put("flights", flightChoices);
 
-		// Manejo seguro de flight y cost
-		Money costPerPassenger = new Money();
-		if (booking.getFlight() != null && booking.getFlight().getCost() != null)
-			costPerPassenger = booking.getFlight().getCost();
-		else {
-			costPerPassenger.setAmount(0.0);
-			costPerPassenger.setCurrency("USD");
-		}
-
-		int passengerCount = 0;
-		try {
-			passengerCount = this.repository.findPublishedByBookingId(booking.getId()).size();
-		} catch (Exception e) {
-			passengerCount = 0;
-		}
-
-		Money totalPrice = new Money();
-		totalPrice.setAmount(costPerPassenger.getAmount() * passengerCount);
-		totalPrice.setCurrency(costPerPassenger.getCurrency());
-		dataset.put("price", totalPrice);
+		dataset.put("price", booking.getPrice());
 
 		// travelClass como SelectChoices
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());

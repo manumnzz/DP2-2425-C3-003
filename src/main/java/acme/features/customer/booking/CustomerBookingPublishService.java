@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
@@ -34,7 +33,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		int bookingId = super.getRequest().getData("id", int.class);
 		Booking booking = this.repository.findBookingById(bookingId);
 
-		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
+		boolean status = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && booking.getDraftMode();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -59,15 +58,25 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		int draftPassengers = this.repository.countDraftByBookingId(bookingId);
 
 		if (publishedPassengers == 0)
-			super.state(false, "passengers", "customer.booking.error.passengers.required.");
+			super.state(false, "passengers", "customer.booking.error.passengers.required");
 		if (draftPassengers > 0)
-			super.state(false, "passengers", "customer.booking.error.passengers.draftNotAllowed.");
+			super.state(false, "passengers", "customer.booking.error.passengers.draftNotAllowed");
+		// Verifica que el precio total del booking sea mayor que cero
+		if (booking.getFlight() == null || booking.getFlight().getCost() == null || booking.getFlight().getCost().getAmount() <= 0)
+			super.state(false, "price", "customer.booking.error.price.invalid");
+		else {
+			int passengerCount = this.repository.findPublishedByBookingId(booking.getId()).size();
+			double totalAmount = booking.getFlight().getCost().getAmount() * passengerCount;
+			super.state(totalAmount > 0.0, "price", "customer.booking.error.price.invalid");
+		}
+
 	}
 
 	@Override
 	public void perform(final Booking booking) {
 		booking.setDraftMode(false);
 		booking.setPurchaseMoment(MomentHelper.getCurrentMoment());
+
 		this.repository.save(booking);
 	}
 
@@ -104,25 +113,6 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		// travelClass como SelectChoices
 		SelectChoices travelClassChoices = SelectChoices.from(ClassType.class, booking.getTravelClass());
 		dataset.put("travelClass", travelClassChoices);
-
-		// Cálculo seguro del precio
-		Money costPerPassenger = new Money();
-		if (booking.getFlight() != null && booking.getFlight().getCost() != null)
-			costPerPassenger = booking.getFlight().getCost();
-		else {
-			costPerPassenger.setAmount(0.0);
-			costPerPassenger.setCurrency("USD");
-		}
-		int passengerCount = 0;
-		try {
-			passengerCount = this.repository.findPublishedByBookingId(booking.getId()).size();
-		} catch (Exception e) {
-			passengerCount = 0;
-		}
-		Money totalPrice = new Money();
-		totalPrice.setAmount(costPerPassenger.getAmount() * passengerCount);
-		totalPrice.setCurrency(costPerPassenger.getCurrency());
-		dataset.put("price", totalPrice);
 
 		// lastCreditCardNibble como String o vacío
 		dataset.put("lastCreditCardNibble", booking.getLastCreditCardNibble() != null ? booking.getLastCreditCardNibble() : "");

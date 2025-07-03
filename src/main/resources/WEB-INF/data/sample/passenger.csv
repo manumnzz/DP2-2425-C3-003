@@ -37,3 +37,4 @@ passenger-35,ABC123,Nombredeejemplo,emaildeejemplo@gmail.com,2003/01/07 00:00,' 
 passenger-36,ABC123,Nombredeejemplo,emaildeejemplo@gmail.com,2003/01/07 00:00,null,true,customer-03
 passenger-37,ABC423,SINPUBLICAR1,emaildeejemplo@gmail.com,2014/01/07 00:00,EJEMPLO,true,customer-01
 passenger-38,ABC153,SINPUBLICAR2,emaildeejemplo@gmail.com,2011/01/07 00:00,EJMEMPLO,true,customer-01
+passenger-39,ABC155,SINPUBLICAR3,emaildeejemplo@gmail.com,2011/01/07 00:00,EJMEMPLO,false,customer-01

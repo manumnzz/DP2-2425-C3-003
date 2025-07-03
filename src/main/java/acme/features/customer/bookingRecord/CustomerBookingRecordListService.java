@@ -6,13 +6,13 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
-import acme.client.services.AbstractService;
+import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.BookingRecord;
 import acme.realms.Customer;
 
 @GuiService
-public class CustomerBookingRecordListService extends AbstractService<Customer, BookingRecord> {
+public class CustomerBookingRecordListService extends AbstractGuiService<Customer, BookingRecord> {
 
 	// Internal state ---------------------------------------------------------
 
@@ -39,9 +39,11 @@ public class CustomerBookingRecordListService extends AbstractService<Customer, 
 	}
 
 	@Override
-	public void unbind(final BookingRecord bp) {
+	public void unbind(final BookingRecord bookingRecord) {
 		Dataset dataset;
-		dataset = super.unbindObject(bp, "booking", "passenger");
+		dataset = super.unbindObject(bookingRecord, "booking", "passenger");
+		dataset.put("bookingLocCode", bookingRecord.getBooking().getLocatorCode());
+		dataset.put("passengerFullName", bookingRecord.getPassenger().getFullName());
 		super.getResponse().addData(dataset);
 	}
 
