@@ -1,30 +1,37 @@
 
 package acme.features.customer.passenger;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Passenger;
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
+import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerPassengerUpdateService extends AbstractGuiService<Customer, Passenger> {
 
 	@Autowired
-	private CustomerPassengerRepository			repository;
+	private CustomerPassengerRepository		repository;
 
 	@Autowired
-	private CustomerBookingPassengerRepository	bookingPassengerRepository;
+	private CustomerBookingRecordRepository	bookingPassengerRepository;
 
 
 	@Override
 	public void authorise() {
 		int passengerId = super.getRequest().getData("id", int.class);
 		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		boolean status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0;
+		Passenger passenger = this.repository.findPassengerById(passengerId);
+
+		boolean status = false;
+		if (passenger != null)
+			// Comprueba que pertenece al customer y que está en borrador
+			status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0 && passenger.getDraftMode();
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -43,12 +50,15 @@ public class CustomerPassengerUpdateService extends AbstractGuiService<Customer,
 	@Override
 	public void validate(final Passenger passenger) {
 		if (!super.getBuffer().getErrors().hasErrors("passportNumber")) {
-			Passenger existing = this.repository.findPassengerByPassportNumber(passenger.getPassportNumber());
-			if (existing != null && existing.getId() != passenger.getId())
-				super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
+			List<Passenger> matches = this.repository.findByCustomerIdAndPassportNumber(passenger.getCustomer().getId(), passenger.getPassportNumber());
+
+			boolean duplicated = matches.stream().anyMatch(p -> p.getId() != passenger.getId());
+
+			super.state(!duplicated, "passportNumber", "acme.validation.passenger.duplicate-passport");
 		}
+
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
+			super.state(passenger.getDraftMode(), "draftMode", "customer.passenger.error.draftMode");
 	}
 
 	@Override

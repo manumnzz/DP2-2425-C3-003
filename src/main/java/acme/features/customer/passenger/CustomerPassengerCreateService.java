@@ -7,92 +7,80 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Booking;
-import acme.entities.S2.BookingPassenger;
+import acme.entities.S2.BookingRecord;
 import acme.entities.S2.Passenger;
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerPassengerCreateService extends AbstractGuiService<Customer, Passenger> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
-	private CustomerPassengerRepository			repository;
-
-	@Autowired
-	private CustomerBookingPassengerRepository	repositoryBP;
-
-	// AbstractGuiService interface -------------------------------------------
+	private CustomerPassengerRepository repository;
 
 
 	@Override
 	public void authorise() {
-		boolean status;
-		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		status = customer != null;
+		boolean status = false;
+
+		if (super.getRequest().getData().containsKey("bookingId")) {
+			int bookingId = super.getRequest().getData("bookingId", int.class);
+			Booking booking = this.repository.findBookingById(bookingId);
+			Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
+
+			// Solo si el booking existe, es del mismo customer, y está en modo borrador
+			status = booking != null && booking.getCustomer().getId() == customer.getId() && Boolean.TRUE.equals(booking.getDraftMode());
+		}
+
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Passenger passenger;
-		passenger = new Passenger();
+		Passenger passenger = new Passenger();
 		passenger.setDraftMode(true);
-		if (super.getRequest().hasData("bookingId")) {
-			int bookingId = super.getRequest().getData("bookingId", int.class);
-			System.out.println(">>> Booking ID recibido: " + bookingId);
-		}
+
+		int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		Customer customer = this.repository.findCustomerById(customerId);
+		passenger.setCustomer(customer);
+
 		super.getBuffer().addData(passenger);
+
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		super.getResponse().addGlobal("bookingId", bookingId);
 	}
 
 	@Override
 	public void bind(final Passenger passenger) {
-		super.bindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
+		super.bindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds");
 	}
 
 	@Override
 	public void validate(final Passenger passenger) {
 		if (!super.getBuffer().getErrors().hasErrors("passportNumber")) {
-			Passenger existing = this.repository.findPassengerByPassportNumber(passenger.getPassportNumber());
-			if (existing != null && existing.getId() != passenger.getId())
-				super.state(false, "passportNumber", "customer.passenger.error.passportNumber.duplicate");
+			int count = this.repository.countByCustomerIdAndPassportNumber(passenger.getCustomer().getId(), passenger.getPassportNumber());
+			super.state(count == 0, "passportNumber", "acme.validation.passenger.duplicate-passport");
 		}
-		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
 	}
 
 	@Override
 	public void perform(final Passenger passenger) {
+		passenger.setDraftMode(true);
 		this.repository.save(passenger);
 
-		// Relacionar con Booking si bookingId está presente
-		if (super.getRequest().hasData("bookingId")) {
-			int bookingId = super.getRequest().getData("bookingId", int.class);
-			System.out.println(">>> Asociando pasajero al booking con ID: " + bookingId);
-			Booking booking = this.repositoryBP.findBookingById(bookingId);
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		Booking booking = this.repository.findBookingById(bookingId);
 
-			if (booking != null) {
-				BookingPassenger bp = new BookingPassenger();
-				bp.setBooking(booking);
-				bp.setPassenger(passenger);
-				this.repositoryBP.save(bp);
-			}
+		if (booking != null) {
+			BookingRecord record = new BookingRecord();
+			record.setBooking(booking);
+			record.setPassenger(passenger);
+			this.repository.save(record);
 		}
-
-		super.getBuffer().addData(passenger);
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
 		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
-
-		if (super.getRequest().hasData("bookingId")) {
-			int bookingId = super.getRequest().getData("bookingId", int.class);
-			dataset.put("bookingId", bookingId);
-		}
-
 		super.getResponse().addData(dataset);
 	}
-
 }

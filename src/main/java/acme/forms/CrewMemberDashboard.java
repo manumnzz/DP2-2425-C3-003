@@ -1,5 +1,7 @@
 package acme.forms;
 
+import java.util.List;
+
 import acme.client.components.basis.AbstractForm;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +16,7 @@ public class CrewMemberDashboard extends AbstractForm {
 	private static final long serialVersionUID = 1L;
 
 	// Attributes -------------------------------------------------------------
+
 
 	private List<String> lastFiveDestinations;
 

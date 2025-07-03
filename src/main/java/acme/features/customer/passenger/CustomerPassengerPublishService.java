@@ -3,28 +3,28 @@ package acme.features.customer.passenger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Passenger;
-import acme.features.customer.bookingPassenger.CustomerBookingPassengerRepository;
+import acme.features.customer.bookingRecord.CustomerBookingRecordRepository;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerPassengerPublishService extends AbstractGuiService<Customer, Passenger> {
 
 	@Autowired
-	private CustomerPassengerRepository			repository;
+	private CustomerPassengerRepository		repository;
 
 	@Autowired
-	private CustomerBookingPassengerRepository	bookingPassengerRepository;
+	private CustomerBookingRecordRepository	bookingPassengerRepository;
 
 
 	@Override
 	public void authorise() {
 		int passengerId = super.getRequest().getData("id", int.class);
 		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		boolean status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0;
+		Passenger passenger = this.repository.findPassengerById(passengerId);
+		boolean status = this.bookingPassengerRepository.existsBookingPassengerForCustomer(passengerId, customer.getId()) > 0 && passenger.getDraftMode();
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -42,7 +42,7 @@ public class CustomerPassengerPublishService extends AbstractGuiService<Customer
 	@Override
 	public void validate(final Passenger passenger) {
 		if (!super.getBuffer().getErrors().hasErrors("draftMode"))
-			super.state(passenger.isDraftMode(), "draftMode", "customer.passenger.error.draftMode");
+			super.state(passenger.getDraftMode(), "draftMode", "customer.passenger.error.draftMode");
 	}
 
 	@Override
@@ -51,9 +51,4 @@ public class CustomerPassengerPublishService extends AbstractGuiService<Customer
 		this.repository.save(passenger);
 	}
 
-	@Override
-	public void unbind(final Passenger passenger) {
-		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "specialNeeds", "draftMode");
-		super.getResponse().addData(dataset);
-	}
 }

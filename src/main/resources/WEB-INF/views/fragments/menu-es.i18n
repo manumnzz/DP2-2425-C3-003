@@ -46,6 +46,14 @@ master.menu.assistance-agent = Agente de asistencia
 master.menu.assistance-agent.list-completed-claims = Lista de reclamaciones completadas
 master.menu.assistance-agent.list-pending-claims = Lista de reclamaciones en curso
 
+# master.menu.customer ##########################################################
+
+master.menu.customer = Cliente
+master.menu.customer.list-bookings = Listar reservas
+master.menu.customer.list-passengers = Listar pasajeros
+master.menu.customer.list-booking-records = Listar registros de reservas
+master.menu.customer.dashboard = Mostrar panel de control
+
 # master.menu.user-account ####################################################
 
 master.menu.user-account = Cuenta

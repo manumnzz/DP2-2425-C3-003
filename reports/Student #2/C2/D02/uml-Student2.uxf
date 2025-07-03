@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>222</x>
+      <y>330</y>
+      <w>444</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Booking
+--
++ locatorCode: String {Mandatory, ValidString(pattern = "^[A-Z0-9]{6,8}$"), Column(unique = true)}
++ purchaseMoment: Date {Optional, ValidMoment(past = true), Temporal(TemporalType.TIMESTAMP)}
++ travelClass: ClassType {Mandatory, Valid, Automapped}
++ lastNibble: String {Optional, ValidString(min = 4, max = 4, pattern = "[0-9]{4}"), Automapped}
+--
++ price: Money {Transient}
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>480</y>
+      <w>366</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Passenger
+--
++ passportNumber: String {Mandatory,ValidString(pattern = "^[A-Z0-9]{6,9}$"), Automapped}
++ fullName: String {Mandatory, ValidLongText, Automapped}
++ email: String {Mandatory, ValidEmail, Automapped}
++ dateOfBirth: Date {Mandatory, ValidMoment(past = true), Temporal(TemporalType.TIMESTAMP)}
++ specialNeeds: String {Optional, ValidString(min = 1, max = 50, Automapped)}
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>360</y>
+      <w>96</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=x-&gt;
+m1=*
+m2=1
+valid for</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>204</y>
+      <w>42</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>lt=x-&gt;
+m1=*
+m2=1
+paid by</panel_attributes>
+    <additional_attributes>10.0;210.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>474</x>
+      <y>516</y>
+      <w>186</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=x-&gt;
+m1=*
+m2=1
+refers to</panel_attributes>
+    <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>510</y>
+      <w>90</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+BookingRecord
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>702</x>
+      <y>108</y>
+      <w>90</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+ClassType
+--
+ECONOMY
+BUSINESS
+bg=GRAY</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>234</x>
+      <y>114</y>
+      <w>384</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Role&gt;&gt;
+Customer: ValidCustomer
+--
++ identifier: String {Mandatory, ValidString(pattern = "^[A-Z]{2,3}\d{6}$"), Column(unique = true)}
++ phoneNumber: String {Mandatory, ValidPhone, Automapped}
++ physicalAddress: String {Mandatory, ValidLongText, Automapped}
++ city: String {Mandatory, ValidShortText, Automapped}
++ country: String {Mandatory, ValidShortText, Automapped}
++ earnedPoints: Integer {Optional, Validnumber(min = 0, max = 500000), Automapped}
+bg=PINK</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>414</y>
+      <w>54</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=x-&gt;
+m1=*
+m2=1
+belongs to</panel_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>822</x>
+      <y>108</y>
+      <w>186</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Form&gt;&gt;
+CustomerDashboard
+--
++ lastFiveDestinations: List&lt;String&gt;		
++ moneyInBookingsLastYear: Money				
++ totalEconomyBookings: Integer				
++ totalBusinessBookings: Integer				
++ countCostBookingLastYear: Money
++ averageCostBookingLastYear: Money
++ minimumCostBookingLastYear: Money
++ maximumCostBookingLastYear: Money
++ standardDeviaCostBookingLastYear: Money
++ countPassengers: Integer				
++ averagePassengers: Double				
++ minimumPassengers: Integer				
++ maximumPassengers: Integer				
++ standardDeviationPassengers: Double
+bg=CYAN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>744</x>
+      <y>306</y>
+      <w>264</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Flight
+--
++ tag: String {Mandatory, ValidShortText, Automapped}
++ selfTransfer: boolean {Mandatory, Valid, Automapped}
++ cost: Money {Mandatory, ValidMoney, Automapped}
++ description: String {Optional, ValidLongText, Automapped}
++ draftMode: boolean {Mandatory, Automapped}
+--
++ scheduledDeparture: Date {Transient}
++ scheduledArrival: Date {Transient}
++ originCity: String {Transient}
++ destinationCity: String {Transient}
++ numberOfLayovers: Integer {Transient}
+
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

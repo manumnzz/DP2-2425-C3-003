@@ -1,4 +1,22 @@
 key,key:customer,key:flight,locatorCode,purchaseMoment,travelClass,lastCreditCardNibble,draftMode
-booking-01,customer-01,flight-01,ABC1234,2024/03/12 10:30,ECONOMY,1234,true
-booking-02,customer-01,flight-02,BCD2345,2023/04/10 10:30,BUSINESS,2345,false
-booking-03,customer-02,flight-03,CDE3456,2022/05/14 10:30,ECONOMY,3456,true
+booking-01,customer-01,flight-01,X9Y8Z7E,2012/01/07 00:00,ECONOMY,0001,false
+booking-02,customer-02,flight-02,123456,2012/01/07 00:00,ECONOMY,0001,false
+booking-03,customer-04,flight-03,12345678,2012/01/07 00:00,ECONOMY,0001,false
+booking-04,customer-04,flight-04,ABCDEF,2012/01/07 00:00,ECONOMY,0001,false
+booking-05,customer-05,flight-05,ABCDEFGH,2012/01/07 00:00,ECONOMY,0001,false
+booking-06,customer-01,flight-01,1A2B3C,2012/01/07 00:00,ECONOMY,0001,false
+booking-07,customer-07,flight-07,1A2B3C4D,2012/01/07 00:00,ECONOMY,0001,false
+booking-08,customer-08,flight-08,X9Y8Z7,2000/01/01 00:00,ECONOMY,0001,false
+booking-09,customer-09,flight-09,X9Y8ZE,2000/01/01 00:01,ECONOMY,0001,false
+booking-10,customer-01,flight-08,X9Y87E,2022/07/30 00:00,ECONOMY,0001,false
+booking-11,customer-02,flight-06,X9YZ7E,2022/07/29 23:59,ECONOMY,0001,false
+booking-12,customer-02,flight-05,X98Z7E,2012/01/07 00:00,BUSINESS,0001,false
+booking-13,customer-04,flight-05,XY8Z7E,2012/01/07 00:00,ECONOMY,0001,false
+booking-14,customer-05,flight-03,WS8Z7E,2012/01/07 00:00,ECONOMY,0001,false
+booking-15,customer-06,flight-03,EF8Z7E,2012/01/07 00:00,ECONOMY,0001,false
+booking-16,customer-07,flight-02,TH8Z7E,2012/01/07 00:00,ECONOMY,0001,false
+booking-17,customer-08,flight-02,UJ8Z7E,2012/01/07 00:00,ECONOMY,0001,false
+booking-18,customer-09,flight-10,IK8Z7E,2012/01/07 00:00,ECONOMY,1234,false
+booking-19,customer-01,flight-11,LO8Z7E,2012/01/07 00:00,ECONOMY,5678,false
+booking-20,customer-02,flight-11,XX8Z7E,2012/01/07 00:00,ECONOMY,9012,false
+booking-21,customer-01,flight-01,ZZZ999,2012/01/07 00:00,ECONOMY,0001,true

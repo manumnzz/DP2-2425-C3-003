@@ -49,6 +49,7 @@
 			<acme:menu-suboption code="master.menu.consumer.favourite-link" action="http://www.example.com/"/>
 		</acme:menu-option>
 
+
 		
 		<acme:menu-option code="master.menu.manager" access="hasRealm('AirlineManager')">
 			<acme:menu-suboption code="master.menu.airlinemanager.list-flights" action="/airline-manager/flight/list" />
@@ -68,8 +69,12 @@
 		</acme:menu-option>
 		<acme:menu-option code="master.menu.customer" access="hasRealm('Customer')">
 			<acme:menu-suboption code="master.menu.customer.list-bookings" action="/customer/booking/list" />
+			<acme:menu-suboption code="master.menu.customer.list-passengers" action="/customer/passenger/list" />
+			<acme:menu-suboption code="master.menu.customer.list-booking-records" action="/customer/booking-record/list" />
+			<acme:menu-suboption code="master.menu.customer.dashboard" action="/customer/customer-dashboard/show" />
 
 		</acme:menu-option>
+
 		
 		<acme:menu-option code="master.menu.assistance-agent" access="hasRealm('AssistanceAgent')">
 			<acme:menu-suboption code="master.menu.assistance-agent.list-completed-claims" action="/assistance-agent/claim/list"/>

@@ -28,8 +28,8 @@
 	
 	<jstl:choose>
 		<jstl:when test="${acme:anyOf(_command, 'show|update') && draftMode == true}">
-			<acme:submit code="customer.passenger.form.button.update" action="/customer/passenger/update"/>
-			<acme:submit code="customer.passenger.form.button.publish" action="/customer/passenger/publish"/>
+			<acme:submit code="customer.passenger.form.button.update" action="/customer/passenger/update?id=${id}"/>
+			<acme:submit code="customer.passenger.form.button.publish" action="/customer/passenger/publish?id=${id}"/>
 			
 		</jstl:when>
 		<jstl:when test="${_command == 'create'}">
