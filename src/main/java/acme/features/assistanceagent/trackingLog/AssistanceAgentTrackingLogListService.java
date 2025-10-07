@@ -24,9 +24,15 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 		boolean status;
 		int masterId;
 		Claim claim;
+		int userAccountId = super.getRequest().getPrincipal().getAccountId();
+		AssistanceAgent assistanceAgent = this.repository.findAssistanceAgentIdByUserAccountId(userAccountId);
+		
+		
 		masterId = super.getRequest().getData("masterId", int.class);
 		claim = this.repository.findClaimByMasterId(masterId);
-		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null;
+		AssistanceAgent owner = this.repository.findAssistanceAgentIdByClaimId(claim.getId());
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null
+			&& assistanceAgent.getId() == owner.getId();
 		super.getResponse().setAuthorised(status);
 	}
 

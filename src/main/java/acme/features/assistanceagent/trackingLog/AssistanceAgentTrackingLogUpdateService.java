@@ -34,8 +34,6 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 		boolean res;
 		boolean isAssistanceAgent;
 		String metodo = super.getRequest().getMethod();
-		boolean correctEnum = false;
-		String status;
 
 		if (!super.getRequest().hasData("id"))
 			res = false;
@@ -57,14 +55,9 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 			res = tr != null && isAssistanceAgent && isTrackingLogCreator && tr.getDraftMode();
 
 			if (metodo.equals("POST")) {
-				status = super.getRequest().getData("status", String.class);
-				correctEnum = false;
-				for (TrackingLogStatus s : TrackingLogStatus.values())
-					if (s.name().equals(status))
-						correctEnum = true;
 				res = false;
 				if (tr != null)
-					res = correctEnum && tr.getDraftMode();
+					res = tr.getDraftMode();
 			}
 		}
 		super.getResponse().setAuthorised(res);
@@ -105,38 +98,52 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 		trackingLogs100percentage = new ArrayList<>(this.repository.findTrackingLogs100PercentageByMasterId(tr.getClaim().getId()));
 		List<TrackingLog> maxPercentageList = new ArrayList<>(this.repository.findTopByClaimIdOrderByResolutionPercentageDesc(tr.getClaim().getId()));
 		Integer myTrackingLogInListIndex;
-
-		if (!trWithoutUpdate.getResolutionPercentage().equals(tr.getResolutionPercentage())) {
-			if (maxPercentageList.isEmpty() || maxPercentageList.size() == 1) {
-				maxPercentage = 1000.0;
-				minPercentage = -1.00;
-			} else {
-				myTrackingLogInListIndex = maxPercentageList.indexOf(tr);
-				if (myTrackingLogInListIndex == 0) {
+		
+		if(tr.getResolutionPercentage() != null) {
+			if (!trWithoutUpdate.getResolutionPercentage().equals(tr.getResolutionPercentage())) {
+				if (maxPercentageList.isEmpty() || maxPercentageList.size() == 1) {
 					maxPercentage = 1000.0;
-					minPercentage = maxPercentageList.get(myTrackingLogInListIndex + 1).getResolutionPercentage();
-
-				} else if (myTrackingLogInListIndex == maxPercentageList.size() - 1) {
-
-					maxPercentage = maxPercentageList.get(myTrackingLogInListIndex - 1).getResolutionPercentage();
 					minPercentage = -1.00;
-					System.out.println(maxPercentage);
 				} else {
-
-					maxPercentage = maxPercentageList.get(myTrackingLogInListIndex - 1).getResolutionPercentage();
-					minPercentage = maxPercentageList.get(myTrackingLogInListIndex + 1).getResolutionPercentage();
+					myTrackingLogInListIndex = maxPercentageList.indexOf(tr);
+					if (myTrackingLogInListIndex == 0) {
+						maxPercentage = 1000.0;
+						minPercentage = maxPercentageList.get(myTrackingLogInListIndex + 1).getResolutionPercentage();
+	
+					} else if (myTrackingLogInListIndex == maxPercentageList.size() - 1) {
+	
+						maxPercentage = maxPercentageList.get(myTrackingLogInListIndex - 1).getResolutionPercentage();
+						minPercentage = -1.00;
+						System.out.println(maxPercentage);
+					} else {
+	
+						maxPercentage = maxPercentageList.get(myTrackingLogInListIndex - 1).getResolutionPercentage();
+						minPercentage = maxPercentageList.get(myTrackingLogInListIndex + 1).getResolutionPercentage();
+					}
 				}
+	
+				if (tr.getResolutionPercentage() >= maxPercentage || tr.getResolutionPercentage() <= minPercentage)
+					wrongResolutionPercentage = false;
+	
+				if (trackingLogs100percentage.size() >= 2 && tr.getResolutionPercentage() >= 100)
+					super.state(false, "resolutionPercentage", "acme.validation.trackinglog.invalid-resolutionpercentage-two100.message");
+				
+				
+	
 			}
-
-			if (tr.getResolutionPercentage() >= maxPercentage || tr.getResolutionPercentage() <= minPercentage)
-				wrongResolutionPercentage = false;
-
-			if (trackingLogs100percentage.size() >= 2 && tr.getResolutionPercentage() >= 100)
-				super.state(false, "resolutionPercentage", "acme.validation.trackinglog.invalid-resolutionpercentage-two100.message");
-
+			if (!trackingLogs100percentage.isEmpty() && trackingLogs100percentage.get(0).getStatus() != tr.getStatus() && tr.getResolutionPercentage() >= 100)
+				super.state(false, "status", "acme.validation.trackinglog.invalid-resolution-percentage3.message");
+			
+			if(tr.getResolutionPercentage() == 100 && tr.getResolution().isBlank()) {
+				super.state(false, "resolution", "acme.validation.trackinglog.invalid-resolution.message");
+			}
+			if(tr.getResolutionPercentage() == 100 && tr.getStatus() == TrackingLogStatus.PENDING && tr.getStatus() != null) {
+				super.state(false, "status", "acme.validation.trackinglog.invalid-status.message");
+			}
+			if(tr.getResolutionPercentage() < 100 && tr.getStatus() != TrackingLogStatus.PENDING && tr.getStatus() != null) {
+				super.state(false, "status", "acme.validation.trackinglog.invalid-status-notresolute.message");
+			}
 		}
-		if (!trackingLogs100percentage.isEmpty() && trackingLogs100percentage.get(0).getStatus() != tr.getStatus() && tr.getResolutionPercentage() >= 100)
-			super.state(false, "status", "acme.validation.trackinglog.invalid-resolution-percentage3.message");
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");

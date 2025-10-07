@@ -31,7 +31,7 @@ assistance-agent.claim.form.button.publish = Publicar
 assistance-agent.claim.form.label.confirmation = Confirmar
 assistance-agent.claim.form.button.tracking-log = Mostrar registros de seguimiento
 
-acme.validation.assistanceagent.invalid-employeecode-pattern.message = Código de empleado no válido ya que no va de acuerdo al patrón establecido.
+acme.validation.assistanceagent.invalid-employeecode-pattern.message = Código de empleado no válido ya que no va de acuerdo al patrón establecido
 acme.validation.assistanceagent.invalid-employeeCode-initials.message = Las iniciales del cliente no se ven reflejadas en el código de empleado
 
 acme.validation.claim.invalid-leg-date.message = La fecha de llegada del tramo debe de ser anterior a la fecha de creacion de la reclamación

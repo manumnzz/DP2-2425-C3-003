@@ -31,17 +31,7 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 		boolean res = true;
 		boolean isClaimCreator = false;
 		boolean isAssistanceAgent;
-		int legId;
-		Leg leg;
-		Collection<Leg> publishedLegs;
-		String type;
 		String metodo = super.getRequest().getMethod();
-		boolean correctEnum = false;
-		boolean correctLeg = true;
-		AssistanceAgent assistanceAgent;
-		int agentId;
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
 
 		if (!super.getRequest().hasData("id"))
 			res = false;
@@ -62,18 +52,9 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 
 			res = claim != null && isAssistanceAgent && isClaimCreator && claim.getDraftMode();
 			if (metodo.equals("POST")) {
-				type = super.getRequest().getData("typeClaim", String.class);
-				legId = super.getRequest().getData("leg", int.class);
-				leg = this.repository.findLegById(legId);
-				publishedLegs = this.repository.findAllPublishedLegs(assistanceAgent.getAirline().getId());
-				for (TypeClaim t : TypeClaim.values())
-					if (t.name().equals(type))
-						correctEnum = true;
-				if (!publishedLegs.contains(leg))
-					correctLeg = false;
-				res = false;
+
 				if (claim != null)
-					res = correctEnum && correctLeg && claim.getDraftMode();
+					res = claim.getDraftMode();
 			}
 		}
 		super.getResponse().setAuthorised(res);
@@ -117,7 +98,6 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 	@Override
 	public void validate(final Claim claim) {
 		boolean confirmation;
-
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 		super.state(claim.getDraftMode(), "*", "acme.validation.claim.invalid-draftmode.message");

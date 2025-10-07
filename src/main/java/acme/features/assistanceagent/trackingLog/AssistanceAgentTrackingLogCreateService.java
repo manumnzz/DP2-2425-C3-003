@@ -120,14 +120,12 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 		boolean repetido = false;
 
 		trackingLogMaxList = new ArrayList<>(this.repository.findTopByClaimIdOrderByResolutionPercentageDesc(tr.getClaim().getId()));
-		if (!trackingLogMaxList.isEmpty()) {
+		if (!trackingLogMaxList.isEmpty() && tr.getResolutionPercentage() != null) {
 			trMaxResolutionPercentage = trackingLogMaxList.get(0);
 			trMaxPercentage = trMaxResolutionPercentage.getResolutionPercentage();
 
 			if (tr.getResolutionPercentage() <= trMaxPercentage && trackingLogs100percentage.isEmpty())
 				super.state(false, "resolutionPercentage", "acme.validation.trackinglog.invalid-resolutionpercentage.message");
-			if (claim.getDraftMode())
-				super.state(false, "*", "acme.validation.trackingLog-draftmode.message");
 
 			if (trackingLogs100percentage.size() >= 2)
 				super.state(false, "resolutionPercentage", "acme.validation.trackinglog.invalid-resolutionpercentage-two100.message");
@@ -144,6 +142,16 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 
 			if (tr.getStatus() != trMaxResolutionPercentage.getStatus() && !trackingLogs100percentage.isEmpty() && tr.getResolutionPercentage() < 100 && !repetido)
 				super.state(false, "status", "acme.validation.trackinglog.invalid-resolution-percentage3.message");
+			
+			if(tr.getResolutionPercentage() == 100 && tr.getResolution().isBlank()) {
+				super.state(false, "resolution", "acme.validation.trackinglog.invalid-resolution.message");
+			}
+			if(tr.getResolutionPercentage() == 100 && tr.getStatus() == TrackingLogStatus.PENDING && tr.getStatus() != null) {
+				super.state(false, "status", "acme.validation.trackinglog.invalid-status.message");
+			}
+			if(tr.getResolutionPercentage() < 100 && tr.getStatus() != TrackingLogStatus.PENDING && tr.getStatus() != null) {
+				super.state(false, "status", "acme.validation.trackinglog.invalid-status-notresolute.message");
+			}
 		}
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);

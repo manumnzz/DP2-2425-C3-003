@@ -9,6 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S4.Claim;
 import acme.entities.S4.TrackingLog;
 import acme.entities.S4.TrackingLogStatus;
 import acme.realms.AssistanceAgent;
@@ -97,17 +98,25 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 		Collection<TrackingLog> claimsPublishedTrackingLog;
 		Collection<TrackingLog> claimsWithout100TrackingLog;
 		Collection<TrackingLog> claims100PercentageTrackingLog;
-		Collection<TrackingLog> claimsTrackingLog;
-
+		Collection<TrackingLog> claimsTrackingLog;		
+		Claim claim;
 		int masterId;
 		masterId = tr.getClaim().getId();
+		claim = this.repository.findClaimByTrackingLogId(tr.getId());
+
+		
 
 		claimsPublishedTrackingLog = this.repository.findPublishedTrackingLogsByMasterId(masterId);
 		claimsWithout100TrackingLog = this.repository.findTrackingLogsWithout100PercentageByMasterId(masterId);
 		claims100PercentageTrackingLog = this.repository.findTrackingLogs100PercentageByMasterId(masterId);
 		claimsTrackingLog = this.repository.findTrackingLogsByMasterId(masterId);
+		
 		if (!(claimsPublishedTrackingLog.isEmpty() && claimsWithout100TrackingLog.isEmpty()) && tr.getResolutionPercentage() == 100 && claimsPublishedTrackingLog.size() != claimsWithout100TrackingLog.size() && claims100PercentageTrackingLog.isEmpty())
 			super.state(false, "*", "acme.validation.trackinglog.invalid-allpublished2.message");
+		
+		if (claim.getDraftMode())
+			super.state(false, "*", "acme.validation.trackingLog-draftmode.message");
+		
 		if (claims100PercentageTrackingLog.size() == 1 && tr.getResolutionPercentage() == 100)
 			if (claimsPublishedTrackingLog.size() != claimsTrackingLog.size() - 1)
 				super.state(false, "*", "acme.validation.trackinglog.invalid-allpublished.message");
