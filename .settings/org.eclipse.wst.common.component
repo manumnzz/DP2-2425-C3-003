@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< Updated upstream
                                                                                                                                                                                                                                                                                                                                                             
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                    
+=======
+                                                                                                                                                                                                                                                                                                                                                                        
+>>>>>>> Stashed changes
     
     
     
+>>>>>>> Stashed changes
     
     
     
@@ -85,8 +93,33 @@
     
     
     
+<<<<<<< Updated upstream
     <wb-module deploy-name="Acme-ANS-D04">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+=======
+    
+    
+    
+<<<<<<< Updated upstream
+    
+    
+    
+    
+    
+    
+    <wb-module deploy-name="Acme-ANS-C3">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        
+        
+        
+=======
+    <wb-module deploy-name="Acme-ANS-D04">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
         
         
         
@@ -149,7 +182,21 @@
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+<<<<<<< Updated upstream
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        
+        
+        
+=======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
         
         
         
@@ -212,7 +259,21 @@
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+<<<<<<< Updated upstream
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        
+        
+        
+=======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
         
         
         
@@ -275,7 +336,21 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+<<<<<<< Updated upstream
                                                                                                                                                                                                                 
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                
+        
+        
+        
+=======
+                                                                                                                                                                                                                                        
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
         
         
         
@@ -301,7 +376,21 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+<<<<<<< Updated upstream
                                                                 
+=======
+<<<<<<< Updated upstream
+                                                                                                                
+        
+        
+        
+=======
+                                                                                        
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
         
         
         
@@ -309,8 +398,18 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+<<<<<<< Updated upstream
                 
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/acme-framework-25.5.0"/>
+=======
+<<<<<<< Updated upstream
+                                                        
+        
+        
+        
+        
+        
+>>>>>>> Stashed changes
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
                 
         <dependent-module archiveName="Acme-Framework-25.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Acme-Framework-25.5.0/Acme-Framework-25.5.0">
@@ -318,7 +417,35 @@
             <dependency-type>uses</dependency-type>
                     
         </dependent-module>
+<<<<<<< Updated upstream
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+=======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+        
+        
+        
+=======
+                                        
+        
+        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/acme-framework-25.5.0"/>
+                                
+        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
+                        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/classes"/>
+        <dependent-module archiveName="Acme-Framework-25.7.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Acme-Framework-25.7.0/Acme-Framework-25.7.0">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
         
         
         
@@ -404,12 +531,40 @@
         
         
         <property name="java-output-path" value="/Acme-Jobs-22.0/target/classes"/>
+<<<<<<< Updated upstream
                                         
+=======
+<<<<<<< Updated upstream
+                                                                                        
+        
+        
+        
+=======
+                                                                
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
         
         
         
         <property name="context-root" value="Acme-ANS"/>
+<<<<<<< Updated upstream
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    
+    
+    
+=======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+>>>>>>> Stashed changes
+    
+    
+    
+>>>>>>> Stashed changes
     
     
     
@@ -496,7 +651,21 @@
     
     
     </wb-module>
+<<<<<<< Updated upstream
                                                                                                                                                                                                                                                                                                                                                         
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                
+
+
+
+=======
+                                                                                                                                                                                                                                                                                                                                                                    
+>>>>>>> Stashed changes
+
+
+
+>>>>>>> Stashed changes
 
 
 
