@@ -24,10 +24,15 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 		boolean status;
 		int masterId;
 		Claim claim;
-
+		int userAccountId = super.getRequest().getPrincipal().getAccountId();
+		AssistanceAgent assistanceAgent = this.repository.findAssistanceAgentIdByUserAccountId(userAccountId);
+		
+		
 		masterId = super.getRequest().getData("masterId", int.class);
-		claim = this.repository.findClaimById(masterId);
-		status = claim != null && !claim.getDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+		claim = this.repository.findClaimByMasterId(masterId);
+		AssistanceAgent owner = this.repository.findAssistanceAgentIdByClaimId(claim.getId());
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null
+			&& assistanceAgent.getId() == owner.getId();
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -35,35 +40,37 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 	public void load() {
 		Collection<TrackingLog> trackingLogs;
 		int masterId;
-
 		masterId = super.getRequest().getData("masterId", int.class);
-		trackingLogs = this.repository.findAllTrackingLogsByClaimId(masterId);
 
+		trackingLogs = this.repository.findTrackingLogsByMasterId(masterId);
 		super.getBuffer().addData(trackingLogs);
-
 	}
 
 	@Override
-	public void unbind(final TrackingLog trackingLog) {
+	public void unbind(final TrackingLog tr) {
 		Dataset dataset;
+		dataset = super.unbindObject(tr, "updateTime", "status", "resolutionPercentage");
+		Claim claim;
+		int masterId;
 
-		dataset = super.unbindObject(trackingLog, "updateTime", "step", "resolutionPercentage", "status", "resolution", "draftMode");
+		masterId = super.getRequest().getData("masterId", int.class);
+		claim = this.repository.findClaimByMasterId(masterId);
+		dataset.put("claim", claim);
 
 		super.getResponse().addData(dataset);
 	}
 
 	@Override
-	public void unbind(final Collection<TrackingLog> trackingLogs) {
+	public void unbind(final Collection<TrackingLog> trackingLog) {
 		int masterId;
-		Claim claim;
-		final boolean showCreate;
+		boolean claimCompleted = true;
 
 		masterId = super.getRequest().getData("masterId", int.class);
-		claim = this.repository.findClaimById(masterId);
-		showCreate = claim.getDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+		if (this.repository.findTrackingLogs100PercentageByMasterId(masterId).size() >= 2)
+			claimCompleted = false;
 
+		super.getResponse().addGlobal("claimCompleted", claimCompleted);
 		super.getResponse().addGlobal("masterId", masterId);
-		super.getResponse().addGlobal("showCreate", showCreate);
 	}
 
 }

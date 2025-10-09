@@ -9,32 +9,33 @@
 # they accept any liabilities with respect to them.
 
 # assistance-agent.claim.list
-assistance-agent.claim.list.title = Listado de quejas
-assistance-agent.claim.form.title = Formulario de Queja
+assistance-agent.claim.list.title = Lista de reclamaciones
+assistance-agent.claim.list.label.registration-moment =Momento del registro
+assistance-agent.claim.list.label.description =Descripción
+assistance-agent.claim.list.label.draft-mode = Modo borrador
+assistance-agent.list.label.leg = Tramo
 
-assistanceAgent.claim.list.label.registrationMoment = Momento de Registro
-assistanceAgent.claim.list.label.passengerEmail = Email del Pasajero
-assistanceAgent.claim.list.label.description = Descripción
-assistanceAgent.claim.list.label.type = Tipo de Queja
-assistanceAgent.claim.list.label.assistanceAgent = Agente Registrador
-assistanceAgent.claim.list.label.leg = Tramo
-assistanceAgent.claim.list.label.trackingLogType = Estado
-assistanceAgent.claim.list.label.draftMode = Modo Borrador
+# assistance-agent.claim.form
+assistance-agent.claim.form.title = Crear una reclamación
+assistance-agent.form.label.registration-moment = Momento del registro
+assistance-agent.form.label.description = Descripción
+assistance-agent.form.label.passenger-email = Email del pasajero
+assistance-agent.form.label.claim-type = Tipo de reclamacion
+assistance-agent.form.label.draft-mode = Modo borrador
+assistance-agent.form.label.status = Estado
+assistance-agent.form.label.leg = Tramo 
+assistance-agent.claim.form.button.create = Crear
+assistance-agent.claim.form.button.delete = Eliminar
+assistance-agent.claim.form.button.update = Actualizar
+assistance-agent.claim.form.button.publish = Publicar
+assistance-agent.claim.form.label.confirmation = Confirmar
+assistance-agent.claim.form.button.tracking-log = Mostrar registros de seguimiento
 
-assistanceAgent.claim.form.label.registrationMoment = Momento de Registro
-assistanceAgent.claim.form.label.passengerEmail = Email de Pasajero
-assistanceAgent.claim.form.label.description = Descripción
-assistanceAgent.claim.form.label.trackingLogType = Estado
-assistanceAgent.claim.form.label.draftMode = Modo Borrador
-assistanceAgent.claim.form.label.type = Tipo de Queja
-assistanceAgent.claim.form.label.leg = Tramo
+acme.validation.assistanceagent.invalid-employeecode-pattern.message = Código de empleado no válido ya que no va de acuerdo al patrón establecido
+acme.validation.assistanceagent.invalid-employeeCode-initials.message = Las iniciales del cliente no se ven reflejadas en el código de empleado
 
-assistanceAgent.claim.list.button.create = Crear
-assistanceAgent.claim.form.button.create = Crear
+acme.validation.claim.invalid-leg-date.message = La fecha de llegada del tramo debe de ser anterior a la fecha de creacion de la reclamación
+acme.validation.claim.invalid-leg-draftmode.message = El tramo debe de estar publicado
+acme.validation.claim.invalid-draftmode.message = La reclamación esta publicada
 
-assistanceAgent.claim.form.button.trackingLogs = Seguimientos de registro
-assistanceAgent.claim.form.button.update = Actualizar
-assistanceAgent.claim.form.button.delete = Borrar
-assistanceAgent.claim.form.button.publish = Publicar
-
-assistance-agent.claim.form.label.confirmation Confirmar
+acme.validation.delete.message = No se puede eliminar si tiene registros de seguimiento asociados

@@ -1,3 +1,4 @@
 ﻿key,key:userAccount,code,spokenLanguages,moment,biography,salary,photo,key:airline
 agent-01,user-account-assistance-agent-01,AA000000,spanish,2020/01/01 00:00,biography,EUR 4500.00,null,airline-01
 agent-02,user-account-assistance-agent-02,AA000001,spanish,2020/01/01 00:00,biography,EUR 4500.00,null,airline-01
+agent-03,user-account-manager-03,AA000002,spanish,2020/01/01 00:00,biography,EUR 4500.00,null,airline-01

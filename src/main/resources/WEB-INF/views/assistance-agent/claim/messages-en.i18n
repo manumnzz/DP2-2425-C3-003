@@ -9,33 +9,32 @@
 # they accept any liabilities with respect to them.
 
 # assistance-agent.claim.list
-assistance-agent.claim.list.title = Listing of Claims
-assistance-agent.claim.form.title = Claim Form
+assistance-agent.claim.list.title = List of Claims
+assistance-agent.claim.list.label.registration-moment = Registration Moment
+assistance-agent.claim.list.label.description = Description
+assistance-agent.claim.list.label.draft-mode = Draft Mode
+assistance-agent.list.label.leg = Segment
 
-assistanceAgent.claim.list.label.registrationMoment = Registration Moment
-assistanceAgent.claim.list.label.passengerEmail = Passenger Email
-assistanceAgent.claim.form.label.description = Description
-assistanceAgent.claim.list.label.type = Claim Type
-assistanceAgent.claim.list.label.assistanceAgent = Assistance Agent
-assistanceAgent.claim.list.label.leg = Leg
-assistanceAgent.claim.list.label.trackingLogType = State
-assistanceAgent.claim.list.label.draftMode = Draft Mode
-assistanceAgent.claim.form.label.type = Claim Type
-assistanceAgent.claim.form.label.leg = Leg
-
-assistanceAgent.claim.form.label.registrationMoment = Registration Moment
-assistanceAgent.claim.form.label.passengerEmail = Passenger Email
-assistanceAgent.claim.form.label.type = Claim Type
-assistanceAgent.claim.form.label.description = Description
-assistanceAgent.claim.form.label.trackingLogType = State
-assistanceAgent.claim.form.label.draftMode = Draft Mode
-
-assistanceAgent.claim.list.button.create = Create
-assistanceAgent.claim.form.button.create = Create
-
-assistanceAgent.claim.form.button.trackingLogs = Tracking Logs
-assistanceAgent.claim.form.button.update = Update
-assistanceAgent.claim.form.button.delete = Delete
-assistanceAgent.claim.form.button.publish = Publish
-
+# assistance-agent.claim.form
+assistance-agent.claim.form.title = Claim
+assistance-agent.form.label.registration-moment = Registration Moment
+assistance-agent.form.label.description = Description
+assistance-agent.form.label.passenger-email = Passenger Email
+assistance-agent.form.label.claim-type = Claim Type
+assistance-agent.form.label.draft-mode = Draft Mode
+assistance-agent.form.label.status = Status
+assistance-agent.form.label.leg = Leg
+assistance-agent.claim.form.button.create = Create
+assistance-agent.claim.form.button.delete = Delete
+assistance-agent.claim.form.button.update = Update
+assistance-agent.claim.form.button.publish = Publish
 assistance-agent.claim.form.label.confirmation = Confirm
+assistance-agent.claim.form.button.tracking-log = Show tracking logs
+
+acme.validation.claim.invalid-leg-date.message = Claim must be created after the leg's scheduled arrival
+acme.validation.claim.invalid-leg-draftmode.message = Leg must be published
+acme.validation.claim.invalid-draftmode.message = Claim is already published
+
+acme.validation.assistanceagent.invalid-employeecode-pattern.message = Invalid employee code as it does not conform to the established pattern.
+acme.validation.assistanceagent.invalid-employeeCode-initials.message = The client's initials are not reflected in the employee code
+acme.validation.delete.message = Can not be deleted if it has tracking logs associated

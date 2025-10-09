@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
                                                                                                                                                                                                                                                                                                                                                                                     
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                            
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                    
+=======
+                                                                                                                                                                                                                                                                                                                                                                        
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
     
     
     
+>>>>>>> Stashed changes
     
     
     
@@ -85,6 +97,17 @@
     
     
     
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+    <wb-module deploy-name="Acme-ANS-D04">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+=======
+    
+    
+    
+<<<<<<< Updated upstream
+>>>>>>> Student4-Rev2
     
     
     
@@ -96,9 +119,20 @@
         
         
         
+<<<<<<< HEAD
         
         
         
+=======
+=======
+    <wb-module deploy-name="Acme-ANS-D04">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
         
         
         
@@ -161,13 +195,30 @@
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+=======
+<<<<<<< Updated upstream
+>>>>>>> Student4-Rev2
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
         
         
         
+<<<<<<< HEAD
         
         
         
+=======
+=======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
         
         
         
@@ -230,13 +281,30 @@
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+=======
+<<<<<<< Updated upstream
+>>>>>>> Student4-Rev2
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
         
         
         
+<<<<<<< HEAD
         
         
         
+=======
+=======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
         
         
         
@@ -299,13 +367,30 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                
+=======
+<<<<<<< Updated upstream
+>>>>>>> Student4-Rev2
                                                                                                                                                                                                                                                                 
         
         
         
+<<<<<<< HEAD
         
         
         
+=======
+=======
+                                                                                                                                                                                                                                        
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
         
         
         
@@ -331,13 +416,30 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+                                                                
+=======
+<<<<<<< Updated upstream
+>>>>>>> Student4-Rev2
                                                                                                                 
         
         
         
+<<<<<<< HEAD
         
         
         
+=======
+=======
+                                                                                        
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
         
         
         
@@ -345,12 +447,24 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/acme-framework-25.5.0"/>
+=======
+<<<<<<< Updated upstream
+>>>>>>> Student4-Rev2
                                                         
         
         
         
         
         
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
                                         
         
@@ -360,13 +474,44 @@
         <dependent-module archiveName="Acme-Framework-25.7.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Acme-Framework-25.7.0/Acme-Framework-25.7.0">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+=======
+>>>>>>> Student4-Rev2
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
         
         
         
+<<<<<<< HEAD
         
         
         
+=======
+=======
+                                        
+        
+        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/acme-framework-25.5.0"/>
+                                
+        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
+                        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/classes"/>
+        <dependent-module archiveName="Acme-Framework-25.7.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Acme-Framework-25.7.0/Acme-Framework-25.7.0">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
         
         
         
@@ -452,24 +597,58 @@
         
         
         <property name="java-output-path" value="/Acme-Jobs-22.0/target/classes"/>
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+                                        
+=======
+<<<<<<< Updated upstream
+>>>>>>> Student4-Rev2
                                                                                         
         
         
         
+<<<<<<< HEAD
         
         
         
+=======
+=======
+                                                                
+>>>>>>> Stashed changes
+        
+        
+        
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
         
         
         
         <property name="context-root" value="Acme-ANS"/>
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+=======
+<<<<<<< Updated upstream
+>>>>>>> Student4-Rev2
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     
     
     
+<<<<<<< HEAD
     
     
     
+=======
+=======
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+>>>>>>> Stashed changes
+    
+    
+    
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
     
     
     
@@ -556,13 +735,30 @@
     
     
     </wb-module>
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+                                                                                                                                                                                                                                                                                                                                                        
+=======
+<<<<<<< Updated upstream
+>>>>>>> Student4-Rev2
                                                                                                                                                                                                                                                                                                                                                                                 
 
 
 
+<<<<<<< HEAD
 
 
 
+=======
+=======
+                                                                                                                                                                                                                                                                                                                                                                    
+>>>>>>> Stashed changes
+
+
+
+>>>>>>> Stashed changes
+>>>>>>> Student4-Rev2
 
 
 

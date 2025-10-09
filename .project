@@ -43,12 +43,18 @@
 		<link>
 			<name>classes</name>
 			<type>2</type>
+<<<<<<< HEAD
 			<locationURI>WORKSPACE_LOC/Frameworks/Acme-Framework-25.7.0/target/classes</locationURI>
 		</link>
 		<link>
 			<name>target/classes</name>
 			<type>2</type>
 			<location>//C:/Users/lcman/Desktop/Workspace-25/Projects/Acme-ANS-C3/target/classes/</location>
+=======
+
+			<locationURI>WORKSPACE_LOC/Frameworks/Acme-Framework-25.7.0/target/classes</locationURI>
+>>>>>>> Student4-Rev2
 		</link>
+
 	</linkedResources>
 </projectDescription>
